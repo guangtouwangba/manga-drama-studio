@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex flex-col min-h-screen">
+<!-- Top Navigation -->
+<header class="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">项目设置</h1>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="flex items-center gap-2 pl-2 pr-3 py-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-200 dark:border-slate-800">
+<div class="w-7 h-7 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">person</span>
+</div>
+<span class="text-sm font-medium">管理员</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-2 text-sm mb-8 text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">项目</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">万古第一废体</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">设置</span>
+</nav>
+<form class="space-y-8">
+<!-- Section 1: Basic Info -->
+<section class="bg-white dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">info</span>
+<h2 class="text-lg font-bold">基本信息</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">项目标题</label>
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" type="text" value="万古第一废体"/>
+</div>
+<div class="space-y-2 col-span-2 md:col-span-1">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">题材</label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>玄幻奇幻</option>
+<option>都市异能</option>
+<option>仙侠修真</option>
+<option>科幻未来</option>
+</select>
+</div>
+<div class="space-y-2 col-span-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">项目描述</label>
+<textarea class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="请输入项目的核心简介..." rows="4">天生废体，却偶得神秘传承，从此逆天改命，纵横万古...</textarea>
+</div>
+</div>
+</section>
+<!-- Section 2: Output Config -->
+<section class="bg-white dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">output</span>
+<h2 class="text-lg font-bold">输出配置</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">分辨率</label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>1080x1920 (9:16)</option>
+<option>1920x1080 (16:9)</option>
+<option>1024x1024 (1:1)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">默认分镜数量</label>
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" type="number" value="24"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">风格前缀</label>
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="如: Webtoon style, sharp lines" type="text"/>
+</div>
+</div>
+</section>
+<!-- Section 3: AI Model Config -->
+<section class="bg-white dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+<h2 class="text-lg font-bold">AI 模型配置</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">edit_note</span> 剧本模型 (Writer)
+                            </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>GPT-4o (Creative Writing)</option>
+<option>Claude 3.5 Sonnet</option>
+<option>DeepSeek Chat</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">palette</span> 绘画模型 (Artist)
+                            </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>Midjourney v6.1</option>
+<option>Stable Diffusion XL (Comic)</option>
+<option>Flux.1 Dev</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">movie</span> 视频模型 (Video)
+                            </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>Runway Gen-3 Alpha</option>
+<option>Luma Dream Machine</option>
+<option>Kling AI</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">face</span> 角色一致性模型
+                            </label>
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+<option>FaceID v2 (LoRA)</option>
+<option>InstantID Pro</option>
+<option>IP-Adapter Plus</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Section 4: Budget -->
+<section class="bg-white dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h2 class="text-lg font-bold">预算控制</h2>
+</div>
+<span class="text-xs font-semibold px-2 py-1 bg-primary/10 text-primary rounded">额度实时同步</span>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">项目预算上限 (Tokens/Credits)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">¥</span>
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg pl-8 pr-4 py-2.5 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" type="number" value="5000"/>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-sm text-slate-500">已使用预算</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">¥ 1,240 / ¥ 5,000</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-800 h-3 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[24.8%] rounded-full shadow-[0_0_10px_rgba(37,106,244,0.4)]"></div>
+</div>
+<p class="text-xs text-slate-500">提示：当消耗达到 80% 时系统将发送预警通知。</p>
+</div>
+</div>
+</section>
+<!-- Footer Action -->
+<div class="flex items-center justify-end gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="px-6 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" type="button">
+                        重置更改
+                    </button>
+<button class="px-8 py-2.5 bg-primary text-white text-sm font-bold rounded-lg shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-sm">save</span>
+                        保存设置
+                    </button>
+</div>
+</form>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-6 text-center text-slate-500 dark:text-slate-500 text-sm">
+<p>© 2024 AI 创作平台. 保留所有权利.</p>
+</footer>
+</div>
+</body></html>

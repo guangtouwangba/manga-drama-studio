@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                        "panel-dark": "#1a2234",
+                        "border-dark": "#314368"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<title>Storyboard Editor - Version Comparison</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-dark px-6 md:px-10 py-3 bg-background-dark/50 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary size-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">movie_edit</span>
+</div>
+<h2 class="text-slate-100 text-lg font-bold leading-tight tracking-tight">Storyboard Editor</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Storyboard Grid</a>
+<a class="text-primary text-sm font-medium border-b-2 border-primary pb-1" href="#">Versions</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Assets</a>
+<a class="text-slate-400 hover:text-white text-sm font-medium transition-colors" href="#">Settings</a>
+</nav>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded h-10 px-4 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-all">
+<span>Save Progress</span>
+</button>
+<div class="bg-slate-700 bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-border-dark" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-MHYfXPoKpTs4m48NDofH-iA4W0MkSAwIcYHKrm-CY3_AGsxTy5Ls1mUBurzIvwur8Y_4FyqRmWB1lgf-mBkY2y8P9M9MWyoGElJEz-Qw56SsKOGYLSRpgzdDfv91lM9M2qUNVwBoCSxNXNqCNoPnywxmvv_7rffAJ5L3JJyLVHtTG-DMa8bBMkee6lf4-ZMiwzNJTFIqHaKnqkEDwy1ZyhQZPJg8kgv309Rd7nJvtigOhrUW_l2mcGNcOfcJDO30dnG7JXH427A");'>
+</div>
+</div>
+</header>
+<!-- Breadcrumbs & Title Section -->
+<main class="max-w-7xl mx-auto w-full px-6 py-6">
+<div class="flex flex-col gap-2 mb-6">
+<nav class="flex items-center gap-2 text-slate-400 text-sm">
+<a class="hover:text-primary flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-base">grid_view</span>
+                            Project Alpha
+                        </a>
+<span class="text-slate-600">/</span>
+<a class="hover:text-primary" href="#">Scene 4</a>
+<span class="text-slate-600">/</span>
+<span class="text-slate-100">Panel 12 Comparison</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mt-2">
+<div>
+<h1 class="text-slate-100 text-3xl md:text-4xl font-bold tracking-tight">Compare Iterations</h1>
+<p class="text-slate-400 mt-1 max-w-2xl">Review variations generated for this panel. Compare visual style, lighting, and composition before selecting the final version for the sequence.</p>
+</div>
+<div class="flex bg-slate-800/50 p-1 rounded-lg border border-border-dark">
+<button class="px-4 py-2 text-sm font-bold bg-primary text-white rounded">Side-by-side</button>
+<button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">Overlay</button>
+</div>
+</div>
+</div>
+<!-- Comparison Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
+<!-- Version 1 Card -->
+<div class="flex flex-col bg-panel-dark border border-border-dark rounded-xl overflow-hidden shadow-2xl">
+<div class="p-4 border-b border-border-dark flex justify-between items-center bg-slate-800/30">
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 bg-slate-700 text-slate-300 text-[10px] font-bold uppercase tracking-widest rounded">V1</span>
+<span class="text-slate-200 font-semibold">Original Concept</span>
+</div>
+<span class="text-xs text-slate-500 font-medium italic">Generated 2 days ago</span>
+</div>
+<div class="aspect-video relative group overflow-hidden bg-black">
+<img alt="Storyboard V1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Cinematic storyboard panel showing a futuristic city street at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsJ58_pvuYkFI5SoProMJwVoWVY5MLfYEaKTx0MT_-EbB8Iosml72tUcOaGQHqjWQN3LLXGibQsg6Y75PRsFjnuL_L9QP0h5z2PYdmoVfrgLen71Oa7Y0cVFwrTBmSgoJZE0q23YUeAwMOBmbXKIo4O0WtxY-H34Ccuc0tOpFieQiLfn7cy7GHvUJOKHSr1vXh7KvgEHh0UrxXkNCZu9OkH_-KS_z-XQIxp3uN3QXm8AWdnutIPNEl-PW522W24sOTp5mGImFhh7g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg text-sm border border-white/20">
+<span class="material-symbols-outlined text-lg">zoom_in</span> View Fullscreen
+                                </button>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Prompt Metadata -->
+<div class="space-y-3">
+<label class="text-xs font-bold uppercase tracking-wider text-slate-500">AI Prompt</label>
+<div class="bg-slate-900/50 p-4 rounded-lg border border-border-dark/50 text-slate-300 text-sm leading-relaxed min-h-[100px]">
+                                    A wide shot of a futuristic Tokyo-style street at night, neon lights reflecting on wet asphalt, cinematic lighting, 8k resolution, vaporwave aesthetic, shallow depth of field.
+                                </div>
+</div>
+<!-- Generation Specs -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] uppercase text-slate-500 font-bold">Model Used</span>
+<span class="text-sm text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">model_training</span>
+                                        Storyboard-Diffusion v1.2
+                                    </span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] uppercase text-slate-500 font-bold">Inference Time</span>
+<span class="text-sm text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">timer</span>
+                                        4.2 seconds
+                                    </span>
+</div>
+</div>
+<button class="w-full py-4 border-2 border-primary/40 hover:border-primary text-primary hover:bg-primary/5 font-bold transition-all rounded-xl flex items-center justify-center gap-2 mt-2">
+<span class="material-symbols-outlined">check_circle</span>
+                                Select as Final
+                            </button>
+</div>
+</div>
+<!-- Version 3 Card -->
+<div class="flex flex-col bg-panel-dark border-2 border-primary rounded-xl overflow-hidden shadow-[0_0_40px_rgba(37,106,244,0.15)] relative">
+<!-- Active Indicator -->
+<div class="absolute top-0 right-0 bg-primary text-white px-3 py-1 text-[10px] font-bold uppercase tracking-tighter rounded-bl-lg z-10 shadow-lg">
+                            Latest Version
+                        </div>
+<div class="p-4 border-b border-border-dark flex justify-between items-center bg-primary/10">
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded">V3</span>
+<span class="text-slate-100 font-semibold">Enhanced Lighting</span>
+</div>
+<span class="text-xs text-primary font-bold">Just now</span>
+</div>
+<div class="aspect-video relative group overflow-hidden bg-black">
+<img alt="Storyboard V3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Cinematic storyboard panel with vibrant neon reflections and dramatic cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqxKKRtBFcrxR-6zwNF9hIFJW4-BnUy12aJFLKGHOi5CkOEiRuK7Yb84CR66-BOnFE5QzT8ZCSs1fVarFYRsx8o150Uu5P7bSE4Q45Uak4wydw-WKJBd35IJ71coYYIzGmabC_wp-eb8nOhFFpfoK5_mH_LGr4HBqW3X9Pg8nenUbtDF6dt48L2f5EQ3aL7-wLJoiWPonb79laMiSlc9OWaPXSHKnW5y75RMRozs8bWc0QFu55t3lb7BGSeqYW4nG4D89Pwg1yaJM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent flex items-end p-6">
+<button class="flex items-center gap-2 bg-primary/80 hover:bg-primary backdrop-blur-md text-white px-4 py-2 rounded-lg text-sm border border-white/20">
+<span class="material-symbols-outlined text-lg">zoom_in</span> View Fullscreen
+                                </button>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Prompt Metadata -->
+<div class="space-y-3">
+<label class="text-xs font-bold uppercase tracking-wider text-primary/80">AI Prompt (Refined)</label>
+<div class="bg-primary/5 p-4 rounded-lg border border-primary/20 text-slate-100 text-sm leading-relaxed min-h-[100px]">
+                                    A wide shot of a futuristic Tokyo-style street at night, <span class="text-primary font-semibold">dramatic heavy rain, high contrast, golden hour neon glow</span>, reflecting on wet asphalt, anamorphic lens flares, cyberpunk atmosphere, hyper-realistic.
+                                </div>
+</div>
+<!-- Generation Specs -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1">
+<span class="text-[10px] uppercase text-slate-500 font-bold">Model Used</span>
+<span class="text-sm text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">model_training</span>
+                                        Storyboard-Diffusion v2.0
+                                    </span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-[10px] uppercase text-slate-500 font-bold">Inference Time</span>
+<span class="text-sm text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">timer</span>
+                                        6.8 seconds
+                                    </span>
+</div>
+</div>
+<button class="w-full py-4 bg-primary text-white font-bold hover:bg-primary/90 transition-all rounded-xl flex items-center justify-center gap-2 mt-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">star</span>
+                                Select as Final
+                            </button>
+</div>
+</div>
+</div>
+<!-- History Timeline (Subtle Bottom Section) -->
+<div class="mt-12 border-t border-border-dark pt-8">
+<h3 class="text-slate-300 font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">history</span>
+                        Version History
+                    </h3>
+<div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+<div class="min-w-[120px] aspect-[4/3] bg-slate-800 border border-border-dark rounded-lg flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-primary transition-colors">
+<span class="text-xs font-bold text-slate-500">V1</span>
+<span class="text-[10px] text-slate-600">2d ago</span>
+</div>
+<div class="min-w-[120px] aspect-[4/3] bg-slate-800 border border-border-dark rounded-lg flex flex-col items-center justify-center gap-1 cursor-pointer hover:border-primary transition-colors">
+<span class="text-xs font-bold text-slate-500">V2</span>
+<span class="text-[10px] text-slate-600">1d ago</span>
+</div>
+<div class="min-w-[120px] aspect-[4/3] bg-slate-800 border-2 border-primary rounded-lg flex flex-col items-center justify-center gap-1">
+<span class="text-xs font-bold text-primary">V3</span>
+<span class="text-[10px] text-primary/70">Active</span>
+</div>
+<div class="min-w-[120px] aspect-[4/3] bg-background-dark border border-dashed border-border-dark rounded-lg flex flex-col items-center justify-center gap-1 cursor-pointer hover:bg-slate-800/50 transition-colors group">
+<span class="material-symbols-outlined text-slate-600 group-hover:text-primary transition-colors">add_circle</span>
+<span class="text-[10px] text-slate-600">New Version</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

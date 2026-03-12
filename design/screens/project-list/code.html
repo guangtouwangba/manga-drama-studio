@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col">
+<div class="p-6">
+<div class="flex flex-col gap-1">
+<h1 class="text-xl font-bold tracking-tight text-primary">AI Manga Editor</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider font-semibold">Creator Studio</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span>项目</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>设置</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>文档</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-slate-100 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">存储空间</span>
+<span class="text-xs font-bold text-primary">85%</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-slate-50 dark:bg-[#0a0f1a]">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 flex items-center justify-between px-8 py-6 bg-slate-50/80 dark:bg-[#0a0f1a]/80 backdrop-blur-md">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">我的项目</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">管理并继续您的漫画创作工程</p>
+</div>
+<button class="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-bold transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>新建项目</span>
+</button>
+</header>
+<!-- Projects Grid -->
+<section class="px-8 pb-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="group bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-primary/50 transition-all hover:shadow-xl dark:hover:shadow-primary/5">
+<div class="relative aspect-[16/10] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Manga style character with blue energy background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGte-xLftII47ijxvRmMcO0hYXzNne15NTLlDPgImIOEuRVJl0fSIBGcX-PFOCrA46T5HP78MaVszeN33j41K12ODVd0bGX9u5uVF0Sx8h_rI80uj67hMnnZBt0WjBVkyoE1dDeKpN_1LebK-nO8S8J6t3mwzjn0sb58bZs1OTTtirkIGEsJZRCntaAv6MxsoSXhZrtlmgLh39B27eb5ljxPeaAcWHB7m1vhlPRfCNTtGoAdhvjXQlHW7TwBSHw-m0RmzdzBB9IZs');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">玄幻</span>
+<span class="bg-emerald-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">制作中</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">万古第一废体</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>项目完成度</span>
+<span class="font-bold text-slate-900 dark:text-slate-200">60%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-1 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>2023-10-24</span>
+</div>
+<button class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-primary/50 transition-all hover:shadow-xl dark:hover:shadow-primary/5">
+<div class="relative aspect-[16/10] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Anime sword fighter character in sunset" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWxSVTl9ytTTVyN9W_9FkcgnC9BYsxtR0PPYMwrUNQxVDJ9Uac3x5SJynaqnezRPXUBSZ_-XMp_KKfMA5bjhvM1uDXHfzY717WK6YsCaTNTflIWTq6OeHkCjQVLo9yF64ee9KOLXwqN166EdLWP4ewenzzUpGp9875P1GmIQS9nBVpj8JE48BLg6UKxCvt8w8KYNMYcpuKLcX_lFfFWcZMyXECRP9BkUcY7cpjm8ZemCyBvT8yhOVqvoVlgev3szrL3IXnYxuuPXQ');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">修仙</span>
+<span class="bg-emerald-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">制作中</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">剑道第一仙</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>项目完成度</span>
+<span class="font-bold text-slate-900 dark:text-slate-200">85%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-1 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>2023-10-23</span>
+</div>
+<button class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-primary/50 transition-all hover:shadow-xl dark:hover:shadow-primary/5">
+<div class="relative aspect-[16/10] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Digital illustration of a high fantasy landscape" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAr_QiYsRcd1hcb7Xdlz1_urP3JDZ_ZBVR2YJNjVTu9siutD1wE7oBRBFqlUFq4xZv5ShTxZjdfCK2e80_E8q9_-AwH0K-6dycaaeB54rG0Pfdo2EMgyXgw0kvG7ARy1jECb5SgOApOWcUeHNRtx0JX-HJbN11nR9-maGTKznFpGSWA2EEplwJ5RR8j-pDC-l-a-ieMXS2_RNj37w0oAJ4TEfb-Vx893Ktoh-T0x1HjgmrQp4CuGby-6pw-zV84uTVnmd00XLoa_2w');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">玄幻</span>
+<span class="bg-amber-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">草稿</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">伏天氏</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>项目完成度</span>
+<span class="font-bold text-slate-900 dark:text-slate-200">30%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 30%"></div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-1 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>2023-10-22</span>
+</div>
+<button class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-primary/50 transition-all hover:shadow-xl dark:hover:shadow-primary/5">
+<div class="relative aspect-[16/10] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Intense anime battle scene close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC80b_Kt6_UGHZnTfSuZIqkR-LpRiDSn7tPdEV3Y9IdjXQPsw3dUCQE4AeAK3axBaqL2pH7M23hLIZuDek1QsUO7bQHe83YobRFZ2bpRb4IQSD87hvNDS1CIqd2arPV7-rdcem-6CtaVaGgWyyUfTRz431HQZH4db0Y58Qg1NVjqHRxHaA3IaKaMld222i9G1366Uns0jQJntHNPpDp8MnwRYtveupB6K1A5dmruAJGmFvtHeefQZuaaBQTRWcscV_AegKyVN6C-iw');"></div>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">武侠</span>
+<span class="bg-blue-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">已发布</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">绝世武神</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>项目完成度</span>
+<span class="font-bold text-slate-900 dark:text-slate-200">100%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-1 text-[11px] text-slate-400">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>2023-10-20</span>
+</div>
+<button class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- New Project Placeholder -->
+<div class="group border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl flex flex-col items-center justify-center p-8 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer min-h-[340px]">
+<div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+<p class="mt-4 font-bold text-slate-900 dark:text-white">创建新项目</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 text-center">使用 AI 快速生成您的首个分镜</p>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

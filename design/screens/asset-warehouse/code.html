@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(37, 106, 244, 0.2);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(37, 106, 244, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark shrink-0">
+<div class="p-6 flex flex-col gap-1">
+<h1 class="text-primary text-xl font-bold tracking-tight">AI漫剧创作平台</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs">专业创作者工作站</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="text-sm font-medium">总览</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">movie</span>
+<span class="text-sm font-medium">剧集管理</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px] fill-[1]">inventory_2</span>
+<span class="text-sm font-medium">资产仓库</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="text-sm font-medium">团队协作</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mb-4" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium">设置</span>
+</a>
+<div class="flex items-center gap-3 px-3">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs" data-alt="User avatar">SY</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium">沈渊</span>
+<span class="text-[10px] text-slate-500">高级创作者</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark">
+<!-- Header with Tabs -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shrink-0">
+<div class="flex items-center gap-8 h-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+<h2 class="text-lg font-bold">资产仓库</h2>
+</div>
+<nav class="flex h-full gap-6">
+<a class="flex items-center border-b-2 border-primary text-primary px-1 text-sm font-bold" href="#">角色</a>
+<a class="flex items-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 px-1 text-sm font-medium transition-colors" href="#">场景</a>
+<a class="flex items-center border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 px-1 text-sm font-medium transition-colors" href="#">道具</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl pointer-events-none">search</span>
+<input class="bg-slate-100 dark:bg-slate-900 border-none rounded-lg pl-10 pr-4 py-2 text-sm w-64 focus:ring-1 focus:ring-primary outline-none" placeholder="搜索资产..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+                        新建资产
+                    </button>
+</div>
+</header>
+<!-- Two Column Layout Content -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Column: Asset List (35%) -->
+<section class="w-[35%] border-r border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="p-4 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">全部角色 (24)</span>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">filter_list</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-3">
+<!-- Active Asset Card -->
+<div class="p-3 bg-primary/10 border border-primary/50 rounded-xl flex gap-3 cursor-pointer group">
+<div class="w-20 h-20 rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0 overflow-hidden border border-primary/20">
+<img alt="Character Shen Yuan" class="w-full h-full object-cover" data-alt="Portrait of character Shen Yuan with long black hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXoeAxd_n2lBg0sF9LYnKLoMD9BWBL6SPCWD7IVpSo-y5UCmFOSZ9b1DccEeqdTB400l-e6ERmd5MBEp8OrjqWhP_S1B39HnJhr2hWTNdQqyM4ef8YJ_G9q1T-X0PUaC4ahY5Eih-8uy06-V5CfvGA4T_ySYvxAH786hjuIpja2cLGB-TsYHpia1r3D_IimCfwr54-ttwZtI6dXV2oROCsQTpWfk3cwre562Lv4UCDUAKF2YjoBQylXbC-qZtZvb-bPqkbo_5nVRo"/>
+</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100 truncate">沈渊</h3>
+<span class="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-bold rounded">S-Rank</span>
+</div>
+<p class="text-xs text-slate-500 mb-2">冷酷剑客，背景不详</p>
+<div class="flex items-center gap-3 text-[10px] text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">visibility</span>3 次登场</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">history</span>2小时前更新</span>
+</div>
+</div>
+</div>
+<!-- Secondary Asset Cards -->
+<div class="p-3 bg-white dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl flex gap-3 cursor-pointer hover:border-primary/30 transition-all group">
+<div class="w-20 h-20 rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0 overflow-hidden">
+<img alt="Character Bai Lu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Portrait of female character Bai Lu in white robe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3GoJQxcU3lBT9K3RJmx25MXj-gk70i1KunAJc1rYNWiF2B7Ft7MigUe6PhABpxFUwpXOZwtK8x-d2exXSqpWUFrGl0EExeFOD_1vnkRaVzWn15Lh9Mf3T7VUjm9fJxTtIkcC1y_OmBQxZZtjceN3JMV_Le64T9CNrPTLcjikP1_uqr03kH62nrEiGLLSrAVV4FIlKUZrZ72TmMn8a_KVfcGc7kIu4r_Jb66vilR5rvn30e6AR777apxt48ExHXSjs9Z0xhjiOjkU"/>
+</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100 truncate">白鹭</h3>
+<span class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] font-bold rounded">A-Rank</span>
+</div>
+<p class="text-xs text-slate-500 mb-2">青云宗内门弟子</p>
+<div class="flex items-center gap-3 text-[10px] text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">visibility</span>12 次登场</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">history</span>昨天</span>
+</div>
+</div>
+</div>
+<div class="p-3 bg-white dark:bg-slate-900/30 border border-slate-200 dark:border-slate-800 rounded-xl flex gap-3 cursor-pointer hover:border-primary/30 transition-all group">
+<div class="w-20 h-20 rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0 overflow-hidden">
+<img alt="Character Mo Ying" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="Shadowy character Mo Ying with mask" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBtTsSWDG7-PjxaSx2v3rQsjgG0F5zTr-sY00SFfJ0RXRidAwHV6TkTeTRtC4Xj2tyzZRzVTotaTEOn0Q0z-6sYUTriheERDXWncibzb_3xvj_nc8UnPIB3r37Zagtu3Fm3bZq96sggKAp0Dhrtz3rxxdOiMw1Lav6uwZ2J_x1hMZ205EUrTCw5X8Et45jKRj3OpdAFS0Goua8t-4Pl7027m5K7HXOPuECZ5CSEQmjFLeS6sjQlZJju8aWvHQlEKiTBjxTHBPbbPs"/>
+</div>
+<div class="flex-1 flex flex-col justify-center min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-slate-900 dark:text-slate-100 truncate">墨影</h3>
+<span class="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] font-bold rounded">S-Rank</span>
+</div>
+<p class="text-xs text-slate-500 mb-2">神秘组织头领</p>
+<div class="flex items-center gap-3 text-[10px] text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">visibility</span>5 次登场</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">history</span>3天前</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Asset Details (65%) -->
+<section class="flex-1 overflow-y-auto custom-scrollbar bg-white dark:bg-background-dark/30">
+<div class="max-w-4xl mx-auto p-8 space-y-10">
+<!-- Section 1: Basic Info -->
+<div class="flex justify-between items-start">
+<div class="space-y-4 flex-1">
+<div class="flex items-center gap-4">
+<h1 class="text-3xl font-bold tracking-tight">沈渊 (Shen Yuan)</h1>
+<button class="p-1 rounded-md text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+<div class="flex gap-4">
+<span class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-sm">male</span> 男
+                                    </span>
+<span class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-sm">cake</span> 24岁
+                                    </span>
+<span class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800">
+<span class="material-symbols-outlined text-sm">height</span> 182cm
+                                    </span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                                    一位背负着家族血仇的流浪剑客，由于常年处于战斗边缘，性格冷酷寡言。身着玄青色劲装，佩有一柄无名古剑。在故事的主线剧情中起到了关键的引导作用，是连接过去与未来的核心人物。
+                                </p>
+</div>
+<div class="w-40 h-40 rounded-xl overflow-hidden border-2 border-slate-100 dark:border-slate-800 shadow-xl">
+<img alt="Main Profile" class="w-full h-full object-cover" data-alt="High resolution detailed character portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc5SPpmJHpv7tKU7ULR0ruhwUWSLaR2ZekhKwsw-eM6cvyQoipZzuh89UHwdQ93EcGthTKx8ut9USBtcD9cxG80EpAJv7m4fN1R7nUm50VSCACpDhIvJvtFpS3r7_Ov93XJ-X6pAl0yyDCouyBWKQWuYptT1O3eWakKTBurlzESuLyLcLJZ3hT-V3Hdaqmczly2CIy3dfEqyvCQAv4KpNMFFbfUKhXUTwT_7LH8xTOaWADygGMHaMldNxddZn_LZYOoS5xD12ZTdY"/>
+</div>
+</div>
+<!-- Section 2: Appearance States -->
+<div class="space-y-4">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+<span class="w-4 h-[2px] bg-primary"></span> 外观形态
+                            </h3>
+<div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-lg w-fit">
+<button class="px-6 py-1.5 rounded-md text-sm font-bold bg-white dark:bg-slate-800 shadow-sm text-primary">日常</button>
+<button class="px-6 py-1.5 rounded-md text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">战斗</button>
+<button class="px-6 py-1.5 rounded-md text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">觉醒</button>
+</div>
+</div>
+<!-- Section 3: Visual Reference -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+<span class="w-4 h-[2px] bg-primary"></span> 视觉参考图
+                                </h3>
+<button class="flex items-center gap-2 text-sm text-primary hover:bg-primary/10 px-4 py-1.5 rounded-lg border border-primary/20 transition-all">
+                                    🎨 生成参考图
+                                </button>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-[3/4] rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden group relative">
+<img alt="Front view" class="w-full h-full object-cover" data-alt="Character design sheet front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACzUyk8yCzJgTIczlLofnxDX1ajU-w0mae7nTDgbr9VB3qyNRTfzQd0MNRw041U2jbEYKzZ-_ibjXwQwLx_JH3qfk6jFT5YAFRrojUIFCEeOJbW4b8uFDVXuVxlXqtImK9KXlN0Gm1y2sZ0yCH20zBYAnGo3z_YuI9WlmBmmN71JRfAvB3cFGICF1ARR-wqqCOxLuW2TjsOzoVIgBlMvjFtC_qOXLblshkKPoH_Nj1IIdN2s34_N6hBNImkobcZJE5bP1pBf-RwEY"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-white text-xs font-bold">正视图 (Front)</span>
+</div>
+</div>
+<div class="aspect-[3/4] rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden group relative">
+<img alt="Side view" class="w-full h-full object-cover" data-alt="Character design sheet side view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK7qgSXAmVWSHFF3EUpQj-ptURpezdY0fBrfCJstBYy-UKl8fTpyRzvm1ta_MUKZnLG_z1L5pqRP4Hd9scofUlHgVPfz__65eOdYpR0CyYxV2JZV03zWmJz8rqR0qhYt3TBLzU7_W58NrjO8em2M_puL-cyLuTcwYSV33wbgA8fGS_73gm0zcAAHSZF28IP41wfTJ-ChCUmKUCYtylaNmrxX76s3b9Aa9a3BBtS8QGr6caMrjl8sVslfPmXeHJ9txGPUTk7vdDpbw"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-white text-xs font-bold">侧视图 (Side)</span>
+</div>
+</div>
+<div class="aspect-[3/4] rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden group relative">
+<img alt="Back view" class="w-full h-full object-cover" data-alt="Character design sheet back view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd5V8SmLLlybjnKfyP2aeV4g_XVPWCZcyPCYyfBmu47TP--KWD0if4peyZZTa4ZLqBtTTWKRnkyyl5ER-zlGqg17BXm7qkCPfCo64-WnimIT23tKvTZmp5cggTIec39ubhTuliGe9MiI-_4EepwaUGln6w5KU5i5DocGuJ0D3Jkh3K8DhF8KylCMOGqszhE8-_tui2RdQ5PNSbf2Sh6Aue3we5B3x8cbSTj-a-mv2YVVo0ePn_1DrpggBT34TpEx5xmrgZob-MePc"/>
+<div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="text-white text-xs font-bold">背视图 (Back)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Prompt Settings -->
+<div class="space-y-4">
+<h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
+<span class="w-4 h-[2px] bg-primary"></span> 专属提示词设置 (Prompt)
+                            </h3>
+<div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-500">固定提示词 (Anchor Prompts)</label>
+<div class="w-full min-h-[80px] p-3 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-600 dark:text-slate-300">
+                                        1boy, cool gaze, long black ponytail, traditional chinese martial arts attire, dark blue silk, silver embroidery, holding a weathered long sword, ancient temple background, cinematic lighting, masterpiece, 8k
+                                    </div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-500">角色强度控制 (LORA Weight)</label>
+<div class="flex items-center gap-4">
+<input class="flex-1 accent-primary" type="range"/>
+<span class="text-sm font-mono text-primary">0.85</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-500">负向提示词 (Negative Prompts)</label>
+<select class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm p-2 focus:ring-primary">
+<option>标准负向词库 v2.1</option>
+<option>高强度质量控制</option>
+<option>自定义排除</option>
+</select>
+</div>
+</div>
+<div class="flex justify-end pt-2">
+<button class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-6 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">
+                                        更新全局配置
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<div class="h-20"></div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

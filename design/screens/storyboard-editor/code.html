@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Storyboard Editor - AI Manga Production</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #314368; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden h-screen flex flex-col">
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-3 bg-white dark:bg-background-dark/50 backdrop-blur-md">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">movie_edit</span>
+<h2 class="text-lg font-bold tracking-tight">Storyboard Editor</h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">项目</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">素材库</a>
+<a class="text-sm font-medium hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">分镜编辑器</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">导出</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-9 pr-4 py-1.5 text-sm w-64 focus:ring-1 focus:ring-primary" placeholder="搜索分镜..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">save</span>
+<span>保存</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Side: Panel Grid (40%) -->
+<section class="w-[40%] border-r border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="p-4 flex flex-col gap-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-xs text-slate-500 font-medium overflow-hidden whitespace-nowrap">
+<span>项目</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>万古第一废体</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>第一集：退婚大典</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary">分镜脚本</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<button class="bg-primary/10 hover:bg-primary/20 text-primary px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">auto_fix_high</span>
+<span>自动规划</span>
+</button>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add_box</span>
+<span>插入分镜</span>
+</button>
+</div>
+<div class="flex items-center gap-4 text-xs">
+<div class="flex flex-col items-end">
+<span class="text-slate-500">总分镜</span>
+<span class="font-bold">20</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-slate-500">总时长</span>
+<span class="font-bold">38.5s</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+<div class="grid grid-cols-2 gap-4">
+<!-- Panel Item 1 -->
+<div class="group relative bg-slate-100 dark:bg-slate-800/50 rounded-xl p-2 border-2 border-transparent hover:border-primary/50 transition-all cursor-pointer">
+<div class="aspect-video rounded-lg mb-2 overflow-hidden bg-slate-200 dark:bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="Wide shot of a massive ancient oriental palace hall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZEIqyS83sPYXaeD_xQ2GCM_1XvCgOnh6Yc2_prWZaXFl0tuFYJAVrPoWkQH4OXhsQfFIoTJOAw9xOoinNoMaXTkRrrFtKjoFm4QkcezppSyI0oHHvf4iKdngqmHLeDORZfi7t46FhBhmw6J_3wS422Sm_m4J8s6gRphrBV37vKaYLJP4Il9r4PBS8LYZ30aMuJMBmo1Ijp3OkWNX6i1Bu0RRwPcR5U6tUmGqP6jDnryQ3MLKr_BZ1h69x60DO5JBctB1WQilkavE"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">P1</span>
+<p class="text-[11px] mt-1 font-medium line-clamp-1">大厅全景</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-slate-500">全景 | 2.5s</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-emerald-500 text-sm">check_circle</span>
+</div>
+</div>
+<!-- Panel Item 2 -->
+<div class="group relative bg-slate-100 dark:bg-slate-800/50 rounded-xl p-2 border-2 border-transparent hover:border-primary/50 transition-all cursor-pointer">
+<div class="aspect-video rounded-lg mb-2 overflow-hidden bg-slate-200 dark:bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="Close up of an ornate jade tea cup being held by a trembling hand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhVocyopl7exoJuGbTPq9PQB7gSj6aQ49g13S3qZKg3k4tTaA3uDQgdwjzUmA2CYrZBHIZFmJkDyOFlQPp1TgmoqRgOooO0kDK4J_vaZ_iuzHJ1WAPwcmqJz-QNf1f6M8gAI2xuGqIWfzgASk7ZphyfpuSxCMf6-8qjj06XavVa1c2zoUs-IVGeRsp8rtOHM2U9Hj70ljHplxtVeHcwTljgn9o6QDgUh5o5dwIzDUHrJetB8jFH9WabwcAiMI5d6gtWamDCTp_YvU"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">P2</span>
+<p class="text-[11px] mt-1 font-medium line-clamp-1">特写：手部颤抖</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-slate-500">特写 | 1.5s</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-emerald-500 text-sm">check_circle</span>
+</div>
+</div>
+<!-- Active Panel Item 3 -->
+<div class="group relative bg-primary/10 dark:bg-primary/20 rounded-xl p-2 border-2 border-primary transition-all cursor-pointer">
+<div class="aspect-video rounded-lg mb-2 overflow-hidden bg-slate-200 dark:bg-slate-700 relative">
+<div class="absolute inset-0 flex items-center justify-center bg-black/40">
+<span class="material-symbols-outlined text-white text-3xl animate-pulse">refresh</span>
+</div>
+<img class="w-full h-full object-cover opacity-50" data-alt="Authoritative elderly man sitting on a throne speaking loudly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmnuphZ3C6KZ5MUdkFb-5v9DOvjsGmbSTkwUULF8Oo_JjzuIdkGPGbHsvX6oqzZJ9KHj7G9pVFcHg8wU5XDqf8YhbGrtMGIDdMMMYDsy31FX6qDO559ZYBaCguK2YCQ4BlbmpWPZiYDJ1Dm25RQuUtmlt8KCfyAk6CvDgihpxHke096SjAj2qQcmUc2U90PTui35Gz90lVsYUA8WirbKbHCWs8zBrJXE3qDYJz7bLe0N-R4UA9N910Zo8npeHniboTwz0enAWEB0A"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold text-white bg-primary px-1.5 py-0.5 rounded">P3</span>
+<p class="text-[11px] mt-1 font-bold line-clamp-1 text-primary">族长宣布退婚</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-primary/80">中景 | 2.5s</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-sm">sync</span>
+</div>
+</div>
+<!-- Panel Item 4 -->
+<div class="group relative bg-slate-100 dark:bg-slate-800/50 rounded-xl p-2 border-2 border-transparent hover:border-primary/50 transition-all cursor-pointer">
+<div class="aspect-video rounded-lg mb-2 overflow-hidden bg-slate-200 dark:bg-slate-700 flex items-center justify-center border border-dashed border-slate-500">
+<span class="material-symbols-outlined text-slate-500">image_not_supported</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="text-[10px] font-bold text-slate-400 bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded">P4</span>
+<p class="text-[11px] mt-1 font-medium line-clamp-1 text-slate-400 italic">待生成</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-slate-500">近景 | 2.0s</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-500 text-sm">hourglass_empty</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side: Panel Details (60%) -->
+<section class="w-[60%] flex flex-col bg-white dark:bg-background-dark">
+<header class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded font-bold text-sm">P3</span>
+<h3 class="font-bold text-lg">族长宣布退婚</h3>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500"><span class="material-symbols-outlined">delete</span></button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500"><span class="material-symbols-outlined">content_copy</span></button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+<div class="space-y-8">
+<!-- Media Preview Section -->
+<div class="space-y-4">
+<div class="aspect-video rounded-xl bg-slate-900 overflow-hidden relative group border border-slate-800">
+<img class="w-full h-full object-cover" data-alt="Cinematic shot of a clan leader on a throne in an ancient hall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc-8cdg2rDROgCItnVW161_186x6Lki-xjA-YSfTrC4jSocleTh3VmtZWPCIsy1q_FGNkt2PSM67d45qA9ub8fIEf72C4PNhIzDxTFIi38B-djAG1AOTq-c-TO_3z9TUisf15UAQHlVXUU044OjdGjwvmD5bfl4ydovKJNjqSALkyBqxaxH1u8xY3qG-a20m80bZO0VnnP36BH2Gujil7y_pYBzKSPb_IWoilp8hLWI_L_fTggGyzTiOCkspZ3CiE15bNqKaM5fyk"/>
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+<button class="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full"><span class="material-symbols-outlined text-white">play_arrow</span></button>
+<button class="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full"><span class="material-symbols-outlined text-white">fullscreen</span></button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-primary text-white text-xs font-bold uppercase">v3</button>
+<button class="px-3 py-1 rounded bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-bold uppercase">v2</button>
+<button class="px-3 py-1 rounded bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-xs font-bold uppercase">v1</button>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-base">palette</span>
+<span>生成图片</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-bold border border-slate-700">
+<span class="material-symbols-outlined text-base">movie</span>
+<span>生成视频</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined text-base">volume_up</span>
+<span>试听配音</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Shot Design Section -->
+<div class="grid grid-cols-4 gap-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">景别</label>
+<select class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary">
+<option>中景 (Medium Shot)</option>
+<option selected="">全景 (Wide Shot)</option>
+<option>特写 (Close Up)</option>
+<option>远景 (Extreme Wide)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">角度</label>
+<select class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary">
+<option selected="">平视 (Eye Level)</option>
+<option>俯视 (High Angle)</option>
+<option>仰视 (Low Angle)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">运镜</label>
+<select class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary">
+<option selected="">固定 (Static)</option>
+<option>推进 (Zoom In)</option>
+<option>平移 (Pan)</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">时长</label>
+<div class="relative">
+<input class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary pr-8" step="0.1" type="number" value="2.5"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500 font-bold uppercase">s</span>
+</div>
+</div>
+</div>
+<!-- Content Section -->
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">动作描述</label>
+<textarea class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary" placeholder="描述画面中的动作..." rows="3">族长在主座上缓缓站起，单手展开一份金色的退婚书，目光如炬，投向台下的少年。</textarea>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">氛围</label>
+<input class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary" type="text" value="紧张 Tense"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">情感</label>
+<input class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary" type="text" value="威严 Authoritative"/>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">台词</label>
+<textarea class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium italic border-l-4 border-primary/50" placeholder="角色对话..." rows="3">“今日召集大家，不为别事，只为宣布叶凡与纳兰嫣然婚约解除一事！”</textarea>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">旁白 / 音效</label>
+<input class="w-full bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:ring-primary" placeholder="描述旁白或特殊音效..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Associations Section -->
+<div class="space-y-3">
+<label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">关联资产</label>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-full text-xs font-medium text-primary">
+<span class="material-symbols-outlined text-sm">person</span>
+<span>角色：族长 (萧战)</span>
+<span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-xs font-medium">
+<span class="material-symbols-outlined text-sm">inventory_2</span>
+<span>道具：退婚书</span>
+<span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-xs font-medium">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>场景：大殿-夜</span>
+<span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</div>
+<button class="px-3 py-1.5 border border-dashed border-slate-400 rounded-full text-xs text-slate-500 font-medium hover:border-primary hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>添加关联</span>
+</button>
+</div>
+</div>
+<!-- Prompt Section -->
+<div class="space-y-4 pb-10">
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<button class="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_square</span>
+<span class="text-sm font-bold uppercase tracking-wider">图片生成提示词</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+<div class="p-4 bg-white dark:bg-background-dark/50">
+<code class="text-xs text-slate-500 block leading-relaxed">
+                                    masterpiece, highly detailed, fantasy ancient Chinese palace, elder man standing on throne, holding scrolls, cinematic lighting, sharp focus, volumetric fog, blue and gold color scheme, 8k resolution...
+                                </code>
+</div>
+</div>
+<div class="rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<button class="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">movie_creation</span>
+<span class="text-sm font-bold uppercase tracking-wider">视频动作提示词</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">expand_more</span>
+</button>
+<div class="p-4 bg-white dark:bg-background-dark/50">
+<code class="text-xs text-slate-500 block leading-relaxed">
+                                    slow motion zoom towards character's face, clothes blowing in the mystical wind, character opening scroll slowly, epic background movement, particles flying...
+                                </code>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="h-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex items-center justify-between px-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+<div class="flex items-center gap-4">
+<span>渲染状态: 就绪</span>
+<span class="w-1 h-1 bg-emerald-500 rounded-full"></span>
+<span>GPU 使用率: 24%</span>
+</div>
+<div class="flex items-center gap-4">
+<span>键盘快捷键: Space (播放) | J/L (跳转) | S (保存)</span>
+</div>
+</footer>
+</body></html>

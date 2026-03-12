@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#256af4",
+              "background-light": "#f5f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">rocket_launch</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">项目仪表盘</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden md:flex flex-col min-w-64">
+<div class="flex w-full items-stretch rounded-lg bg-slate-100 dark:bg-slate-800">
+<div class="text-slate-500 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 text-sm py-2 px-3 placeholder:text-slate-500" placeholder="搜索资源或任务..."/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 relative">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+</button>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIUMhrAaXYCy6ev9lxVvH5ySTFYa-N3Y-ijQzvPZgehs-g_7KHz0HNdutM8zcbHUwkFPExI5kImtZwND3Q43SqJ6y60m7qL7RWPExY4SxeKkK-mtpGo1CZc0vETTswTTnyZ6vGJNpI-3R1BKER8hrKdEKSlGhAq6CahM42CTH5IHfABf5-CVbp84D1bUFoxbjVrlKFxw1LMBffgbuWan_xKfg4o0L4MCFg6YZx_70dhbpNudNFL_YoNiDHnUa6bKmiADXwHXduuBg"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1">
+<aside class="hidden lg:flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 p-4 gap-2">
+<div class="flex items-center gap-3 px-3 py-3 mb-4 rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-bold">概览</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">movie</span>
+<p class="text-sm font-medium">剧集管理</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-sm font-medium">资产仓库</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">group</span>
+<p class="text-sm font-medium">团队协作</p>
+</div>
+<div class="mt-auto flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">help</span>
+<p class="text-sm font-medium">帮助中心</p>
+</div>
+</aside>
+<main class="flex-1 flex flex-col p-6 gap-6 max-w-7xl mx-auto w-full">
+<nav class="flex text-sm text-slate-500 dark:text-slate-400 mb-2">
+<a class="hover:text-primary" href="#">项目</a>
+<span class="mx-2">/</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">万古第一废体</span>
+</nav>
+<section class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl font-black tracking-tight">万古第一废体</h1>
+<div class="flex gap-3 items-center">
+<span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 uppercase tracking-wider">玄幻</span>
+<span class="px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded-lg border border-green-500/20">连载中</span>
+<span class="text-sm text-slate-500">更新至 05 集</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-slate-200 dark:bg-slate-800 text-sm font-bold rounded-xl hover:bg-slate-300 dark:hover:bg-slate-700">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>项目设置</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>新建剧集</span>
+</button>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">已发布集数</p>
+<div class="flex items-end justify-between">
+<p class="text-3xl font-black">5</p>
+<span class="text-green-500 flex items-center text-xs font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span> +1
+                            </span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">面板总数</p>
+<div class="flex items-end justify-between">
+<p class="text-3xl font-black">98</p>
+<span class="text-slate-400 text-xs">活跃面板</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">消耗预算</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-baseline">
+<p class="text-2xl font-black text-primary">¥42万</p>
+<p class="text-xs text-slate-500">/ ¥200万</p>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[21%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">总制作进度</p>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-baseline">
+<p class="text-3xl font-black">60%</p>
+<span class="text-xs font-bold text-primary">进行中</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[60%] rounded-full"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="flex flex-wrap gap-4">
+<button class="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 hover:border-primary/50 group">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white">
+<span class="material-symbols-outlined">brush</span>
+</div>
+<div class="text-left">
+<p class="font-bold text-sm">资产编辑器</p>
+<p class="text-xs text-slate-500">快速管理3D模型与贴图</p>
+</div>
+</button>
+<button class="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 hover:border-primary/50 group">
+<div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white">
+<span class="material-symbols-outlined">account_tree</span>
+</div>
+<div class="text-left">
+<p class="font-bold text-sm">流水线监控</p>
+<p class="text-xs text-slate-500">实时查看渲染队列状态</p>
+</div>
+</button>
+<button class="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 hover:border-primary/50 group">
+<div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<div class="text-left">
+<p class="font-bold text-sm">Provider 设置</p>
+<p class="text-xs text-slate-500">配置外部渲染资源节点</p>
+</div>
+</button>
+</section>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<section class="xl:col-span-2 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold">剧集列表</h3>
+<button class="text-primary text-sm font-bold hover:underline">查看全部</button>
+</div>
+<div class="overflow-x-auto bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 font-bold text-slate-500 uppercase text-xs">#</th>
+<th class="px-6 py-4 font-bold text-slate-500 uppercase text-xs">集名</th>
+<th class="px-6 py-4 font-bold text-slate-500 uppercase text-xs">面板数</th>
+<th class="px-6 py-4 font-bold text-slate-500 uppercase text-xs">状态</th>
+<th class="px-6 py-4 font-bold text-slate-500 uppercase text-xs text-right">快速操作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors">
+<td class="px-6 py-4 text-slate-400">001</td>
+<td class="px-6 py-4 font-bold">退婚大典</td>
+<td class="px-6 py-4">24</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-green-500">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                已完成
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:text-primary" title="剧本"><span class="material-symbols-outlined text-lg">description</span></button>
+<button class="p-2 hover:text-primary" title="分镜"><span class="material-symbols-outlined text-lg">view_carousel</span></button>
+<button class="p-2 hover:text-primary" title="审核"><span class="material-symbols-outlined text-lg">rule</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors">
+<td class="px-6 py-4 text-slate-400">002</td>
+<td class="px-6 py-4 font-bold">废体觉醒</td>
+<td class="px-6 py-4">18</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                                进行中
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:text-primary" title="剧本"><span class="material-symbols-outlined text-lg">description</span></button>
+<button class="p-2 hover:text-primary" title="分镜"><span class="material-symbols-outlined text-lg">view_carousel</span></button>
+<button class="p-2 hover:text-primary" title="审核"><span class="material-symbols-outlined text-lg">rule</span></button>
+</div>
+</td>
+</tr>
+<tr class="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors">
+<td class="px-6 py-4 text-slate-400">003</td>
+<td class="px-6 py-4 font-bold">禁地奇遇</td>
+<td class="px-6 py-4">32</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-slate-400">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                                待开始
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 text-slate-400">
+<button class="p-2 hover:text-primary" title="剧本"><span class="material-symbols-outlined text-lg">description</span></button>
+<button class="p-2 hover:text-primary" title="分镜"><span class="material-symbols-outlined text-lg">view_carousel</span></button>
+<button class="p-2 hover:text-primary" title="审核"><span class="material-symbols-outlined text-lg">rule</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors">
+<td class="px-6 py-4 text-slate-400">004</td>
+<td class="px-6 py-4 font-bold">九转金丹</td>
+<td class="px-6 py-4">24</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-slate-400">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                                待开始
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 text-slate-400">
+<button class="p-2 hover:text-primary" title="剧本"><span class="material-symbols-outlined text-lg">description</span></button>
+<button class="p-2 hover:text-primary" title="分镜"><span class="material-symbols-outlined text-lg">view_carousel</span></button>
+<button class="p-2 hover:text-primary" title="审核"><span class="material-symbols-outlined text-lg">rule</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<h3 class="text-lg font-bold">最近动态</h3>
+<div class="bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col gap-6">
+<div class="flex gap-4 relative">
+<div class="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold">流水线流水 #9482 成功</p>
+<p class="text-xs text-slate-500">渲染节点: GPU-Cluster-04 · 12分钟前</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold">002集 角色审核通过</p>
+<p class="text-xs text-slate-500">审核人: 张制作 · 2小时前</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="w-6 h-6 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-400 z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px]">upload</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold">上传了新资源: "雷鸣剑_v2.fbx"</p>
+<p class="text-xs text-slate-500">操作人: 李建模 · 5小时前</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center text-white z-10 shrink-0">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold">存储空间警告: 已使用 85%</p>
+<p class="text-xs text-slate-500">系统通知 · 昨天 18:30</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                            查看所有流水线记录
+                        </button>
+</section>
+</div>
+</main>
+</div>
+</div>
+</body></html>

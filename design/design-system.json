@@ -1,0 +1,535 @@
+{
+  "_meta": {
+    "name": "Manga Drama Studio Design System",
+    "version": "1.0.0",
+    "purpose": "Comprehensive styling guide for AI to follow when building any page or feature in this app. Every component includes exact Tailwind classes verified against the running showcase app.",
+    "stack": {
+      "framework": "React 19 + TypeScript",
+      "styling": "Tailwind CSS v3 with custom theme (see tailwindConfig section)",
+      "icons": "Lucide React — outlined style, 1.5px stroke, rounded joins",
+      "fonts": "Inter (Google Fonts) — weights 400, 500, 600, 700, 800"
+    },
+    "showcase": "packages/design-showcase — run `npm run dev` to see all components live"
+  },
+
+  "designPrinciples": {
+    "summary": "Soft lime canvas, pillow-white cards, one purple accent, generous rounding, maximum breathing room. The interface whispers — never shouts.",
+    "rules": [
+      {
+        "name": "Soft Power",
+        "rule": "No sharp edges anywhere. Cards use 24px radius, buttons and chips are fully rounded pills, avatars are perfect circles. The entire interface feels touchable and inviting."
+      },
+      {
+        "name": "Bento Grid",
+        "rule": "Layout is a mosaic of self-contained white cards on a lime canvas. Cards vary in column span (1 or 2) and height (content-driven). Use CSS Grid with gap-4."
+      },
+      {
+        "name": "One Accent Rule",
+        "rule": "Only ONE accent color: purple #7C6AF2. Used for progress rings, active toggles, today markers, focus rings, badges. If something needs emphasis, use purple or font-weight — never a second accent color."
+      },
+      {
+        "name": "Breathe",
+        "rule": "Card padding is always p-6 (24px). Page padding is px-6 py-10. Grid gap is gap-4. Content never touches card edges. When in doubt, add more space."
+      },
+      {
+        "name": "Minimal Chrome",
+        "rule": "Cards have NO borders and NO shadows by default — they separate from the canvas through white-on-lime contrast. Borders are only used inside cards for list dividers (border-bdr-subtle). Shadows only appear on modals and dropdowns."
+      },
+      {
+        "name": "Hierarchy Through Weight",
+        "rule": "Use the type scale for visual hierarchy. display-sm (26px/700) for card titles, text-heading (20px/600) for sections, text-body-medium (15px/500) for list item names, text-small (13px/400) for secondary info, text-caption (11px/500) for labels."
+      }
+    ]
+  },
+
+  "tailwindConfig": {
+    "description": "Paste this into tailwind.config.js theme.extend to enable all design tokens as Tailwind classes.",
+    "fontFamily": {
+      "sans": ["Inter", "system-ui", "-apple-system", "sans-serif"]
+    },
+    "colors": {
+      "canvas":  { "DEFAULT": "#E4F0A4", "light": "#EDF5C4", "dark": "#D4E488" },
+      "surface": { "DEFAULT": "#FFFFFF", "subtle": "#F5F5F0" },
+      "accent":  { "DEFAULT": "#7C6AF2", "light": "#EDE9FE", "medium": "#A394F5", "dark": "#5B47D0" },
+      "txt":     { "primary": "#1A1A1A", "secondary": "#6B6B6B", "muted": "#ABABAB" },
+      "bdr":     { "DEFAULT": "#E8E8E4", "subtle": "#F0F0EC" },
+      "status":  { "running": "#7C6AF2", "completed": "#6BBF6A", "waiting": "#F0C850", "failed": "#E87070", "pending": "#CCCCCC" }
+    },
+    "borderRadius": {
+      "card": "24px",
+      "card-nested": "16px"
+    },
+    "boxShadow": {
+      "card": "0 2px 8px rgba(0,0,0,0.04)",
+      "card-hover": "0 4px 16px rgba(0,0,0,0.06)",
+      "modal": "0 8px 32px rgba(0,0,0,0.08)",
+      "dropdown": "0 4px 20px rgba(0,0,0,0.08)"
+    }
+  },
+
+  "customCSSUtilities": {
+    "description": "Add these to index.css inside @layer utilities. They define the typography scale used throughout the app.",
+    "classes": {
+      ".text-display-lg": "font-size: 32px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em;",
+      ".text-display-sm": "font-size: 26px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em;",
+      ".text-heading":    "font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em;",
+      ".text-body":       "font-size: 15px; line-height: 1.5; font-weight: 400;",
+      ".text-body-medium":"font-size: 15px; line-height: 1.5; font-weight: 500;",
+      ".text-small":      "font-size: 13px; line-height: 1.4; font-weight: 400;",
+      ".text-caption":    "font-size: 11px; line-height: 1.3; font-weight: 500; letter-spacing: 0.02em;"
+    }
+  },
+
+  "colors": {
+    "canvas":         { "hex": "#E4F0A4", "tw": "bg-canvas",         "usage": "Page background. The signature lime-chartreuse." },
+    "canvasLight":    { "hex": "#EDF5C4", "tw": "bg-canvas-light",   "usage": "Lighter canvas variant for hover on canvas-level elements." },
+    "canvasDark":     { "hex": "#D4E488", "tw": "bg-canvas-dark",    "usage": "Darker canvas for calendar range highlight, borders on canvas." },
+    "surface":        { "hex": "#FFFFFF", "tw": "bg-white",          "usage": "Card backgrounds, modals, dropdowns. Always pure white." },
+    "surfaceSubtle":  { "hex": "#F5F5F0", "tw": "bg-surface-subtle", "usage": "Nested surfaces: chips, input backgrounds, icon button hover, list item hover." },
+    "accent":         { "hex": "#7C6AF2", "tw": "bg-accent",         "usage": "THE accent. Progress rings, active toggles, today marker, focus rings, badges." },
+    "accentLight":    { "hex": "#EDE9FE", "tw": "bg-accent-light",   "usage": "Accent tint for icon containers in stat cards, empty state circles." },
+    "accentMedium":   { "hex": "#A394F5", "tw": "bg-accent-medium",  "usage": "Lighter interactive accent for hover states." },
+    "accentDark":     { "hex": "#5B47D0", "tw": "bg-accent-dark",    "usage": "Darker accent for pressed/active states." },
+    "textPrimary":    { "hex": "#1A1A1A", "tw": "text-txt-primary",  "usage": "Headlines, names, primary content. Also used as button bg: bg-txt-primary." },
+    "textSecondary":  { "hex": "#6B6B6B", "tw": "text-txt-secondary","usage": "Subtitles, descriptions, roles, timestamps." },
+    "textMuted":      { "hex": "#ABABAB", "tw": "text-txt-muted",    "usage": "Placeholder text, disabled, ghost-month days in calendar." },
+    "border":         { "hex": "#E8E8E4", "tw": "border-bdr",        "usage": "Chip borders, input borders, button outlines." },
+    "borderSubtle":   { "hex": "#F0F0EC", "tw": "border-bdr-subtle", "usage": "List dividers inside cards. Very faint." },
+    "acceptBg":       { "hex": "#F0F5E4", "tw": "bg-[#F0F5E4]",     "usage": "Accept/positive button background." },
+    "acceptBgHover":  { "hex": "#E4EDD4", "tw": "bg-[#E4EDD4]",     "usage": "Accept button hover." },
+    "toggleOff":      { "hex": "#E0E0DC", "tw": "bg-[#E0E0DC]",     "usage": "Toggle switch off state." },
+    "statusRunning":  { "hex": "#7C6AF2", "tw": "bg-status-running", "usage": "Pipeline running, in-progress." },
+    "statusCompleted":{ "hex": "#6BBF6A", "tw": "bg-status-completed","usage": "Completed, success." },
+    "statusWaiting":  { "hex": "#F0C850", "tw": "bg-status-waiting", "usage": "Waiting for input, gate pending." },
+    "statusFailed":   { "hex": "#E87070", "tw": "bg-status-failed",  "usage": "Errors, failures, destructive actions." },
+    "statusPending":  { "hex": "#CCCCCC", "tw": "bg-status-pending", "usage": "Not started, queued." }
+  },
+
+  "typography": {
+    "fontFamily": "Inter, system-ui, -apple-system, sans-serif",
+    "fontImport": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+    "scale": {
+      "displayLg": {
+        "css": "text-display-lg",
+        "specs": "32px / 1.2 / 800 / -0.02em",
+        "usage": "Page hero titles. One per page maximum."
+      },
+      "displaySm": {
+        "css": "text-display-sm",
+        "specs": "26px / 1.25 / 700 / -0.015em",
+        "usage": "Card headlines: person names, project titles, section headers like 'Notifications'."
+      },
+      "heading": {
+        "css": "text-heading",
+        "specs": "20px / 1.3 / 600 / -0.01em",
+        "usage": "Sub-section titles, milestone names, modal titles, card section headers."
+      },
+      "body": {
+        "css": "text-body",
+        "specs": "15px / 1.5 / 400",
+        "usage": "Primary reading text: descriptions, notification messages, form labels."
+      },
+      "bodyMedium": {
+        "css": "text-body-medium",
+        "specs": "15px / 1.5 / 500",
+        "usage": "Emphasized body: list item names, inline labels, button text."
+      },
+      "small": {
+        "css": "text-small",
+        "specs": "13px / 1.4 / 400",
+        "usage": "Secondary info: roles, timestamps, helper text, form labels."
+      },
+      "caption": {
+        "css": "text-caption",
+        "specs": "11px / 1.3 / 500 / 0.02em",
+        "usage": "Badges, calendar day headers, color swatch labels. Often uppercase."
+      }
+    },
+    "colorPairings": {
+      "headline": "text-txt-primary",
+      "description": "text-txt-secondary",
+      "timestamp": "text-txt-muted",
+      "placeholder": "placeholder:text-txt-muted",
+      "label": "text-txt-secondary"
+    }
+  },
+
+  "spacing": {
+    "pageContainer": "max-w-[1400px] mx-auto px-6 py-10",
+    "bentoGrid": "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4",
+    "cardPadding": "p-6",
+    "sectionHeaderMargin": "mb-4 or mb-5",
+    "listItemDivider": "divide-y divide-bdr-subtle",
+    "listItemPadding": "py-3.5 first:pt-0 last:pb-0",
+    "chipGap": "flex flex-wrap gap-2",
+    "buttonGap": "flex gap-2 or flex gap-3",
+    "inlineGap": "gap-3 (list items), gap-2 (buttons), gap-1.5 (icon+text in buttons)"
+  },
+
+  "components": {
+
+    "card": {
+      "description": "The fundamental building block. White, generously padded, large radius, no border, no shadow.",
+      "tailwind": "bg-white rounded-card p-6",
+      "variants": {
+        "default": "bg-white rounded-card p-6",
+        "spanning": "bg-white rounded-card p-6 md:col-span-2 (or xl:col-span-3)",
+        "tall": "bg-white rounded-card p-6 row-span-2",
+        "interactive": "bg-white rounded-card p-6 hover:shadow-card-hover transition-shadow cursor-pointer",
+        "nested": "bg-white rounded-card-nested p-6 shadow-modal (for modals/dropdowns overlaying content)"
+      },
+      "rules": [
+        "Never add border to cards — contrast with lime canvas provides separation",
+        "Shadow only on modals (shadow-modal) and dropdowns (shadow-dropdown)",
+        "Card header pattern: flex items-start justify-between mb-5"
+      ]
+    },
+
+    "avatar": {
+      "description": "Always perfectly circular with object-cover. Background fallback for loading.",
+      "sizes": {
+        "xs": "w-7 h-7 rounded-full object-cover bg-surface-subtle",
+        "sm": "w-9 h-9 rounded-full object-cover bg-surface-subtle",
+        "md": "w-10 h-10 rounded-full object-cover bg-surface-subtle",
+        "lg": "w-11 h-11 rounded-full object-cover bg-surface-subtle",
+        "xl": "w-20 h-20 rounded-full object-cover bg-surface-subtle"
+      },
+      "notes": "Use bg-surface-subtle as placeholder background while image loads."
+    },
+
+    "avatarGroup": {
+      "description": "Overlapping circular avatars for team/assignees.",
+      "tailwind": "flex -space-x-2",
+      "childTailwind": "w-9 h-9 rounded-full ring-2 ring-white bg-surface-subtle",
+      "smallVariant": "w-8 h-8 rounded-full ring-2 ring-white bg-surface-subtle"
+    },
+
+    "buttonPrimary": {
+      "description": "Dark filled pill button. The main CTA per card.",
+      "tailwind": "bg-txt-primary text-white rounded-full px-5 py-2.5 text-sm font-medium hover:bg-[#333] transition-colors active:scale-[0.98]",
+      "smallVariant": "bg-txt-primary text-white rounded-full px-4 py-2 text-[13px] font-medium hover:bg-[#333] transition-colors",
+      "rules": [
+        "Maximum one primary button per card",
+        "Use text-sm (14px) for standard, text-[13px] for compact/card-footer"
+      ]
+    },
+
+    "buttonSecondary": {
+      "description": "Outlined pill button for secondary actions.",
+      "tailwind": "bg-transparent text-txt-primary border border-[#E0E0E0] rounded-full px-5 py-2.5 text-sm font-medium hover:bg-surface-subtle transition-colors active:scale-[0.98]",
+      "compactVariant": "border border-bdr text-txt-primary rounded-full px-4 py-2.5 text-[13px] font-medium hover:bg-surface-subtle transition-colors"
+    },
+
+    "buttonAccept": {
+      "description": "Positive action button with light green tint. Used with Check icon.",
+      "tailwind": "bg-[#F0F5E4] text-txt-primary rounded-full px-4 py-2 text-[13px] font-medium hover:bg-[#E4EDD4] transition-colors flex items-center gap-1.5",
+      "icon": "Check from lucide-react, size={14}"
+    },
+
+    "buttonDeny": {
+      "description": "Outlined button for negative/reject actions. Used with X icon.",
+      "tailwind": "bg-transparent text-txt-primary border border-bdr rounded-full px-4 py-2 text-[13px] font-medium hover:bg-surface-subtle transition-colors flex items-center gap-1.5",
+      "icon": "X from lucide-react, size={14}"
+    },
+
+    "buttonGhost": {
+      "description": "Text-only button with no background or border.",
+      "tailwind": "text-txt-secondary text-sm font-medium hover:text-txt-primary transition-colors"
+    },
+
+    "buttonIcon": {
+      "description": "Circular button containing only an icon. For more-menu, navigation arrows.",
+      "tailwind": "w-9 h-9 rounded-full flex items-center justify-center hover:bg-surface-subtle transition-colors",
+      "smallVariant": "w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-subtle transition-colors shrink-0",
+      "iconStyle": "text-txt-secondary (default) or text-txt-muted (less important)",
+      "iconSize": "size={18} standard, size={16} compact"
+    },
+
+    "chip": {
+      "description": "Pill-shaped tag for categorization. Light background, subtle border.",
+      "tailwind": "bg-surface-subtle text-txt-primary rounded-full px-3.5 py-1.5 text-[13px] border border-bdr",
+      "containerPattern": "flex flex-wrap gap-2"
+    },
+
+    "badge": {
+      "description": "Small pill count indicator.",
+      "tailwind": "bg-accent text-white rounded-full min-w-[24px] h-6 px-2 flex items-center justify-center text-xs font-semibold",
+      "statusVariants": {
+        "success": "bg-status-completed text-white ...",
+        "error": "bg-status-failed text-white ..."
+      }
+    },
+
+    "progressRing": {
+      "description": "SVG circular progress indicator with centered percentage text.",
+      "implementation": {
+        "structure": "Two <circle> elements inside <svg>: track (stroke #EEEEE8) + fill (stroke #7C6AF2, strokeLinecap round)",
+        "math": "radius = (size - strokeWidth) / 2; circumference = 2 * PI * radius; offset = circumference - (pct/100) * circumference",
+        "text": "<text> centered with textAnchor=middle dominantBaseline=central, class: fill-txt-primary text-[13px] font-semibold",
+        "rotation": "svg: className='-rotate-90', text: className='rotate-90 origin-center'",
+        "animation": "className='transition-all duration-700 ease-out' on the fill circle"
+      },
+      "sizes": {
+        "sm": { "size": 40, "stroke": 3.5 },
+        "md": { "size": 56, "stroke": 4.5 },
+        "lg": { "size": 72, "stroke": 5 }
+      },
+      "colors": {
+        "track": "#EEEEE8",
+        "fill": "#7C6AF2"
+      }
+    },
+
+    "toggle": {
+      "description": "Pill toggle switch. Purple when on, gray when off. White knob.",
+      "tailwind": {
+        "track": "relative w-11 h-6 rounded-full transition-colors duration-200 shrink-0",
+        "trackOn": "bg-accent",
+        "trackOff": "bg-[#E0E0DC]",
+        "knob": "absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200",
+        "knobOn": "translate-x-5",
+        "knobOff": "translate-x-0"
+      },
+      "behavior": "Use useState for on/off. onClick toggles state."
+    },
+
+    "input": {
+      "description": "Text input with subtle border, rounded-xl, purple focus ring.",
+      "tailwind": "w-full bg-white border border-bdr rounded-xl px-4 py-3 text-[15px] text-txt-primary placeholder:text-txt-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all",
+      "label": "text-small text-txt-secondary block mb-1.5",
+      "searchVariant": {
+        "wrapper": "relative",
+        "icon": "absolute left-3.5 top-1/2 -translate-y-1/2 text-txt-muted (Search icon size={18})",
+        "input": "...same as above but pl-10 pr-4..."
+      },
+      "textarea": "...same as input but add resize-none, use rows={3} or more"
+    },
+
+    "statusIndicator": {
+      "description": "Colored dot + label pill for pipeline/task status.",
+      "tailwind": "flex items-center gap-1.5 bg-surface-subtle rounded-full px-3 py-1.5 text-[13px] text-txt-primary",
+      "dot": "w-2 h-2 rounded-full bg-status-{running|completed|waiting|failed|pending}"
+    },
+
+    "listItem": {
+      "description": "Standard horizontal list row: avatar + content + action.",
+      "tailwind": "flex items-center gap-3 py-3.5 first:pt-0 last:pb-0",
+      "containerDivider": "divide-y divide-bdr-subtle",
+      "layout": {
+        "left": "Avatar (w-10 h-10 or w-11 h-11, shrink-0)",
+        "center": "flex-1 min-w-0 — name (text-body-medium text-txt-primary) + role/desc (text-small text-txt-secondary)",
+        "right": "Icon button (shrink-0) or Toggle"
+      }
+    },
+
+    "notificationItem": {
+      "description": "Extended list item with optional action buttons.",
+      "tailwind": "py-4 first:pt-0",
+      "innerLayout": "flex items-start gap-3",
+      "avatar": "w-10 h-10 rounded-full bg-surface-subtle shrink-0",
+      "nameWithTimestamp": "text-body-medium text-txt-primary — Name <span class='text-small text-txt-muted ml-1'>· 1h</span>",
+      "message": "text-small text-txt-secondary",
+      "actionButtons": "flex gap-2 mt-3 — Accept button + Deny button",
+      "moreIcon": "buttonIcon (small variant) with MoreVertical"
+    },
+
+    "sectionHeader": {
+      "description": "Title + optional right-aligned element (badge, button, label).",
+      "tailwind": "flex items-center justify-between mb-5",
+      "title": "text-display-sm text-txt-primary (for major sections) or text-heading text-txt-primary (for sub-sections)",
+      "rightSide": "Badge, button, or text-small text-txt-secondary label"
+    },
+
+    "integrationRow": {
+      "description": "Service icon + name/desc + toggle.",
+      "tailwind": "flex items-center gap-3",
+      "icon": "w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold shrink-0 (with inline background color)",
+      "text": "flex-1 min-w-0 — name (text-body-medium text-txt-primary) + desc (text-small text-txt-secondary truncate)",
+      "action": "Toggle component"
+    },
+
+    "statCard": {
+      "description": "Small metric card with label + big number + icon container.",
+      "tailwind": "bg-white rounded-card p-6 flex items-start justify-between",
+      "label": "text-small text-txt-secondary",
+      "value": "text-display-sm text-txt-primary mt-1",
+      "iconContainer": "w-10 h-10 rounded-xl bg-accent-light flex items-center justify-center",
+      "icon": "size={20} className='text-accent'",
+      "gridPattern": "grid grid-cols-2 md:grid-cols-4 gap-4 (parent spans full width: md:col-span-2 xl:col-span-3)"
+    },
+
+    "dropdown": {
+      "description": "Floating menu with white background, medium radius, subtle shadow.",
+      "tailwind": "bg-white rounded-2xl shadow-dropdown p-2 w-52",
+      "menuItem": "w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-[10px] text-[14px] transition-colors text-txt-primary hover:bg-surface-subtle",
+      "dangerItem": "...same but text-status-failed hover:bg-status-failed/10",
+      "itemIcon": "size={16}"
+    },
+
+    "modal": {
+      "description": "Centered overlay dialog.",
+      "backdrop": "fixed inset-0 bg-[#1A1A1A]/30 flex items-center justify-center z-50",
+      "content": "bg-white rounded-card p-6 w-full max-w-[540px] mx-4 shadow-modal",
+      "title": "text-heading text-txt-primary",
+      "description": "text-small text-txt-secondary mt-2",
+      "actions": "flex gap-2 mt-4 — primary button + secondary button"
+    },
+
+    "emptyState": {
+      "description": "Centered content for zero-data views.",
+      "tailwind": "flex flex-col items-center text-center py-8",
+      "iconCircle": "w-16 h-16 rounded-full bg-accent-light flex items-center justify-center mb-4",
+      "icon": "size={28} className='text-accent'",
+      "title": "text-heading text-txt-primary",
+      "description": "text-small text-txt-secondary mt-2 max-w-[240px]",
+      "cta": "mt-5 — primary button with Plus icon"
+    },
+
+    "divider": {
+      "description": "Barely visible horizontal line. Use sparingly.",
+      "tailwind": "border-t border-bdr-subtle",
+      "spacing": "my-4 (between typography samples) or implicit via divide-y"
+    },
+
+    "calendar": {
+      "description": "Month calendar grid widget.",
+      "container": "bg-white rounded-card p-6",
+      "header": "flex items-center justify-between mb-5 — chevron buttons + text-heading title",
+      "dayHeaders": "grid grid-cols-7 mb-1 — text-caption text-txt-muted text-center py-1.5",
+      "dayGrid": "grid grid-cols-7",
+      "dayCell": "flex items-center justify-center h-10 text-[14px] font-medium rounded-xl transition-colors cursor-default",
+      "states": {
+        "default": "text-txt-primary hover:bg-surface-subtle",
+        "outside": "text-txt-muted",
+        "today": "!bg-accent !text-white rounded-full",
+        "range": "bg-canvas/60"
+      }
+    },
+
+    "profileCard": {
+      "description": "User profile with avatar, name, role, skill chips.",
+      "layout": [
+        "Card header: flex items-start justify-between mb-5 — avatar-xl left + icon button right",
+        "Name: text-display-sm text-txt-primary",
+        "Role: text-small text-txt-secondary mt-1",
+        "Chips: flex flex-wrap gap-2 mt-4 — chip components"
+      ]
+    },
+
+    "projectCard": {
+      "description": "Project overview with progress ring, title, description, team avatars.",
+      "layout": [
+        "Card header: flex items-start justify-between mb-5 — ProgressRing left + icon button right",
+        "Title: text-display-sm text-txt-primary",
+        "Description: text-body text-txt-secondary mt-2 line-clamp-2",
+        "Team: avatarGroup mt-5"
+      ]
+    },
+
+    "milestoneCard": {
+      "description": "Task milestone with title, due date, progress, assignees.",
+      "layout": [
+        "Header: flex items-start justify-between mb-4 — text-heading title + primary button (small)",
+        "Metadata row: flex items-center gap-6 mt-4",
+        "  — Due date: text-small label + text-body-medium value",
+        "  — ProgressRing (size 48)",
+        "  — Assignees: text-small label + avatarGroup (small)"
+      ]
+    }
+  },
+
+  "layout": {
+    "page": {
+      "background": "min-h-screen bg-canvas",
+      "container": "max-w-[1400px] mx-auto px-6 py-10",
+      "header": "flex items-end justify-between mb-8"
+    },
+    "bentoGrid": {
+      "tailwind": "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4",
+      "spanning": {
+        "twoCol": "md:col-span-2",
+        "threeCol": "xl:col-span-3",
+        "fullWidth": "md:col-span-2 xl:col-span-3",
+        "tall": "row-span-2"
+      }
+    },
+    "splitView": {
+      "description": "For editor pages with list+detail or editor+sidebar pattern.",
+      "listDetail": "grid grid-cols-[45fr_55fr] gap-4 (or flex with w-[45%] + w-[55%])",
+      "editorSidebar": "grid grid-cols-[70fr_30fr] gap-4"
+    },
+    "statRow": {
+      "description": "4 metric cards in a row, spanning full grid width.",
+      "container": "md:col-span-2 xl:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4"
+    }
+  },
+
+  "animation": {
+    "principles": "Subtle and functional. Quick ease-out transitions. No bounce, no spring, no wobble.",
+    "transitions": {
+      "colors": "transition-colors duration-200",
+      "shadow": "transition-shadow duration-200",
+      "all": "transition-all duration-200",
+      "transform": "transition-transform duration-200"
+    },
+    "interactions": {
+      "buttonPress": "active:scale-[0.98]",
+      "cardHover": "hover:shadow-card-hover transition-shadow",
+      "iconButtonHover": "hover:bg-surface-subtle transition-colors",
+      "progressRingFill": "transition-all duration-700 ease-out (on SVG circle)",
+      "toggleSwitch": "transition-colors duration-200 (track) + transition-transform duration-200 (knob)"
+    }
+  },
+
+  "iconography": {
+    "library": "lucide-react",
+    "importExample": "import { MoreVertical, Check, X, Search, ChevronLeft, Plus } from 'lucide-react';",
+    "style": "Outlined, 1.5px stroke, rounded caps/joins.",
+    "sizes": {
+      "sm": "size={14} — inside compact buttons",
+      "md": "size={16} — dropdown items, compact icon buttons",
+      "default": "size={18} — standard icon buttons, search icons",
+      "lg": "size={20} — stat card icons",
+      "xl": "size={28} — empty state hero icons"
+    },
+    "colorDefault": "className='text-txt-secondary'",
+    "colorMuted": "className='text-txt-muted'",
+    "colorAccent": "className='text-accent'"
+  },
+
+  "patterns": {
+    "cardWithHeader": {
+      "description": "Most common card pattern: section header + content.",
+      "template": "<div className='bg-white rounded-card p-6'>\n  <h2 className='text-heading text-txt-primary mb-4'>Title</h2>\n  {/* content */}\n</div>"
+    },
+    "cardWithHeaderAction": {
+      "description": "Card header with right-aligned button or badge.",
+      "template": "<div className='bg-white rounded-card p-6'>\n  <div className='flex items-center justify-between mb-5'>\n    <h2 className='text-display-sm text-txt-primary'>Title</h2>\n    <button className='...'>Action</button>\n  </div>\n  {/* content */}\n</div>"
+    },
+    "listInCard": {
+      "description": "A card containing a divided list of items.",
+      "template": "<div className='bg-white rounded-card p-6'>\n  <h2 className='text-heading text-txt-primary mb-4'>Title</h2>\n  <div className='divide-y divide-bdr-subtle'>\n    {items.map(item => (\n      <div className='flex items-center gap-3 py-3.5 first:pt-0 last:pb-0'>\n        {/* avatar + content + action */}\n      </div>\n    ))}\n  </div>\n</div>"
+    },
+    "cardFooterButtons": {
+      "description": "Two buttons at card bottom: secondary left, primary right.",
+      "template": "<div className='flex gap-3 mt-5'>\n  <button className='flex-1 border border-bdr text-txt-primary rounded-full px-4 py-2.5 text-[13px] font-medium hover:bg-surface-subtle transition-colors'>Secondary</button>\n  <button className='flex-1 bg-txt-primary text-white rounded-full px-4 py-2.5 text-[13px] font-medium hover:bg-[#333] transition-colors'>Primary</button>\n</div>"
+    },
+    "formField": {
+      "description": "Label + input field pattern.",
+      "template": "<div>\n  <label className='text-small text-txt-secondary block mb-1.5'>Label</label>\n  <input className='w-full bg-white border border-bdr rounded-xl px-4 py-3 text-[15px] text-txt-primary placeholder:text-txt-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all' />\n</div>"
+    }
+  },
+
+  "doNot": [
+    "Do NOT use borders on cards — white-on-lime contrast is the separation mechanism",
+    "Do NOT use shadows on cards — only on modals (shadow-modal) and dropdowns (shadow-dropdown)",
+    "Do NOT use pure black (#000) or pure white (#fff) for text — use txt-primary (#1A1A1A)",
+    "Do NOT use sharp corners — minimum radius is rounded-xl (12px) for inputs, rounded-card (24px) for cards, rounded-full for buttons/chips/avatars",
+    "Do NOT introduce new accent colors — only purple #7C6AF2 for interactive elements",
+    "Do NOT use heavy dividers — only border-bdr-subtle (#F0F0EC) inside cards, and prefer spacing over borders",
+    "Do NOT use complex shadows — the design is flat with lime-to-white contrast",
+    "Do NOT use dark mode colors — this is a light-only design system",
+    "Do NOT use more than one primary button per card",
+    "Do NOT mix icon styles — always use Lucide React outlined icons"
+  ]
+}

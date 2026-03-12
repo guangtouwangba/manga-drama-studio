@@ -1,0 +1,64 @@
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
+
+interface Crumb {
+  label: string;
+  to?: string;
+}
+
+interface PageHeaderProps {
+  breadcrumbs?: Crumb[];
+  title?: string;
+  subtitle?: string;
+  actions?: ReactNode;
+  tags?: ReactNode;
+  children?: ReactNode;
+}
+
+export default function PageHeader({
+  breadcrumbs,
+  title,
+  subtitle,
+  actions,
+  tags,
+  children,
+}: PageHeaderProps) {
+  return (
+    <div className="space-y-3">
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <nav className="flex items-center gap-2 text-sm text-slate-400">
+          {breadcrumbs.map((crumb, i) => (
+            <span key={i} className="flex items-center gap-2">
+              {i > 0 && <ChevronRight className="w-3 h-3 text-slate-600" />}
+              {crumb.to ? (
+                <Link to={crumb.to} className="hover:text-primary transition-colors">
+                  {crumb.label}
+                </Link>
+              ) : (
+                <span className="text-slate-100 font-medium">{crumb.label}</span>
+              )}
+            </span>
+          ))}
+        </nav>
+      )}
+
+      {(title || actions) && (
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            {title && (
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
+                {title}
+              </h1>
+            )}
+            {subtitle && <p className="text-slate-400 text-sm mt-1">{subtitle}</p>}
+            {tags && <div className="flex items-center gap-3 mt-2">{tags}</div>}
+          </div>
+          {actions && <div className="flex items-center gap-3">{actions}</div>}
+        </div>
+      )}
+
+      {children}
+    </div>
+  );
+}

@@ -1,0 +1,651 @@
+{
+  "_meta": {
+    "name": "Manga Drama Studio Design System",
+    "version": "1.0.0",
+    "description": "Soft, airy bento-grid dashboard aesthetic. Lime-washed canvas, pillow-white cards, generous rounding, one purple accent. Friendly yet professional — a creative studio that feels approachable, not intimidating.",
+    "reference": "Project management dashboard screenshot — bento card layout with lime background"
+  },
+
+  "designPrinciples": [
+    {
+      "name": "Soft Power",
+      "description": "Everything feels touchable and inviting. No sharp edges, no harsh contrasts. Cards float like pillows on a soft-colored canvas. Corners are always generously rounded. The interface whispers, never shouts."
+    },
+    {
+      "name": "Bento Grid",
+      "description": "Layout is a mosaic of self-contained cards at varying sizes, like a Japanese bento box. Each card is a complete unit of information. Cards align to a grid but vary in span, creating visual rhythm without chaos."
+    },
+    {
+      "name": "One Accent Rule",
+      "description": "The palette is almost monochrome (white cards on tinted canvas) with a single purple accent for interactive/progress elements. Never introduce a second accent color. If something needs emphasis, use the purple or use weight/size — not a new color."
+    },
+    {
+      "name": "Breathe",
+      "description": "Generous whitespace inside and between cards. Content never feels cramped. Padding is always more than you think it should be. Let elements breathe — space IS the design."
+    },
+    {
+      "name": "Friendly Typography",
+      "description": "Headlines are big and bold, creating clear hierarchy. Body text is comfortable reading size. Small labels are understated. The font is a modern geometric sans-serif that feels warm, not clinical."
+    },
+    {
+      "name": "Minimal Chrome",
+      "description": "No visible borders on cards — they separate from the canvas through background contrast alone. No heavy dividers. Shadows are either absent or barely perceptible. Separation comes from space and color, not lines."
+    }
+  ],
+
+  "colors": {
+    "canvas": {
+      "value": "#E4F0A4",
+      "tailwind": "bg-[#E4F0A4]",
+      "usage": "Page background. The defining color of the entire app. A soft lime-chartreuse that gives the interface its warm, creative-studio personality.",
+      "variants": {
+        "light": "#EDF5C4",
+        "dark": "#D4E488"
+      }
+    },
+    "surface": {
+      "value": "#FFFFFF",
+      "tailwind": "bg-white",
+      "usage": "Card backgrounds, modals, dropdowns, popovers. Always pure white to create clean contrast against the lime canvas."
+    },
+    "surfaceSubtle": {
+      "value": "#F5F5F0",
+      "tailwind": "bg-[#F5F5F0]",
+      "usage": "Nested surfaces inside cards — tags, chips, input fields, hover states on list items. A barely-there warm gray."
+    },
+    "accent": {
+      "value": "#7C6AF2",
+      "tailwind": "text-[#7C6AF2]",
+      "usage": "THE accent. Progress rings, active toggles, today marker in calendar, active navigation, primary interactive elements.",
+      "variants": {
+        "light": "#EDE9FE",
+        "medium": "#A394F5",
+        "dark": "#5B47D0"
+      }
+    },
+    "textPrimary": {
+      "value": "#1A1A1A",
+      "tailwind": "text-[#1A1A1A]",
+      "usage": "Headlines, names, primary content. Near-black but not pure black — slightly softer."
+    },
+    "textSecondary": {
+      "value": "#6B6B6B",
+      "tailwind": "text-[#6B6B6B]",
+      "usage": "Subtitles, descriptions, roles, timestamps. Medium gray that recedes without disappearing."
+    },
+    "textMuted": {
+      "value": "#ABABAB",
+      "tailwind": "text-[#ABABAB]",
+      "usage": "Disabled text, placeholder text, calendar days outside current month. Light enough to feel ghosted."
+    },
+    "border": {
+      "value": "#E8E8E4",
+      "tailwind": "border-[#E8E8E4]",
+      "usage": "Subtle dividers inside cards (between list items). Very light, warm-toned. Used sparingly — prefer spacing over borders."
+    },
+    "success": {
+      "value": "#34C759",
+      "usage": "Positive actions, enabled states, accept buttons background tint."
+    },
+    "danger": {
+      "value": "#FF3B30",
+      "usage": "Destructive actions, error states. Used very rarely."
+    },
+    "semantic": {
+      "note": "Status colors should be desaturated to match the soft aesthetic. Never use pure/vibrant status colors — always muted versions.",
+      "running": "#7C6AF2",
+      "completed": "#6BBF6A",
+      "waiting": "#F0C850",
+      "failed": "#E87070",
+      "pending": "#CCCCCC"
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "primary": "Inter, system-ui, -apple-system, sans-serif",
+      "mono": "JetBrains Mono, Fira Code, monospace",
+      "note": "Inter is the primary typeface. Its geometric but friendly letterforms match the warm, approachable aesthetic. If Inter is unavailable, system-ui provides a close fallback."
+    },
+    "scale": {
+      "displayLg": {
+        "size": "32px",
+        "lineHeight": "1.2",
+        "weight": "800",
+        "tracking": "-0.02em",
+        "tailwind": "text-[32px] font-extrabold leading-tight tracking-tight",
+        "usage": "Page-level hero titles, project names in detail view"
+      },
+      "displaySm": {
+        "size": "26px",
+        "lineHeight": "1.25",
+        "weight": "700",
+        "tracking": "-0.015em",
+        "tailwind": "text-[26px] font-bold leading-snug tracking-tight",
+        "usage": "Card-level headlines — person names, project titles, section headers like 'Notifications'"
+      },
+      "heading": {
+        "size": "20px",
+        "lineHeight": "1.3",
+        "weight": "600",
+        "tracking": "-0.01em",
+        "tailwind": "text-xl font-semibold leading-snug",
+        "usage": "Sub-section titles, milestone names, modal titles"
+      },
+      "body": {
+        "size": "15px",
+        "lineHeight": "1.5",
+        "weight": "400",
+        "tailwind": "text-[15px] leading-relaxed",
+        "usage": "Primary reading text — descriptions, notification messages, form labels"
+      },
+      "bodyMedium": {
+        "size": "15px",
+        "lineHeight": "1.5",
+        "weight": "500",
+        "tailwind": "text-[15px] font-medium leading-relaxed",
+        "usage": "Emphasized body text — list item names (Julie Andrews), button labels"
+      },
+      "small": {
+        "size": "13px",
+        "lineHeight": "1.4",
+        "weight": "400",
+        "tailwind": "text-[13px] leading-snug",
+        "usage": "Secondary information — roles, timestamps, helper text"
+      },
+      "caption": {
+        "size": "11px",
+        "lineHeight": "1.3",
+        "weight": "500",
+        "tracking": "0.02em",
+        "tailwind": "text-[11px] font-medium tracking-wide",
+        "usage": "Badges, status labels, calendar day headers (M T W T F S S)"
+      }
+    }
+  },
+
+  "spacing": {
+    "philosophy": "Spacing is generous throughout. When in doubt, add more space. The airy feel of the design comes directly from its padding and gaps. Inner card padding is especially important — content should never touch the card edges.",
+    "scale": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "32px",
+      "4xl": "40px"
+    },
+    "semantic": {
+      "cardPadding": "24px",
+      "cardPaddingCompact": "20px",
+      "cardGap": "16px",
+      "sectionGap": "24px",
+      "inlineGap": "8px",
+      "listItemPadding": "16px 0",
+      "pagePadding": "32px",
+      "pageMaxWidth": "1400px"
+    }
+  },
+
+  "borderRadius": {
+    "philosophy": "Everything is rounded — aggressively so. Cards use large radii. Buttons and chips are fully rounded (pill shape). Avatars are circles. There are no sharp corners anywhere in this design system.",
+    "scale": {
+      "sm": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "full": "9999px"
+    },
+    "semantic": {
+      "card": "24px",
+      "cardNested": "16px",
+      "button": "9999px",
+      "chip": "9999px",
+      "avatar": "9999px",
+      "input": "12px",
+      "toggle": "9999px",
+      "progressRing": "9999px",
+      "modal": "24px",
+      "dropdown": "16px",
+      "tooltip": "12px"
+    },
+    "tailwindNote": "Use rounded-3xl for cards, rounded-full for buttons/chips/avatars, rounded-xl for inputs"
+  },
+
+  "shadows": {
+    "philosophy": "Shadows are nearly invisible or absent entirely. Cards separate from the canvas through color contrast (white on lime), not elevation. If a shadow must be used (modals, dropdowns), it should be extremely subtle and diffused.",
+    "none": "none",
+    "subtle": "0 1px 3px rgba(0,0,0,0.04)",
+    "card": "0 2px 8px rgba(0,0,0,0.04)",
+    "cardHover": "0 4px 16px rgba(0,0,0,0.06)",
+    "modal": "0 8px 32px rgba(0,0,0,0.08)",
+    "dropdown": "0 4px 20px rgba(0,0,0,0.08)"
+  },
+
+  "components": {
+    "card": {
+      "description": "The fundamental building block. Every piece of content lives in a card. Cards are white, generously padded, with large rounded corners. No visible border. They float on the lime canvas.",
+      "styles": {
+        "background": "#FFFFFF",
+        "borderRadius": "24px",
+        "padding": "24px",
+        "border": "none",
+        "shadow": "none or 0 2px 8px rgba(0,0,0,0.04)"
+      },
+      "tailwind": "bg-white rounded-3xl p-6",
+      "variants": {
+        "default": "Standard content card",
+        "compact": "Reduced padding (20px) for dense content like lists",
+        "interactive": "Adds hover:shadow-md transition-shadow cursor-pointer for clickable cards"
+      }
+    },
+
+    "avatar": {
+      "description": "Always perfectly circular. Used for user profiles and team members. Sizes range from small (list items) to large (profile cards).",
+      "sizes": {
+        "xs": "28px",
+        "sm": "36px",
+        "md": "44px",
+        "lg": "56px",
+        "xl": "80px"
+      },
+      "styles": {
+        "borderRadius": "9999px",
+        "objectFit": "cover"
+      },
+      "tailwind": {
+        "sm": "w-9 h-9 rounded-full object-cover",
+        "md": "w-11 h-11 rounded-full object-cover",
+        "lg": "w-14 h-14 rounded-full object-cover",
+        "xl": "w-20 h-20 rounded-full object-cover"
+      }
+    },
+
+    "avatarGroup": {
+      "description": "Overlapping circular avatars, used to show team/assignees. Each avatar overlaps the previous by ~30%. Has a thin white ring border to separate overlapping images.",
+      "styles": {
+        "overlap": "-8px margin-left on each after first",
+        "ring": "2px solid white border on each avatar"
+      },
+      "tailwind": "flex -space-x-2 [&>*]:ring-2 [&>*]:ring-white [&>*]:rounded-full"
+    },
+
+    "button": {
+      "description": "Fully rounded (pill shape). Two main variants: filled and outlined. Sized by padding, not fixed dimensions. Text is medium weight.",
+      "variants": {
+        "primary": {
+          "description": "Dark filled button for primary actions. Used sparingly — usually one per card.",
+          "styles": {
+            "background": "#1A1A1A",
+            "color": "#FFFFFF",
+            "borderRadius": "9999px",
+            "padding": "10px 20px",
+            "fontSize": "14px",
+            "fontWeight": "500"
+          },
+          "tailwind": "bg-[#1A1A1A] text-white rounded-full px-5 py-2.5 text-sm font-medium hover:bg-[#333] transition-colors"
+        },
+        "secondary": {
+          "description": "Outlined button with subtle border. For secondary actions alongside a primary.",
+          "styles": {
+            "background": "transparent",
+            "color": "#1A1A1A",
+            "border": "1.5px solid #E0E0E0",
+            "borderRadius": "9999px",
+            "padding": "10px 20px"
+          },
+          "tailwind": "bg-transparent text-[#1A1A1A] border border-[#E0E0E0] rounded-full px-5 py-2.5 text-sm font-medium hover:bg-[#F5F5F0] transition-colors"
+        },
+        "accept": {
+          "description": "Positive action button with light green-tinted background and checkmark icon.",
+          "styles": {
+            "background": "#F0F5E4",
+            "color": "#1A1A1A",
+            "borderRadius": "9999px",
+            "padding": "8px 16px"
+          },
+          "tailwind": "bg-[#F0F5E4] text-[#1A1A1A] rounded-full px-4 py-2 text-sm font-medium hover:bg-[#E4EDD4] transition-colors"
+        },
+        "ghost": {
+          "description": "No background, no border. Just text. For minimal actions like 'Mark all as read'.",
+          "tailwind": "text-[#6B6B6B] text-sm font-medium hover:text-[#1A1A1A] transition-colors"
+        },
+        "icon": {
+          "description": "Circular button containing only an icon. Used for more-menu (three dots), navigation arrows.",
+          "styles": {
+            "width": "36px",
+            "height": "36px",
+            "borderRadius": "9999px",
+            "background": "transparent or #F5F5F0"
+          },
+          "tailwind": "w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#F5F5F0] transition-colors"
+        }
+      }
+    },
+
+    "chip": {
+      "description": "Pill-shaped tags for categorization (skills, genres, status). Light gray background, dark text, no border. Compact padding.",
+      "styles": {
+        "background": "#F5F5F0",
+        "color": "#1A1A1A",
+        "borderRadius": "9999px",
+        "padding": "6px 14px",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "border": "1px solid #E8E8E4"
+      },
+      "tailwind": "bg-[#F5F5F0] text-[#1A1A1A] rounded-full px-3.5 py-1.5 text-[13px] border border-[#E8E8E4]"
+    },
+
+    "badge": {
+      "description": "Small circular count indicator. Used for unread counts. Accent-colored background with white text.",
+      "styles": {
+        "background": "#7C6AF2",
+        "color": "#FFFFFF",
+        "borderRadius": "9999px",
+        "minWidth": "24px",
+        "height": "24px",
+        "fontSize": "12px",
+        "fontWeight": "600"
+      },
+      "tailwind": "bg-[#7C6AF2] text-white rounded-full min-w-[24px] h-6 px-2 flex items-center justify-center text-xs font-semibold"
+    },
+
+    "progressRing": {
+      "description": "Circular progress indicator with percentage text in center. Track is light gray, fill is purple accent. Used for project/task completion.",
+      "styles": {
+        "trackColor": "#EEEEE8",
+        "fillColor": "#7C6AF2",
+        "strokeWidth": "4px",
+        "textColor": "#1A1A1A",
+        "textSize": "14px",
+        "textWeight": "600"
+      },
+      "sizes": {
+        "sm": "40px",
+        "md": "56px",
+        "lg": "72px"
+      }
+    },
+
+    "toggle": {
+      "description": "Pill-shaped toggle switch. Off state is light gray, on state is purple accent. Knob is always white.",
+      "styles": {
+        "width": "44px",
+        "height": "24px",
+        "borderRadius": "9999px",
+        "offBackground": "#E0E0DC",
+        "onBackground": "#7C6AF2",
+        "knobColor": "#FFFFFF",
+        "knobSize": "20px"
+      },
+      "tailwind": "w-11 h-6 rounded-full relative transition-colors [&.on]:bg-[#7C6AF2] [&.off]:bg-[#E0E0DC]"
+    },
+
+    "input": {
+      "description": "Clean text input with subtle background or border. Rounded but not pill-shaped (medium radius). Comfortable height.",
+      "styles": {
+        "background": "#FFFFFF",
+        "border": "1.5px solid #E8E8E4",
+        "borderRadius": "12px",
+        "padding": "12px 16px",
+        "fontSize": "15px",
+        "focusBorderColor": "#7C6AF2"
+      },
+      "tailwind": "w-full bg-white border border-[#E8E8E4] rounded-xl px-4 py-3 text-[15px] focus:outline-none focus:border-[#7C6AF2] focus:ring-2 focus:ring-[#7C6AF2]/20 transition-all"
+    },
+
+    "calendar": {
+      "description": "Clean month calendar grid. Day headers are caption-sized, muted. Days outside current month are ghosted. Today is highlighted with accent color circle. Selected range has canvas-colored (lime) background highlight.",
+      "styles": {
+        "headerFont": "heading size, semibold",
+        "dayHeaderColor": "#ABABAB",
+        "dayDefaultColor": "#1A1A1A",
+        "dayOutsideColor": "#CCCCCC",
+        "todayBackground": "#7C6AF2",
+        "todayTextColor": "#FFFFFF",
+        "rangeBackground": "#E4F0A4",
+        "daySize": "40px",
+        "gap": "4px"
+      }
+    },
+
+    "listItem": {
+      "description": "Horizontal layout for list entries (notifications, team members). Avatar on left, content in center, action/icon on right. Separated by subtle bottom border or spacing — never both.",
+      "styles": {
+        "padding": "16px 0",
+        "gap": "12px",
+        "borderBottom": "1px solid #F0F0EC",
+        "layout": "flex items-center"
+      },
+      "tailwind": "flex items-center gap-3 py-4 border-b border-[#F0F0EC] last:border-0"
+    },
+
+    "notificationItem": {
+      "description": "Extended list item with avatar, message body, timestamp, optional action buttons, and more-menu. Action buttons (Accept/Deny) appear below the message when relevant.",
+      "layout": {
+        "row1": "avatar | name + timestamp + message | more-icon",
+        "row2": "indent | action-buttons (Accept, Deny request)"
+      }
+    },
+
+    "sectionHeader": {
+      "description": "Section title with optional right-aligned action. Title is display-sm weight, action can be text link, badge, or button.",
+      "layout": "flex justify-between items-center",
+      "tailwind": "flex items-center justify-between mb-4",
+      "titleStyle": "text-[26px] font-bold leading-snug tracking-tight",
+      "actionStyle": "text-sm font-medium text-[#6B6B6B] hover:text-[#1A1A1A]"
+    },
+
+    "integrationRow": {
+      "description": "Horizontal row: service icon + name & description + toggle. Used for connected services/integrations list.",
+      "layout": "flex items-center gap-3, icon (40px rounded-xl) | text (name bold + desc muted) | toggle (right-aligned)"
+    },
+
+    "milestoneCard": {
+      "description": "Compact card showing task/milestone info: title, due date, progress ring, assignee avatars. View details button top-right.",
+      "layout": "title + metadata row (due-date | progress-ring | avatar-group)"
+    },
+
+    "projectCard": {
+      "description": "Rich card for project overview: progress ring top-left, more-menu top-right, large bold title, description text, team avatar row bottom.",
+      "layout": {
+        "header": "progress-ring (left) + icon-button (right)",
+        "body": "display-sm title + body description",
+        "footer": "avatar-group"
+      }
+    },
+
+    "profileCard": {
+      "description": "User profile display: large avatar, full name (display-sm), role (small muted), skill chips row. More-menu top-right corner.",
+      "layout": {
+        "header": "avatar-xl (left) + icon-button (top-right)",
+        "body": "display-sm name + small role",
+        "footer": "chip row with flex-wrap and gap-2"
+      }
+    },
+
+    "modal": {
+      "description": "Centered overlay with white background, large radius, generous padding. Backdrop is semi-transparent dark. Animation: scale-up + fade-in.",
+      "styles": {
+        "background": "#FFFFFF",
+        "borderRadius": "24px",
+        "padding": "32px",
+        "maxWidth": "540px",
+        "backdropColor": "rgba(0,0,0,0.3)"
+      },
+      "tailwind": "bg-white rounded-3xl p-8 max-w-[540px] w-full mx-4"
+    },
+
+    "dropdown": {
+      "description": "Floating menu triggered by icon button. White background, medium radius, subtle shadow. Menu items have comfortable padding and hover state.",
+      "styles": {
+        "background": "#FFFFFF",
+        "borderRadius": "16px",
+        "padding": "8px",
+        "shadow": "0 4px 20px rgba(0,0,0,0.08)",
+        "itemPadding": "10px 16px",
+        "itemRadius": "10px",
+        "itemHover": "#F5F5F0"
+      }
+    },
+
+    "divider": {
+      "description": "Barely visible horizontal line. Use sparingly — prefer spacing. When needed, it's a 1px line in a very light warm gray.",
+      "styles": {
+        "color": "#F0F0EC",
+        "thickness": "1px"
+      },
+      "tailwind": "border-t border-[#F0F0EC]"
+    },
+
+    "emptyState": {
+      "description": "Centered content for empty views. Soft illustration or icon, descriptive text, and a primary action button.",
+      "layout": "flex flex-col items-center text-center gap-4 py-12"
+    }
+  },
+
+  "layout": {
+    "philosophy": "Bento-grid layout where cards of varying sizes tile together. The grid is responsive — 3 columns on desktop, 2 on tablet, 1 on mobile. Cards can span 1 or 2 columns, and vary in height based on content.",
+    "grid": {
+      "type": "CSS Grid",
+      "columns": "repeat(auto-fit, minmax(340px, 1fr))",
+      "gap": "16px",
+      "tailwind": "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+    },
+    "page": {
+      "maxWidth": "1400px",
+      "padding": "32px",
+      "tailwind": "max-w-[1400px] mx-auto px-8 py-8"
+    },
+    "sidebar": {
+      "width": "280px",
+      "background": "#FFFFFF or canvas color",
+      "note": "If sidebar is needed, it should feel like another card — white background, padded, with rounded inner elements."
+    },
+    "splitView": {
+      "description": "For editor pages (script, storyboard, review): left panel + right panel. Divider is a 1px line or 16px gap. Panels are card-styled containers.",
+      "ratios": {
+        "listDetail": "40/60 or 45/55",
+        "editorSidebar": "65/35 or 70/30"
+      }
+    }
+  },
+
+  "animation": {
+    "philosophy": "Animations are subtle and functional. They guide attention, never distract. Transitions are quick and use ease-out curves. No bouncing, no spring physics, no playful wobbles.",
+    "durations": {
+      "fast": "150ms",
+      "normal": "200ms",
+      "slow": "300ms",
+      "enter": "200ms",
+      "exit": "150ms"
+    },
+    "easings": {
+      "default": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+      "enter": "cubic-bezier(0, 0, 0.2, 1)",
+      "exit": "cubic-bezier(0.4, 0, 1, 1)"
+    },
+    "patterns": {
+      "cardHover": "shadow transition over 200ms",
+      "buttonPress": "scale(0.98) over 100ms",
+      "modalEnter": "opacity 0→1 + scale 0.95→1 over 200ms",
+      "listItemEnter": "opacity 0→1 + translateY 8→0 over 200ms, staggered 50ms",
+      "progressRing": "stroke-dashoffset animation over 800ms ease-out",
+      "toggleSwitch": "background-color + knob translateX over 200ms"
+    }
+  },
+
+  "iconography": {
+    "style": "Outlined, 1.5-2px stroke weight. Rounded caps and joins to match the overall soft aesthetic. Never use filled icons unless indicating 'active/selected' state.",
+    "library": "Lucide React (recommended) or Heroicons Outline",
+    "size": {
+      "sm": "16px",
+      "md": "20px",
+      "lg": "24px"
+    },
+    "color": "Inherits text color. Default is textSecondary (#6B6B6B). Active/hover is textPrimary (#1A1A1A)."
+  },
+
+  "darkMode": {
+    "note": "Not in scope for MVP. When implemented, the canvas shifts to a deep warm gray (#1E1E1C), cards become #2A2A28, and the lime accent becomes more muted. The purple accent stays consistent."
+  },
+
+  "applicationMapping": {
+    "note": "How this design system maps to the specific pages of Manga Drama Studio",
+    "projectList": {
+      "layout": "Bento grid of project cards on lime canvas",
+      "primaryComponent": "projectCard"
+    },
+    "projectDashboard": {
+      "layout": "Bento grid with stat cards (top), episode list card (center), recent activity card",
+      "primaryComponents": ["card", "listItem", "progressRing", "badge"]
+    },
+    "assetEditor": {
+      "layout": "Split view — card list (left) + detail card (right), tab navigation at top",
+      "primaryComponents": ["card", "chip", "avatar", "button"]
+    },
+    "scriptEditor": {
+      "layout": "Split view — editor card (left 70%) + sidebar card (right 30%)",
+      "note": "Editor area has subtle monospace for script formatting, entity names highlighted with chip-style inline badges"
+    },
+    "storyboardEditor": {
+      "layout": "Split view — thumbnail grid card (left 45%) + detail panel card (right 55%)",
+      "note": "Thumbnail grid items are mini-cards (cardNested radius). Selected item has accent border."
+    },
+    "pipelineMonitor": {
+      "layout": "Full-width pipeline visualization card (top) + gate decision card (middle) + event log card (bottom)",
+      "note": "Pipeline stages are pill-shaped nodes connected by lines. Each node uses status colors from semantic palette."
+    },
+    "qualityReview": {
+      "layout": "Navigation strip (top) + split comparison view (script card left, output card right) + issues card (bottom)",
+      "note": "Issue items use listItem component with warning/error badge indicators"
+    },
+    "providerSettings": {
+      "layout": "Stacked section cards, each containing provider rows with toggle switches",
+      "primaryComponents": ["card", "input", "toggle", "integrationRow"]
+    },
+    "timelineEditor": {
+      "layout": "Preview card (top center) + full-width timeline card (bottom) + properties card (side)",
+      "note": "Timeline is a specialized component — horizontal tracks with colored blocks. Follows the same color/radius principles."
+    }
+  },
+
+  "tailwindConfig": {
+    "note": "Suggested Tailwind v4 theme extensions for this design system",
+    "theme": {
+      "colors": {
+        "canvas": "#E4F0A4",
+        "canvas-light": "#EDF5C4",
+        "canvas-dark": "#D4E488",
+        "surface": "#FFFFFF",
+        "surface-subtle": "#F5F5F0",
+        "accent": "#7C6AF2",
+        "accent-light": "#EDE9FE",
+        "accent-medium": "#A394F5",
+        "accent-dark": "#5B47D0",
+        "text-primary": "#1A1A1A",
+        "text-secondary": "#6B6B6B",
+        "text-muted": "#ABABAB",
+        "border-default": "#E8E8E4",
+        "border-subtle": "#F0F0EC",
+        "status-running": "#7C6AF2",
+        "status-completed": "#6BBF6A",
+        "status-waiting": "#F0C850",
+        "status-failed": "#E87070",
+        "status-pending": "#CCCCCC"
+      },
+      "borderRadius": {
+        "card": "24px",
+        "card-nested": "16px",
+        "input": "12px"
+      },
+      "fontFamily": {
+        "sans": ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        "mono": ["JetBrains Mono", "Fira Code", "monospace"]
+      }
+    }
+  }
+}

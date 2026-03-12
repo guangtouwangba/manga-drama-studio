@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 漫绘平台 - 剧本编辑器</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#256af4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #314368;
+            border-radius: 10px;
+        }
+        .editor-highlight {
+            background-color: rgba(37, 106, 244, 0.15);
+            border-bottom: 2px solid #256af4;
+            color: #60a5fa;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-sm font-bold tracking-tight">AI 漫绘平台</h1>
+<p class="text-xs text-slate-500">专业版 V2.4</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="text-sm font-medium">概览</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px] fill-current">movie_edit</span>
+<span class="text-sm font-medium">剧集管理</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">inventory_2</span>
+<span class="text-sm font-medium">资产仓库</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="text-sm font-medium">团队协作</span>
+</a>
+<div class="pt-4 pb-2 px-3">
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">系统控制</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-medium">偏好设置</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-100 dark:bg-slate-800/50">
+<div class="w-8 h-8 rounded-full bg-slate-300 dark:bg-slate-700 flex-shrink-0" data-alt="User profile avatar of a developer" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUKi4CLyQmouy7LHaTHfUqhl9EU2_0YOriiKC7ildWJyg1U6jOiUUXnj53QB0yNinM0VHJqZLuQZz2Vuwo_F3CrJSk1bhynY658e0rHwHaSOAWE9qzgGOLO-hDREFZhaaJKOULQBYD8O7Krzkvb6-Sq8rCRxt5xN-HZV07TYxngrHpQLcGRv0dT8fCs7H7VjYzkIQfmYLXugpP9Hd3w1SFRoWaP53dCiA4oxZaMYSDjM-JPFMJuEnAMoCu8gPoRzgtb9hnA-K1cy0'); background-size: cover;"></div>
+<div class="min-w-0">
+<p class="text-xs font-bold truncate">沈渊 (管理员)</p>
+<p class="text-[10px] text-slate-500 truncate">Premium Member</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-background-dark/50">
+<!-- Top Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark flex items-center justify-between px-6 shrink-0">
+<nav class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">项目</a>
+<span class="text-slate-400">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">万古第一废体</a>
+<span class="text-slate-400">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">第001集</a>
+<span class="text-slate-400">/</span>
+<span class="font-bold text-slate-900 dark:text-slate-100">剧本编辑器</span>
+</nav>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-sm font-bold transition-all border border-primary/20">
+<span class="material-symbols-outlined text-sm">magic_button</span>
+                        自动生成剧本
+                    </button>
+<div class="w-px h-6 bg-slate-200 dark:border-slate-800"></div>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Editor Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left: Editor (70%) -->
+<section class="w-[70%] flex flex-col border-r border-slate-200 dark:border-slate-800">
+<!-- Episode Synopsis -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark/30">
+<div class="flex items-center justify-between mb-3">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">description</span>
+                                剧集大纲 (Episode Synopsis)
+                            </h3>
+<button class="text-[10px] text-primary font-bold hover:underline">智能优化</button>
+</div>
+<textarea class="w-full h-24 bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 text-sm resize-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-slate-700 dark:text-slate-300 placeholder:text-slate-500" placeholder="在此粘贴本集剧情摘要...">沈渊曾是族中天才，却在三年前突然沦为“废体”。今日，未婚妻云傲天登门，在大殿中当众悔婚，场面一度失控。沈渊在屈辱中意外觉醒远古血脉...</textarea>
+</div>
+<!-- Script Editor -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-10 bg-white dark:bg-background-dark/20">
+<div class="max-w-3xl mx-auto space-y-8 text-slate-800 dark:text-slate-200">
+<!-- Scene Heading -->
+<div class="space-y-4">
+<div class="bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded font-bold text-sm tracking-widest border-l-4 border-primary">
+                                    场景 1：<span class="editor-highlight text-primary">[沈家大殿]</span> - 日 - 室内
+                                </div>
+<div class="italic text-slate-500 text-sm leading-relaxed">
+                                    阳光从大殿的高窗斜射而入，尘埃在光柱中飞舞。大殿中央，气氛凝重。
+                                </div>
+<div class="space-y-6 pl-8">
+<div class="character-block">
+<div class="text-center font-bold text-sm mb-1 text-slate-500 uppercase tracking-widest"><span class="editor-highlight">[族长]</span></div>
+<div class="text-center leading-relaxed max-w-md mx-auto">
+                                            沈渊，云家此次前来，是为了你与云傲天小姐的婚事……
+                                        </div>
+</div>
+<div class="character-block">
+<div class="text-center font-bold text-sm mb-1 text-slate-500 uppercase tracking-widest"><span class="editor-highlight">[云傲天]</span></div>
+<div class="italic text-center text-xs text-slate-500 mb-1">(语气冰冷，没有一丝情感)</div>
+<div class="text-center leading-relaxed max-w-md mx-auto">
+                                            不必劳烦沈族长。沈渊，这封<span class="editor-highlight">[退婚书]</span>，你签了吧。我们注定不是一个世界的人。
+                                        </div>
+</div>
+<div class="action-block py-2 text-sm leading-relaxed">
+<span class="editor-highlight text-primary">[沈渊]</span> 低垂着头，双手死死攥紧，指甲嵌入掌心，鲜血顺着指缝悄然滑落。他猛地抬头，双目通红。
+                                    </div>
+<div class="character-block">
+<div class="text-center font-bold text-sm mb-1 text-slate-500 uppercase tracking-widest"><span class="editor-highlight">[沈渊]</span></div>
+<div class="text-center leading-relaxed max-w-md mx-auto">
+                                            三十年河东，三十年河西……莫欺少年穷！
+                                        </div>
+</div>
+</div>
+</div>
+<!-- Scene Heading 2 -->
+<div class="space-y-4 pt-8">
+<div class="bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded font-bold text-sm tracking-widest border-l-4 border-slate-400">
+                                    场景 2：<span class="editor-highlight text-primary">[沈家后山 - 高台]</span> - 黄昏 - 室外
+                                </div>
+<div class="italic text-slate-500 text-sm leading-relaxed">
+                                    残阳如血。沈渊独自立于高台边缘，俯瞰着整片沈家领地。
+                                </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Metadata & Entities (30%) -->
+<section class="w-[30%] flex flex-col bg-background-light dark:bg-background-dark overflow-y-auto custom-scrollbar border-l border-slate-200 dark:border-slate-800">
+<!-- Metadata Stats -->
+<div class="p-6 grid grid-cols-3 gap-3 border-b border-slate-200 dark:border-slate-800">
+<div class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-[10px] text-slate-500 font-bold mb-1">字数统计</p>
+<p class="text-lg font-bold">1,832</p>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-[10px] text-slate-500 font-bold mb-1">预计时长</p>
+<p class="text-lg font-bold">1:42</p>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-[10px] text-slate-500 font-bold mb-1">分镜预测</p>
+<p class="text-lg font-bold">~24</p>
+</div>
+</div><div class="px-6 py-2 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-emerald-500/5"><div class="flex items-center gap-2 text-[10px] text-emerald-500 font-bold uppercase tracking-wider"><span class="material-symbols-outlined text-xs">cloud_done</span>资产库实时同步中</div><span class="text-[10px] text-slate-500">最后更新: 14:25</span></div>
+<!-- Entity Explorer -->
+<div class="p-6 space-y-8">
+<!-- Characters -->
+<div>
+<div class="flex items-center justify-between mb-4"><h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2"><span class="material-symbols-outlined text-sm">person_search</span>角色实体</h4><div class="flex items-center gap-2"><button class="p-1 hover:bg-slate-800 rounded transition-colors text-slate-500"><span class="material-symbols-outlined text-sm">add</span></button><button class="p-1 hover:bg-slate-800 rounded transition-colors text-slate-500"><span class="material-symbols-outlined text-sm">edit_note</span></button><span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold ml-1">4个</span></div></div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold">沈</div>
+<span class="text-sm font-medium">沈渊</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-1 bg-red-500/10 text-red-500 rounded uppercase">S-Rank</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold">云</div>
+<span class="text-sm font-medium">云傲天</span>
+</div>
+<span class="text-[10px] font-bold px-2 py-1 bg-blue-500/10 text-blue-500 rounded uppercase">A-Rank</span>
+</div>
+</div><button class="w-full mt-3 py-2 border border-dashed border-slate-700 rounded-lg text-xs text-slate-500 hover:text-primary hover:border-primary transition-all flex items-center justify-center gap-2"><span class="material-symbols-outlined text-sm">person_add</span>创建新角色资产</button>
+</div>
+<!-- Scenes -->
+<div>
+<div class="flex items-center justify-between mb-4"><h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2"><span class="material-symbols-outlined text-sm">location_on</span>场景库</h4><div class="flex items-center gap-2"><button class="p-1 hover:bg-slate-800 rounded transition-colors text-slate-500"><span class="material-symbols-outlined text-sm">add</span></button><button class="p-1 hover:bg-slate-800 rounded transition-colors text-slate-500"><span class="material-symbols-outlined text-sm">edit_note</span></button></div></div>
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2 bg-slate-100 dark:bg-slate-800/40 rounded-lg border border-slate-200 dark:border-slate-800 text-center">
+<div class="w-full aspect-video rounded bg-slate-300 dark:bg-slate-700 mb-2 overflow-hidden">
+<div class="w-full h-full bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center" data-alt="Abstract interior of a grand Chinese palace hall">
+<span class="material-symbols-outlined text-white/50">image</span>
+</div>
+</div>
+<span class="text-[10px] font-medium">沈家大殿</span>
+</div>
+<div class="p-2 bg-slate-100 dark:bg-slate-800/40 rounded-lg border border-slate-200 dark:border-slate-800 text-center opacity-60">
+<div class="w-full aspect-video rounded bg-slate-300 dark:bg-slate-700 mb-2 overflow-hidden">
+<div class="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center" data-alt="Stylized landscape of a misty Chinese mountain peak">
+<span class="material-symbols-outlined text-white/50">landscape</span>
+</div>
+</div>
+<span class="text-[10px] font-medium">后山高台</span>
+</div>
+</div>
+</div>
+<!-- Scene Mini Map -->
+<div>
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">account_tree</span>
+                                剧集脉络 (Mini-map)
+                            </h4>
+<div class="relative pl-4 space-y-4 before:content-[''] before:absolute before:left-0 before:top-2 before:bottom-2 before:w-px before:bg-slate-200 dark:before:bg-slate-800">
+<div class="relative flex items-start gap-3">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-primary border-4 border-background-light dark:border-background-dark"></div>
+<div class="text-[11px] leading-tight">
+<p class="font-bold text-slate-900 dark:text-slate-100">场景 1: 大殿对峙</p>
+<p class="text-slate-500">关键动作: 毁婚、立誓</p>
+</div>
+</div>
+<div class="relative flex items-start gap-3">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 border-4 border-background-light dark:border-background-dark"></div>
+<div class="text-[11px] leading-tight opacity-60">
+<p class="font-bold text-slate-900 dark:text-slate-100">场景 2: 高台觉醒</p>
+<p class="text-slate-500">关键动作: 觉醒血脉</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Control Bar -->
+<footer class="h-20 border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark flex items-center justify-between px-8 shrink-0 z-10 shadow-2xl">
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white font-medium text-sm transition-colors">
+<span class="material-symbols-outlined">undo</span>
+                        撤销
+                    </button>
+<button class="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:hover:text-white font-medium text-sm transition-colors">
+<span class="material-symbols-outlined">redo</span>
+                        重做
+                    </button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs text-slate-500">已自动保存 (14:20)</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 font-bold text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        保存草稿
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                        重新生成
+                    </button>
+<button class="flex items-center gap-2 px-8 py-2.5 rounded-lg bg-primary text-white font-bold text-sm shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all hover:-translate-y-0.5 active:translate-y-0">
+                        下一步：分镜规划
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</footer>
+</main>
+<aside class="fixed right-0 top-0 h-full w-[400px] bg-background-dark border-l border-slate-800 shadow-2xl z-50 transform transition-transform duration-300 translate-x-full" id="asset-drawer"><div class="flex flex-col h-full"><div class="p-6 border-b border-slate-800 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center text-primary font-bold text-xl">沈</div><div><h3 class="font-bold">角色详情: 沈渊</h3><p class="text-xs text-slate-500">UUID: CHAR-9527-SY</p></div></div><button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-800 text-slate-500"><span class="material-symbols-outlined">close</span></button></div><div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6"><div><h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">基础设定</h4><div class="space-y-3"><div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800"><p class="text-[10px] text-slate-500 mb-1">角色定位</p><p class="text-sm">主角 / 废材逆袭 / 远古血脉觉醒者</p></div><div class="bg-slate-900/50 p-3 rounded-lg border border-slate-800"><p class="text-[10px] text-slate-500 mb-1">性格特征</p><p class="text-sm">坚韧不拔、冷静睿智、重情重义</p></div></div></div><div><h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">外貌描述</h4><div class="text-sm leading-relaxed text-slate-400 bg-slate-900/50 p-4 rounded-lg border border-slate-800">少年面容清秀却带坚毅，双眸如星。常着玄色劲装，腰间佩戴一枚残缺的古玉。觉醒后瞳孔微露金芒。</div></div><div><h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">参考图库 (Stable Diffusion)</h4><div class="grid grid-cols-2 gap-2"><div class="aspect-square rounded-lg bg-slate-800 overflow-hidden border border-slate-700 group relative"><div class="w-full h-full bg-gradient-to-tr from-slate-900 to-slate-700 flex items-center justify-center"><span class="material-symbols-outlined text-slate-600">portrait</span></div><div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer"><span class="material-symbols-outlined text-white">zoom_in</span></div></div><div class="aspect-square rounded-lg bg-slate-800 overflow-hidden border border-slate-700 group relative"><div class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-700 flex items-center justify-center"><span class="material-symbols-outlined text-slate-600">portrait</span></div><div class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer"><span class="material-symbols-outlined text-white">zoom_in</span></div></div></div><button class="w-full mt-2 py-2 text-xs text-primary hover:underline flex items-center justify-center gap-1"><span class="material-symbols-outlined text-xs">add_photo_alternate</span>添加参考图</button></div></div><div class="p-6 border-t border-slate-800 bg-slate-900/50 flex gap-3"><button class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-sm font-bold rounded-lg transition-colors">在资产库查看</button><button class="flex-1 py-2.5 bg-primary text-white text-sm font-bold rounded-lg shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">更新并同步</button></div></div></aside></div>
+</body></html>

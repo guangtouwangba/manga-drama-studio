@@ -1,1 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #256af4;
+  --color-background-dark: #101622;
+  --color-main-surface: #0a0f1a;
+  --color-panel-dark: #1a2234;
+  --color-border-dark: #314368;
+
+  --font-family-display: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+}
+
+body {
+  font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+  background-color: #0a0f1a;
+  color: #f1f5f9;
+}
+
+/* Custom scrollbar for panels */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #314368;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 106, 244, 0.4);
+}
+
+/* Editor entity highlights */
+.editor-highlight {
+  background-color: rgba(37, 106, 244, 0.15);
+  border-bottom: 2px solid #256af4;
+  color: #60a5fa;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+/* Line clamp utility */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
