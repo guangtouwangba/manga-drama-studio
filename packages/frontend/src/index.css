@@ -1,21 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #256af4;
-  --color-background-dark: #101622;
-  --color-main-surface: #0a0f1a;
-  --color-panel-dark: #1a2234;
-  --color-border-dark: #314368;
+  /* Canvas — page background */
+  --color-canvas: #E4F0A4;
+  --color-canvas-light: #EDF5C4;
+  --color-canvas-dark: #D4E488;
 
-  --font-family-display: 'Space Grotesk', 'Noto Sans SC', sans-serif;
+  /* Surface — cards, modals */
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F5F5F0;
+
+  /* Accent — THE one accent color */
+  --color-accent: #7C6AF2;
+  --color-accent-light: #EDE9FE;
+  --color-accent-medium: #A394F5;
+  --color-accent-dark: #5B47D0;
+
+  /* Text */
+  --color-txt-primary: #1A1A1A;
+  --color-txt-secondary: #6B6B6B;
+  --color-txt-muted: #ABABAB;
+
+  /* Borders */
+  --color-bdr: #E8E8E4;
+  --color-bdr-subtle: #F0F0EC;
+
+  /* Status */
+  --color-status-running: #7C6AF2;
+  --color-status-completed: #6BBF6A;
+  --color-status-waiting: #F0C850;
+  --color-status-failed: #E87070;
+  --color-status-pending: #CCCCCC;
+
+  /* Radius */
+  --radius-card: 24px;
+  --radius-card-nested: 16px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-modal: 0 8px 32px rgba(0,0,0,0.08);
+  --shadow-dropdown: 0 4px 20px rgba(0,0,0,0.08);
+
+  /* Font */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-  font-family: 'Space Grotesk', 'Noto Sans SC', sans-serif;
-  background-color: #0a0f1a;
-  color: #f1f5f9;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #E4F0A4;
+  color: #1A1A1A;
 }
 
 /* Custom scrollbar for panels */
@@ -26,20 +62,61 @@ body {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #314368;
+  background: #D4E488;
   border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(37, 106, 244, 0.4);
+  background: #7C6AF2;
 }
 
 /* Editor entity highlights */
 .editor-highlight {
-  background-color: rgba(37, 106, 244, 0.15);
-  border-bottom: 2px solid #256af4;
-  color: #60a5fa;
+  background-color: rgba(124, 106, 242, 0.12);
+  border-bottom: 2px solid #7C6AF2;
+  color: #5B47D0;
   padding: 0 2px;
   cursor: pointer;
+}
+
+/* Typography scale */
+.text-display-lg {
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.text-display-sm {
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.text-heading {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.text-body {
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.text-body-medium {
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.text-small {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+.text-caption {
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 /* Line clamp utility */

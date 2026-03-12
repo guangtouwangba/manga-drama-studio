@@ -6,14 +6,14 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClasses: Record<string, string> = {
-  default: 'bg-slate-800/50 rounded-2xl border border-slate-800 p-5',
-  form: 'bg-slate-900/50 rounded-xl p-6 border border-slate-800 shadow-sm',
+  default: 'bg-white rounded-[24px] p-6',
+  form: 'bg-white rounded-[24px] p-6',
   interactive:
-    'bg-slate-800/50 rounded-2xl border border-slate-800 p-5 hover:border-primary/50 group cursor-pointer transition-all',
-  stat: 'bg-slate-800/50 p-5 rounded-2xl border border-slate-800',
+    'bg-white rounded-[24px] p-6 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] transition-shadow cursor-pointer',
+  stat: 'bg-white rounded-[24px] p-6',
   dashed:
-    'border-2 border-dashed border-slate-800 rounded-xl flex flex-col items-center justify-center p-8 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer',
-  comparison: 'bg-panel-dark border border-border-dark rounded-xl shadow-2xl overflow-hidden',
+    'border-2 border-dashed border-bdr rounded-[24px] p-8 hover:border-accent/50 hover:bg-accent-light/50 transition-all cursor-pointer flex flex-col items-center justify-center',
+  comparison: 'bg-white rounded-[16px] overflow-hidden',
 };
 
 export default function Card({

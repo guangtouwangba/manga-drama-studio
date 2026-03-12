@@ -21,11 +21,11 @@ export default function ProgressBar({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label="进度"
-      className={`w-full bg-slate-700 ${heightClass} rounded-full overflow-hidden ${className}`}
+      className={`w-full bg-[#EEEEE8] ${heightClass} rounded-full overflow-hidden ${className}`}
     >
       <div
-        className={`bg-primary h-full rounded-full transition-all duration-500 ${
-          glow ? 'shadow-[0_0_10px_rgba(37,106,244,0.4)]' : ''
+        className={`bg-accent h-full rounded-full transition-all duration-500 ${
+          glow ? 'shadow-[0_0_10px_rgba(124,106,242,0.3)]' : ''
         }`}
         style={{ width: `${clampedPercent}%` }}
       />

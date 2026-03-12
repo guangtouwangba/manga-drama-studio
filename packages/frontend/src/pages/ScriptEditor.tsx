@@ -288,32 +288,23 @@ const MOCK_PANELS: Panel[] = [
 
 function StatusDot({ status }: { status: string }) {
   const colorMap: Record<string, string> = {
-    completed: 'bg-emerald-500',
-    in_progress: 'bg-primary',
-    draft: 'bg-slate-600',
-    pending: 'bg-slate-600',
-    generating: 'bg-amber-500',
+    completed: 'bg-status-completed',
+    in_progress: 'bg-accent',
+    draft: 'bg-txt-muted',
+    pending: 'bg-txt-muted',
+    generating: 'bg-status-waiting',
   };
   return (
     <span
-      className={`inline-block w-2 h-2 rounded-full flex-shrink-0 ${colorMap[status] ?? 'bg-slate-600'}`}
+      className={`inline-block w-2 h-2 rounded-full flex-shrink-0 ${colorMap[status] ?? 'bg-txt-muted'}`}
     />
   );
 }
 
 function ShotTypeBadge({ type }: { type: string }) {
-  const colorMap: Record<string, string> = {
-    远景: 'bg-violet-500/15 text-violet-400',
-    全景: 'bg-blue-500/15 text-blue-400',
-    中景: 'bg-sky-500/15 text-sky-400',
-    近景: 'bg-teal-500/15 text-teal-400',
-    特写: 'bg-amber-500/15 text-amber-400',
-  };
   return (
     <span
-      className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${
-        colorMap[type] ?? 'bg-slate-700/60 text-slate-400'
-      }`}
+      className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-accent-light text-accent"
     >
       {type}
     </span>
@@ -350,18 +341,18 @@ export default function ScriptEditor() {
   return (
     <AppLayout layout="split">
       {/* ── Top toolbar ────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between border-b border-slate-800 px-6 h-14 bg-background-dark sticky top-0 z-10 flex-shrink-0">
+      <div className="flex items-center justify-between border-b border-bdr px-6 h-14 bg-white sticky top-0 z-10 flex-shrink-0">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-slate-400" aria-label="breadcrumb">
-          <Link to="/projects" className="hover:text-primary transition-colors">
+        <nav className="flex items-center gap-2 text-sm text-txt-secondary" aria-label="breadcrumb">
+          <Link to="/projects" className="hover:text-accent transition-colors">
             项目
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
-          <Link to={`/projects/${id}`} className="hover:text-primary transition-colors">
+          <ChevronRight className="w-3.5 h-3.5 text-txt-muted" aria-hidden="true" />
+          <Link to={`/projects/${id}`} className="hover:text-accent transition-colors">
             仙玄纪元
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-600" aria-hidden="true" />
-          <span className="text-slate-100 font-medium">
+          <ChevronRight className="w-3.5 h-3.5 text-txt-muted" aria-hidden="true" />
+          <span className="text-txt-primary font-medium">
             EP{eid} 剧本编辑器
           </span>
         </nav>
@@ -371,10 +362,10 @@ export default function ScriptEditor() {
           <Button variant="outline" size="sm" icon={<Sparkles className="w-4 h-4" />}>
             自动生成剧本
           </Button>
-          <div className="w-px h-5 bg-slate-800 mx-1" />
+          <div className="w-px h-5 bg-bdr mx-1" />
           <button
             aria-label="保存"
-            className="p-2 rounded-lg hover:bg-slate-800 text-slate-500 hover:text-slate-200 transition-colors"
+            className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
           >
             <Save className="w-4 h-4" />
           </button>
@@ -386,16 +377,16 @@ export default function ScriptEditor() {
 
         {/* ── LEFT PANEL: Episode list ─────────────────────────────── */}
         <aside
-          className="w-64 flex-shrink-0 flex flex-col border-r border-slate-800 bg-background-dark"
+          className="w-64 flex-shrink-0 flex flex-col border-r border-bdr bg-white"
           aria-label="剧集列表"
         >
           {/* Header */}
-          <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-2">
-            <Film className="w-4 h-4 text-primary" aria-hidden="true" />
-            <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+          <div className="px-4 py-3 border-b border-bdr flex items-center gap-2">
+            <Film className="w-4 h-4 text-accent" aria-hidden="true" />
+            <span className="text-xs font-bold text-txt-primary uppercase tracking-widest">
               剧集列表
             </span>
-            <span className="ml-auto text-[10px] font-bold text-slate-500">
+            <span className="ml-auto text-[10px] font-bold text-txt-muted">
               {MOCK_EPISODES.length} 集
             </span>
           </div>
@@ -410,16 +401,16 @@ export default function ScriptEditor() {
                     onClick={() => setSelectedEpisodeId(ep.id)}
                     className={`w-full flex items-start gap-3 px-4 py-3 text-left transition-colors group ${
                       isActive
-                        ? 'bg-primary/10 border-l-2 border-primary'
-                        : 'border-l-2 border-transparent hover:bg-slate-800/50'
+                        ? 'bg-accent-light border-l-4 border-accent'
+                        : 'border-l-4 border-transparent hover:bg-surface-subtle'
                     }`}
                   >
                     {/* Episode number badge */}
                     <span
                       className={`mt-0.5 text-[11px] font-black w-7 h-5 rounded flex items-center justify-center flex-shrink-0 ${
                         isActive
-                          ? 'bg-primary text-white'
-                          : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700'
+                          ? 'bg-accent text-white'
+                          : 'bg-surface-subtle text-txt-muted group-hover:bg-bdr'
                       }`}
                     >
                       {ep.episode_number}
@@ -429,14 +420,14 @@ export default function ScriptEditor() {
                     <div className="min-w-0 flex-1">
                       <p
                         className={`text-sm font-medium truncate ${
-                          isActive ? 'text-white' : 'text-slate-300'
+                          isActive ? 'text-txt-primary' : 'text-txt-secondary'
                         }`}
                       >
                         {ep.title}
                       </p>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <StatusDot status={ep.status} />
-                        <span className="text-[10px] text-slate-500">
+                        <span className="text-[10px] text-txt-muted">
                           {ep.panel_count ? `${ep.panel_count} 面板` : '草稿'}
                         </span>
                       </div>
@@ -444,7 +435,7 @@ export default function ScriptEditor() {
 
                     {isActive && (
                       <ChevronRight
-                        className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5"
+                        className="w-3.5 h-3.5 text-accent flex-shrink-0 mt-0.5"
                         aria-hidden="true"
                       />
                     )}
@@ -455,9 +446,9 @@ export default function ScriptEditor() {
           </ul>
 
           {/* New episode button */}
-          <div className="p-3 border-t border-slate-800">
+          <div className="p-3 border-t border-bdr">
             <button
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-slate-700 text-xs text-slate-500 font-medium hover:border-primary/50 hover:text-primary transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-bdr text-xs text-txt-muted font-medium hover:border-accent/50 hover:text-accent transition-colors"
               aria-label="新建剧集"
             >
               <Plus className="w-3.5 h-3.5" aria-hidden="true" />
@@ -467,21 +458,21 @@ export default function ScriptEditor() {
         </aside>
 
         {/* ── CENTER PANEL: Script editor ──────────────────────────── */}
-        <section className="flex-1 flex flex-col min-w-0 border-r border-slate-800">
+        <section className="flex-1 flex flex-col min-w-0 border-r border-bdr bg-white">
 
           {/* Editor toolbar */}
           <div
-            className="flex items-center gap-1 px-4 py-2 border-b border-slate-800 bg-background-dark/60 backdrop-blur-sm flex-shrink-0"
+            className="flex items-center gap-1 px-4 py-2 border-b border-bdr bg-surface-subtle backdrop-blur-sm flex-shrink-0"
             role="toolbar"
             aria-label="文本格式工具栏"
           >
             {/* Font size */}
             <div className="flex items-center gap-1 mr-2">
-              <AlignLeft className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
+              <AlignLeft className="w-3.5 h-3.5 text-txt-muted" aria-hidden="true" />
               <select
                 value={fontSize}
                 onChange={(e) => setFontSize(Number(e.target.value))}
-                className="bg-slate-800 border border-slate-700 rounded px-1.5 py-0.5 text-xs text-slate-300 outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                className="bg-white border border-bdr rounded px-1.5 py-0.5 text-xs text-txt-secondary outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent appearance-none cursor-pointer"
                 aria-label="字号"
               >
                 {[12, 13, 14, 15, 16, 18].map((s) => (
@@ -492,7 +483,7 @@ export default function ScriptEditor() {
               </select>
             </div>
 
-            <div className="w-px h-4 bg-slate-700 mx-1" />
+            <div className="w-px h-4 bg-bdr mx-1" />
 
             {/* Format buttons */}
             {[
@@ -504,47 +495,46 @@ export default function ScriptEditor() {
                 key={cmd}
                 onClick={() => execFormat(cmd)}
                 aria-label={label}
-                className="p-1.5 rounded hover:bg-slate-700 text-slate-400 hover:text-slate-200 transition-colors"
+                className="p-1.5 rounded hover:bg-white text-txt-secondary hover:text-txt-primary transition-colors"
               >
                 {icon}
               </button>
             ))}
 
-            <div className="w-px h-4 bg-slate-700 mx-1" />
+            <div className="w-px h-4 bg-bdr mx-1" />
 
             {/* AI Assist */}
-            <Button
-              variant="outline"
-              size="sm"
-              icon={<Wand2 className="w-3.5 h-3.5" />}
-              className="text-xs"
+            <button
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-accent-light text-accent hover:bg-accent/20 transition-colors"
+              aria-label="AI 辅助写作"
             >
+              <Wand2 className="w-3.5 h-3.5" aria-hidden="true" />
               AI 辅助写作
-            </Button>
+            </button>
 
             {/* Autosave indicator */}
             <div className="ml-auto flex items-center gap-1.5" aria-live="polite">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] text-slate-500">已自动保存</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-status-completed animate-pulse" />
+              <span className="text-[10px] text-txt-muted">已自动保存</span>
             </div>
           </div>
 
           {/* Episode title bar */}
-          <div className="px-10 py-4 border-b border-slate-800/60 bg-background-dark/20 flex-shrink-0">
+          <div className="px-10 py-4 border-b border-bdr/60 bg-white flex-shrink-0">
             <div className="max-w-3xl mx-auto flex items-baseline gap-3">
-              <span className="text-[11px] font-bold text-primary uppercase tracking-widest">
+              <span className="text-[11px] font-bold text-accent uppercase tracking-widest">
                 EP{activeEpisode.episode_number}
               </span>
-              <h1 className="text-lg font-black text-white">{activeEpisode.title}</h1>
+              <h1 className="text-lg font-black text-txt-primary">{activeEpisode.title}</h1>
               {activeEpisode.synopsis && (
-                <p className="text-xs text-slate-500 italic truncate">{activeEpisode.synopsis}</p>
+                <p className="text-xs text-txt-muted italic truncate">{activeEpisode.synopsis}</p>
               )}
             </div>
           </div>
 
           {/* Scrollable script body */}
           <div
-            className="flex-1 overflow-y-auto custom-scrollbar p-10 bg-background-dark/20"
+            className="flex-1 overflow-y-auto custom-scrollbar p-10 bg-white"
             style={{ fontSize }}
           >
             <div
@@ -554,20 +544,20 @@ export default function ScriptEditor() {
               spellCheck={false}
               aria-label="剧本编辑区"
               aria-multiline="true"
-              className="max-w-3xl mx-auto space-y-8 text-slate-200 outline-none"
+              className="max-w-3xl mx-auto space-y-8 text-txt-primary outline-none"
               style={{ fontSize, lineHeight: 1.8 }}
             >
               {MOCK_SCRIPT_SCENES.map((scene) => (
                 <div key={scene.id} className="space-y-4">
                   {/* Scene heading */}
-                  <div className="bg-slate-800 px-4 py-2 rounded font-bold text-sm tracking-widest border-l-4 border-primary text-slate-200 select-none">
+                  <div className="bg-accent-light/30 px-4 py-2 rounded font-bold text-sm tracking-widest border-l-4 border-accent text-txt-primary select-none">
                     场景 {scene.number}：
                     <span className="editor-highlight">[{scene.location}]</span>
                     {' - '}{scene.timeOfDay}{' - '}{scene.intOrExt}
                   </div>
 
                   {/* Stage direction */}
-                  <p className="italic text-slate-500 text-sm leading-relaxed pl-4">
+                  <p className="italic text-txt-muted text-sm leading-relaxed pl-4">
                     {scene.stageDirection}
                   </p>
 
@@ -577,22 +567,22 @@ export default function ScriptEditor() {
                       if (block.type === 'character') {
                         return (
                           <div key={i} className="space-y-1" data-block="character">
-                            <p className="text-center font-bold text-sm text-slate-500 uppercase tracking-widest">
+                            <p className="text-center font-bold text-sm text-txt-secondary uppercase tracking-widest">
                               【<span className="editor-highlight">{block.name}</span>】
                             </p>
                             {block.direction && (
-                              <p className="italic text-center text-xs text-slate-600">
+                              <p className="italic text-center text-xs text-txt-muted">
                                 ({block.direction})
                               </p>
                             )}
-                            <p className="text-center leading-relaxed max-w-md mx-auto text-slate-200">
+                            <p className="text-center leading-relaxed max-w-md mx-auto text-txt-primary">
                               {block.dialogue}
                             </p>
                           </div>
                         );
                       }
                       return (
-                        <p key={i} className="py-1 text-sm leading-relaxed text-slate-400" data-block="action">
+                        <p key={i} className="py-1 text-sm leading-relaxed text-txt-secondary" data-block="action">
                           {block.text}
                         </p>
                       );
@@ -604,21 +594,21 @@ export default function ScriptEditor() {
           </div>
 
           {/* Bottom control bar */}
-          <div className="h-14 border-t border-slate-800 bg-background-dark flex items-center justify-between px-6 flex-shrink-0">
+          <div className="h-14 border-t border-bdr bg-white flex items-center justify-between px-6 flex-shrink-0">
             <div className="flex items-center gap-1">
               <button
                 aria-label="撤销"
-                className="p-2 rounded-lg hover:bg-slate-800 text-slate-500 hover:text-slate-200 transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
               >
                 <Undo2 className="w-4 h-4" />
               </button>
               <button
                 aria-label="重做"
-                className="p-2 rounded-lg hover:bg-slate-800 text-slate-500 hover:text-slate-200 transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
               >
                 <Redo2 className="w-4 h-4" />
               </button>
-              <div className="w-px h-4 bg-slate-800 mx-2" />
+              <div className="w-px h-4 bg-bdr mx-2" />
               <Button variant="ghost" size="sm" icon={<Save className="w-3.5 h-3.5" />}>
                 保存草稿
               </Button>
@@ -639,15 +629,15 @@ export default function ScriptEditor() {
 
         {/* ── RIGHT PANEL: Panel breakdown ─────────────────────────── */}
         <aside
-          className="w-80 flex-shrink-0 flex flex-col bg-background-dark border-l border-slate-800"
+          className="w-80 flex-shrink-0 flex flex-col bg-white border-l border-bdr"
           aria-label="分镜拆解"
         >
           {/* Header */}
-          <div className="px-4 py-3 border-b border-slate-800 flex-shrink-0">
+          <div className="px-4 py-3 border-b border-bdr flex-shrink-0">
             <div className="flex items-center justify-between mb-2.5">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-primary" aria-hidden="true" />
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+                <Camera className="w-4 h-4 text-accent" aria-hidden="true" />
+                <span className="text-xs font-bold text-txt-primary uppercase tracking-widest">
                   分镜拆解
                 </span>
               </div>
@@ -658,15 +648,15 @@ export default function ScriptEditor() {
 
             {/* Stats row */}
             <div className="flex gap-3">
-              <div className="flex items-center gap-1.5 bg-slate-800/60 rounded-lg px-2.5 py-1.5">
-                <Camera className="w-3 h-3 text-slate-500" aria-hidden="true" />
-                <span className="text-[11px] font-bold text-slate-300">
+              <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
+                <Camera className="w-3 h-3 text-txt-muted" aria-hidden="true" />
+                <span className="text-[11px] font-bold text-txt-secondary">
                   {MOCK_PANELS.length} 面板
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 bg-slate-800/60 rounded-lg px-2.5 py-1.5">
-                <Clock className="w-3 h-3 text-slate-500" aria-hidden="true" />
-                <span className="text-[11px] font-bold text-slate-300">
+              <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
+                <Clock className="w-3 h-3 text-txt-muted" aria-hidden="true" />
+                <span className="text-[11px] font-bold text-txt-secondary">
                   {totalDuration.toFixed(1)}s 共计
                 </span>
               </div>
@@ -680,11 +670,11 @@ export default function ScriptEditor() {
           >
             {MOCK_PANELS.map((panel) => (
               <li key={panel.id}>
-                <div className="rounded-xl border border-slate-800 bg-slate-900/40 hover:border-primary/30 transition-colors p-3 space-y-2.5 cursor-pointer group">
+                <div className="rounded-xl bg-surface-subtle hover:bg-bdr transition-colors p-3 space-y-2.5 cursor-pointer group">
                   {/* Panel header row */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-black bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                      <span className="text-[11px] font-black bg-accent-light text-accent px-1.5 py-0.5 rounded">
                         P{panel.panel_number}
                       </span>
                       <ShotTypeBadge type={panel.shot_type} />
@@ -692,25 +682,25 @@ export default function ScriptEditor() {
                     {/* Status icon */}
                     <span className="flex-shrink-0 mt-0.5">
                       {panel.status === 'completed' && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" aria-label="已完成" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-status-completed" aria-label="已完成" />
                       )}
                       {panel.status === 'generating' && (
-                        <Loader2 className="w-3.5 h-3.5 text-primary animate-spin" aria-label="生成中" />
+                        <Loader2 className="w-3.5 h-3.5 text-accent animate-spin" aria-label="生成中" />
                       )}
                       {panel.status === 'pending' && (
-                        <Clock className="w-3.5 h-3.5 text-slate-600" aria-label="待处理" />
+                        <Clock className="w-3.5 h-3.5 text-txt-muted" aria-label="待处理" />
                       )}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <p className="text-sm font-semibold text-white group-hover:text-primary transition-colors line-clamp-1">
+                  <p className="text-sm font-semibold text-txt-primary group-hover:text-accent transition-colors line-clamp-1">
                     {panel.title}
                   </p>
 
                   {/* Description */}
                   {panel.action_description && (
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-txt-muted line-clamp-2 leading-relaxed">
                       {panel.action_description}
                     </p>
                   )}
@@ -720,19 +710,19 @@ export default function ScriptEditor() {
                     {/* Dialogue indicator */}
                     <div className="flex items-center gap-3">
                       {panel.dialogue ? (
-                        <span className="flex items-center gap-1 text-[10px] text-slate-500">
+                        <span className="flex items-center gap-1 text-[10px] text-txt-muted">
                           <User className="w-3 h-3" aria-hidden="true" />
-                          <span className="text-slate-400 truncate max-w-[100px]">
+                          <span className="text-txt-secondary truncate max-w-[100px]">
                             {panel.dialogue}
                           </span>
                         </span>
                       ) : (
-                        <span className="text-[10px] text-slate-700 italic">无对白</span>
+                        <span className="text-[10px] text-txt-muted italic">无对白</span>
                       )}
                     </div>
 
                     {/* Duration badge */}
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-800/80 px-1.5 py-0.5 rounded">
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-txt-muted bg-white px-1.5 py-0.5 rounded">
                       <Clock className="w-2.5 h-2.5" aria-hidden="true" />
                       {panel.duration}s
                     </span>
@@ -743,9 +733,9 @@ export default function ScriptEditor() {
           </ul>
 
           {/* Add panel button */}
-          <div className="p-3 border-t border-slate-800 flex-shrink-0">
+          <div className="p-3 border-t border-bdr flex-shrink-0">
             <button
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-slate-700 text-xs text-slate-500 font-medium hover:border-primary/50 hover:text-primary transition-colors"
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-bdr text-xs text-txt-muted font-medium hover:border-accent/50 hover:text-accent transition-colors"
               aria-label="手动添加面板"
             >
               <Plus className="w-3.5 h-3.5" aria-hidden="true" />

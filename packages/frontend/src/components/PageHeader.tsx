@@ -27,16 +27,16 @@ export default function PageHeader({
   return (
     <div className="space-y-3">
       {breadcrumbs && breadcrumbs.length > 0 && (
-        <nav className="flex items-center gap-2 text-sm text-slate-400">
+        <nav className="flex items-center gap-2 text-sm text-txt-muted">
           {breadcrumbs.map((crumb, i) => (
             <span key={i} className="flex items-center gap-2">
-              {i > 0 && <ChevronRight className="w-3 h-3 text-slate-600" />}
+              {i > 0 && <ChevronRight className="w-3 h-3 text-txt-muted" />}
               {crumb.to ? (
-                <Link to={crumb.to} className="hover:text-primary transition-colors">
+                <Link to={crumb.to} className="hover:text-accent transition-colors">
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-slate-100 font-medium">{crumb.label}</span>
+                <span className="text-txt-primary font-medium">{crumb.label}</span>
               )}
             </span>
           ))}
@@ -47,11 +47,11 @@ export default function PageHeader({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             {title && (
-              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-txt-primary">
                 {title}
               </h1>
             )}
-            {subtitle && <p className="text-slate-400 text-sm mt-1">{subtitle}</p>}
+            {subtitle && <p className="text-txt-secondary text-sm mt-1">{subtitle}</p>}
             {tags && <div className="flex items-center gap-3 mt-2">{tags}</div>}
           </div>
           {actions && <div className="flex items-center gap-3">{actions}</div>}

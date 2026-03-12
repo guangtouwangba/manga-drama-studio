@@ -63,24 +63,24 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
 
   return (
     <aside
-      className={`flex-shrink-0 border-r border-slate-800 bg-background-dark flex flex-col transition-all duration-300 ${
+      className={`flex-shrink-0 bg-canvas flex flex-col transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       {/* Logo */}
-      <div className="px-4 py-5 flex items-center gap-3 border-b border-slate-800">
-        <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+      <div className="px-4 py-5 flex items-center gap-3">
+        <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center flex-shrink-0">
           <Clapperboard className="w-5 h-5 text-white" />
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="text-sm font-bold text-white truncate">AI Manga Editor</p>
-            <p className="text-[10px] text-slate-500 uppercase tracking-widest">Creator Studio</p>
+            <p className="text-sm font-bold text-txt-primary truncate">AI Manga Editor</p>
+            <p className="text-[10px] text-txt-muted uppercase tracking-widest">Creator Studio</p>
           </div>
         )}
         <button
           onClick={onToggle}
-          className="ml-auto p-1.5 rounded-lg hover:bg-slate-800 text-slate-500 transition-colors"
+          className="ml-auto p-1.5 rounded-full hover:bg-white/60 text-txt-muted transition-colors"
           aria-label="Toggle sidebar"
         >
           <PanelLeft className="w-4 h-4" />
@@ -99,17 +99,17 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
           return (
             <div key={i}>
               {item.dividerBefore && !collapsed && (
-                <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-3 py-2 mt-4">
+                <p className="text-[10px] font-bold text-txt-muted uppercase tracking-widest px-3 py-2 mt-4">
                   {item.dividerBefore}
                 </p>
               )}
               <Link
                 to={item.to}
                 aria-current={isActive ? 'page' : undefined}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors ${
                   isActive
-                    ? 'bg-primary/10 text-primary font-medium border border-primary/20'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                    ? 'bg-white text-accent font-medium shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
+                    : 'text-txt-secondary hover:bg-white/60 hover:text-txt-primary'
                 } ${collapsed ? 'justify-center' : ''}`}
                 title={collapsed ? item.label : undefined}
               >
@@ -123,11 +123,11 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
 
       {/* Footer */}
       {context === 'home' && !collapsed && (
-        <div className="p-4 border-t border-slate-800">
-          <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-800">
+        <div className="p-4">
+          <div className="bg-white/70 p-4 rounded-xl">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-xs font-medium text-slate-400">存储空间</span>
-              <span className="text-xs font-bold text-primary">85%</span>
+              <span className="text-xs font-medium text-txt-secondary">存储空间</span>
+              <span className="text-xs font-bold text-accent">85%</span>
             </div>
             <ProgressBar percent={85} />
           </div>
@@ -135,14 +135,14 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
       )}
 
       {context !== 'home' && !collapsed && (
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-accent-light flex items-center justify-center text-accent font-bold text-xs">
               SY
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-white truncate">Studio User</p>
-              <p className="text-[10px] text-slate-500">管理员</p>
+              <p className="text-sm font-medium text-txt-primary truncate">Studio User</p>
+              <p className="text-[10px] text-txt-muted">管理员</p>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
         <div className="px-3 pb-3">
           <Link
             to="/help"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-txt-secondary hover:bg-white/60 hover:text-txt-primary transition-colors"
           >
             <HelpCircle className="w-5 h-5" />
             {!collapsed && <span className="text-sm">帮助中心</span>}

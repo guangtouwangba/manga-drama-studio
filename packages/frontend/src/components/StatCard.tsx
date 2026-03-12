@@ -19,20 +19,20 @@ export default function StatCard({
   icon,
 }: StatCardProps) {
   return (
-    <div className="bg-slate-800/50 p-5 rounded-2xl border border-slate-800">
+    <div className="bg-white rounded-[24px] p-6">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{label}</p>
-        {icon && <div className="text-slate-500">{icon}</div>}
+        <p className="text-xs font-bold text-txt-secondary uppercase tracking-widest">{label}</p>
+        {icon && <div className="text-txt-secondary">{icon}</div>}
       </div>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-3xl font-black text-white">{value}</p>
-          {subtitle && <span className="text-slate-400 text-xs">{subtitle}</span>}
+          <p className="text-3xl font-black text-txt-primary">{value}</p>
+          {subtitle && <span className="text-txt-secondary text-xs">{subtitle}</span>}
         </div>
         {trend && (
           <span
             className={`flex items-center text-xs font-bold mt-1 ${
-              trend.positive !== false ? 'text-green-500' : 'text-red-500'
+              trend.positive !== false ? 'text-status-completed' : 'text-status-failed'
             }`}
           >
             {trend.value}

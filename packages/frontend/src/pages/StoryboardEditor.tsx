@@ -251,8 +251,8 @@ function AssocIcon({ type }: { type: PanelAssociation['type'] }) {
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-3">
-      <span className="w-4 h-[2px] bg-primary flex-shrink-0" />
+    <h3 className="text-[10px] font-bold text-txt-muted uppercase tracking-widest flex items-center gap-2 mb-3">
+      <span className="w-4 h-[2px] bg-accent flex-shrink-0" />
       {children}
     </h3>
   );
@@ -289,12 +289,12 @@ export default function StoryboardEditor() {
   return (
     <AppLayout layout="header-only">
       {/* ── Inner header: nav tabs + actions ── */}
-      <div className="flex items-center justify-between border-b border-[#314368] bg-[#0a0f1a]/80 backdrop-blur-md px-6 py-2.5 flex-shrink-0">
+      <div className="flex items-center justify-between border-b border-bdr bg-white px-6 py-2.5 flex-shrink-0">
         <div className="flex items-center gap-6">
           {/* Logo / brand */}
           <div className="flex items-center gap-2 mr-2">
-            <Film className="w-5 h-5 text-primary" />
-            <span className="font-bold text-sm text-white hidden sm:inline">分镜编辑器</span>
+            <Film className="w-5 h-5 text-accent" />
+            <span className="font-bold text-sm text-txt-primary hidden sm:inline">分镜编辑器</span>
           </div>
           {/* Nav tabs */}
           <nav className="hidden md:flex gap-1" aria-label="编辑器导航">
@@ -309,8 +309,8 @@ export default function StoryboardEditor() {
                 to={tab.to}
                 className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
                   tab.active
-                    ? 'bg-primary/10 text-primary border-b-2 border-primary pb-[5px]'
-                    : 'text-slate-400 hover:text-white hover:bg-[#1a2234]'
+                    ? 'border-b-2 border-accent text-accent pb-[5px]'
+                    : 'text-txt-secondary hover:text-accent hover:bg-surface-subtle'
                 }`}
               >
                 {tab.label}
@@ -321,19 +321,23 @@ export default function StoryboardEditor() {
 
         <div className="flex items-center gap-2">
           <div className="relative hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-txt-muted w-4 h-4 pointer-events-none" />
             <input
               type="text"
               placeholder="搜索分镜..."
               aria-label="搜索分镜"
-              className="bg-[#101622] border border-[#314368] rounded-lg pl-9 pr-4 py-1.5 text-sm w-44 focus:ring-1 focus:ring-primary outline-none text-slate-200 placeholder-slate-500"
+              className="bg-surface-subtle border border-bdr rounded-lg pl-9 pr-4 py-1.5 text-sm w-44 focus:ring-1 focus:ring-accent outline-none text-txt-primary placeholder-txt-muted"
             />
           </div>
-          <Button variant="primary" size="sm" icon={<Save className="w-3.5 h-3.5" />}>
-            保存
-          </Button>
           <button
-            className="p-2 rounded-lg hover:bg-[#1a2234] text-slate-500 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-1.5 bg-txt-primary text-white text-sm font-medium rounded-full transition-colors hover:bg-txt-primary/90"
+            aria-label="保存"
+          >
+            <Save className="w-3.5 h-3.5" />
+            保存
+          </button>
+          <button
+            className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted transition-colors"
             aria-label="设置"
           >
             <Settings className="w-4 h-4" />
@@ -348,61 +352,59 @@ export default function StoryboardEditor() {
             LEFT PANEL — Panel grid / timeline (w-[40%])
         ════════════════════════════════════════════════════ */}
         <aside
-          className="w-[40%] min-w-[300px] border-r border-[#314368] flex flex-col"
+          className="w-[40%] min-w-[300px] border-r border-bdr flex flex-col bg-white"
           aria-label="分镜列表"
         >
           {/* Breadcrumb + toolbar */}
-          <div className="px-4 pt-3 pb-3 border-b border-[#314368] space-y-3 flex-shrink-0 bg-[#0a0f1a]">
+          <div className="px-4 pt-3 pb-3 border-b border-bdr space-y-3 flex-shrink-0 bg-white">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-1 text-xs text-slate-500 overflow-hidden" aria-label="面包屑">
-              <Link to="/projects" className="hover:text-primary transition-colors truncate">
+            <nav className="flex items-center gap-1 text-xs text-txt-muted overflow-hidden" aria-label="面包屑">
+              <Link to="/projects" className="hover:text-accent transition-colors truncate">
                 项目
               </Link>
               <ChevronRight className="w-3 h-3 flex-shrink-0" />
-              <Link to={`/projects/${id}`} className="hover:text-primary transition-colors truncate">
+              <Link to={`/projects/${id}`} className="hover:text-accent transition-colors truncate">
                 {EPISODE_META.projectTitle}
               </Link>
               <ChevronRight className="w-3 h-3 flex-shrink-0" />
               <span className="truncate">{EPISODE_META.episodeTitle}</span>
               <ChevronRight className="w-3 h-3 flex-shrink-0" />
-              <span className="text-primary font-medium flex-shrink-0">分镜脚本</span>
+              <span className="text-accent font-medium flex-shrink-0">分镜脚本</span>
             </nav>
 
             {/* Toolbar */}
             <div className="flex items-center justify-between gap-2">
               <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  icon={<Wand2 className="w-3.5 h-3.5" />}
+                <button
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-light text-accent text-xs font-medium rounded-full transition-colors hover:bg-accent/20"
                   aria-label="自动规划分镜"
                 >
+                  <Wand2 className="w-3.5 h-3.5" />
                   自动规划
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  icon={<Plus className="w-3.5 h-3.5" />}
+                </button>
+                <button
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-subtle text-txt-primary text-xs font-medium rounded-full transition-colors hover:bg-bdr"
                   aria-label="插入新分镜"
                 >
+                  <Plus className="w-3.5 h-3.5" />
                   插入分镜
-                </Button>
+                </button>
               </div>
-              <div className="flex items-center gap-4 text-xs text-slate-500">
+              <div className="flex items-center gap-4 text-xs text-txt-muted">
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] uppercase tracking-widest">总分镜</span>
-                  <span className="font-bold text-white">{MOCK_PANELS.length}</span>
+                  <span className="font-bold text-txt-primary">{MOCK_PANELS.length}</span>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] uppercase tracking-widest">总时长</span>
-                  <span className="font-bold text-white">{totalDuration.toFixed(1)}s</span>
+                  <span className="font-bold text-txt-primary">{totalDuration.toFixed(1)}s</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Scrollable panel grid */}
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-4 bg-[#0a0f1a]">
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-4 bg-canvas">
             <div className="grid grid-cols-2 gap-3" role="listbox" aria-label="分镜面板列表">
               {MOCK_PANELS.map((panel) => {
                 const isSelected = panel.id === selectedPanelId;
@@ -415,14 +417,14 @@ export default function StoryboardEditor() {
                     role="option"
                     aria-selected={isSelected}
                     onClick={() => setSelectedPanelId(panel.id)}
-                    className={`group relative text-left rounded-xl p-2 border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                    className={`group relative text-left rounded-xl p-2 border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                       isSelected
-                        ? 'bg-primary/15 border-primary ring-2 ring-primary/30'
-                        : 'bg-[#101622] border-[#314368] hover:border-primary/60 hover:bg-[#1a2234]'
+                        ? 'bg-white border-accent ring-2 ring-accent/30'
+                        : 'bg-white border-bdr hover:border-accent/60 hover:bg-surface-subtle'
                     }`}
                   >
                     {/* Thumbnail */}
-                    <div className="aspect-video rounded-lg mb-2 overflow-hidden bg-[#1a2234] relative">
+                    <div className="aspect-video rounded-lg mb-2 overflow-hidden bg-surface-subtle relative">
                       {panel.image_url ? (
                         <img
                           src={panel.image_url}
@@ -433,20 +435,20 @@ export default function StoryboardEditor() {
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center border border-dashed border-[#314368]">
-                          <ImageIcon className="w-5 h-5 text-slate-600" />
+                        <div className="w-full h-full flex items-center justify-center border border-dashed border-bdr">
+                          <ImageIcon className="w-5 h-5 text-txt-muted" />
                         </div>
                       )}
 
                       {/* Generating overlay */}
                       {(isActiveGenerating || isGeneratingStatus) && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                          <Loader2 className="w-7 h-7 text-primary animate-spin" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-[#1A1A1A]/30">
+                          <Loader2 className="w-7 h-7 text-accent animate-spin" />
                         </div>
                       )}
 
                       {/* Shot-type badge overlay */}
-                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-black/60 backdrop-blur-sm text-[9px] font-bold text-slate-300 rounded">
+                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-accent text-white text-[9px] font-bold rounded">
                         {panel.shot_type}
                       </span>
                     </div>
@@ -457,17 +459,17 @@ export default function StoryboardEditor() {
                         {/* Number badge */}
                         <span
                           className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                            isSelected ? 'bg-primary text-white' : 'bg-primary/10 text-primary'
+                            isSelected ? 'bg-accent text-white' : 'bg-accent-light text-accent'
                           }`}
                         >
                           P{panel.panel_number}
                         </span>
-                        <p className="text-[11px] mt-1 font-medium text-slate-200 line-clamp-1">
+                        <p className="text-[11px] mt-1 font-medium text-txt-primary line-clamp-1">
                           {panel.title}
                         </p>
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <Clock className="w-3 h-3 text-slate-600" />
-                          <span className="text-[10px] text-slate-500">
+                          <Clock className="w-3 h-3 text-txt-muted" />
+                          <span className="text-[10px] text-txt-muted">
                             {panel.duration}s
                           </span>
                         </div>
@@ -476,13 +478,13 @@ export default function StoryboardEditor() {
                       {/* Status icon */}
                       <div className="flex-shrink-0 mt-0.5">
                         {panel.status === 'completed' && (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500" aria-label="已完成" />
+                          <CheckCircle2 className="w-4 h-4 text-status-completed" aria-label="已完成" />
                         )}
                         {(panel.status === 'generating' || isActiveGenerating) && (
-                          <Loader2 className="w-4 h-4 text-primary animate-spin" aria-label="生成中" />
+                          <Loader2 className="w-4 h-4 text-accent animate-spin" aria-label="生成中" />
                         )}
                         {panel.status === 'pending' && !isActiveGenerating && (
-                          <Clock className="w-4 h-4 text-slate-600" aria-label="等待中" />
+                          <Clock className="w-4 h-4 text-txt-muted" aria-label="等待中" />
                         )}
                       </div>
                     </div>
@@ -497,27 +499,27 @@ export default function StoryboardEditor() {
             RIGHT PANEL — Panel detail editor (flex-1)
         ════════════════════════════════════════════════════ */}
         <main
-          className="flex-1 flex flex-col overflow-hidden bg-[#0a0f1a]"
+          className="flex-1 flex flex-col overflow-hidden bg-canvas"
           aria-label="分镜详情编辑器"
         >
           {/* Detail header */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-[#314368] bg-[#0a0f1a]/90 backdrop-blur-md flex-shrink-0 sticky top-0 z-10">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-bdr bg-white flex-shrink-0 sticky top-0 z-10">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 bg-primary text-white text-xs font-bold rounded-lg">
+              <span className="px-2.5 py-1 bg-accent text-white text-xs font-bold rounded-lg">
                 P{selectedPanel.panel_number}
               </span>
-              <h2 className="font-bold text-white text-base">{selectedPanel.title}</h2>
+              <h2 className="font-bold text-txt-primary text-base">{selectedPanel.title}</h2>
               <StatusBadge status={selectedPanel.status} size="sm" />
             </div>
             <div className="flex items-center gap-1">
               <button
-                className="p-2 rounded-lg hover:bg-[#1a2234] text-slate-500 transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted transition-colors"
                 aria-label="复制分镜"
               >
                 <Copy className="w-4 h-4" />
               </button>
               <button
-                className="p-2 rounded-lg hover:bg-[#1a2234] text-slate-500 hover:text-red-400 transition-colors"
+                className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-status-failed transition-colors"
                 aria-label="删除分镜"
               >
                 <Trash2 className="w-4 h-4" />
@@ -530,7 +532,7 @@ export default function StoryboardEditor() {
             <div className="p-5 space-y-6 pb-8">
 
               {/* ── Large preview image ── */}
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-[#101622] border border-[#314368] group">
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-surface-subtle group">
                 {selectedPanel.image_url ? (
                   <img
                     src={
@@ -542,7 +544,7 @@ export default function StoryboardEditor() {
                     }`}
                   />
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-slate-600">
+                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 text-txt-muted">
                     <ImageIcon className="w-14 h-14" />
                     <p className="text-sm">尚未生成图片</p>
                   </div>
@@ -550,15 +552,15 @@ export default function StoryboardEditor() {
 
                 {/* Regen overlay */}
                 {isRegenerating && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 gap-3">
-                    <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                    <p className="text-sm text-slate-300 font-medium">生成中...</p>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1A1A1A]/30 gap-3">
+                    <Loader2 className="w-12 h-12 text-accent animate-spin" />
+                    <p className="text-sm text-white font-medium">生成中...</p>
                   </div>
                 )}
 
                 {/* Hover controls */}
                 {selectedPanel.image_url && !isRegenerating && (
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                  <div className="absolute inset-0 bg-[#1A1A1A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                     <button
                       className="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors"
                       aria-label="播放"
@@ -576,7 +578,7 @@ export default function StoryboardEditor() {
 
                 {/* Camera badge */}
                 {selectedPanel.camera_angle && (
-                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-black/70 backdrop-blur-sm rounded-lg text-xs text-slate-300">
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-[#1A1A1A]/60 backdrop-blur-sm rounded-lg text-xs text-white">
                     <Camera className="w-3.5 h-3.5" />
                     <span>{selectedPanel.camera_angle}</span>
                   </div>
@@ -585,41 +587,37 @@ export default function StoryboardEditor() {
 
               {/* ── Action buttons ── */}
               <div className="flex items-center justify-between gap-3 flex-wrap">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  icon={<RefreshCw className={`w-3.5 h-3.5 ${isRegenerating ? 'animate-spin' : ''}`} />}
+                <button
+                  className="flex items-center gap-1.5 px-4 py-1.5 border border-bdr rounded-full text-sm font-medium text-txt-primary transition-colors hover:bg-surface-subtle disabled:opacity-50"
                   onClick={handleRegenerate}
                   disabled={isRegenerating}
                   aria-label="重新生成图片"
                 >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isRegenerating ? 'animate-spin' : ''}`} />
                   {isRegenerating ? '生成中...' : '重新生成'}
-                </Button>
+                </button>
                 <div className="flex gap-2">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    icon={<Video className="w-3.5 h-3.5" />}
+                  <button
+                    className="flex items-center gap-1.5 px-4 py-1.5 bg-txt-primary text-white text-sm font-medium rounded-full transition-colors hover:bg-txt-primary/90"
                     aria-label="生成视频"
                   >
+                    <Video className="w-3.5 h-3.5" />
                     生成视频
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    icon={<Check className="w-3.5 h-3.5" />}
+                  </button>
+                  <button
+                    className="flex items-center gap-1.5 px-4 py-1.5 bg-accent-light text-accent text-sm font-medium rounded-full transition-colors hover:bg-accent/20"
                     aria-label="批准此分镜"
                   >
+                    <Check className="w-3.5 h-3.5" />
                     批准
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    icon={<Mic className="w-3.5 h-3.5" />}
+                  </button>
+                  <button
+                    className="flex items-center gap-1.5 px-4 py-1.5 border border-bdr rounded-full text-sm font-medium text-txt-primary transition-colors hover:bg-surface-subtle"
                     aria-label="试听配音"
                   >
+                    <Mic className="w-3.5 h-3.5" />
                     试听配音
-                  </Button>
+                  </button>
                 </div>
               </div>
 
@@ -628,11 +626,11 @@ export default function StoryboardEditor() {
                 <SectionHeading>镜头设计</SectionHeading>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                       景别
                     </label>
                     <select
-                      className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary appearance-none"
+                      className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent appearance-none"
                       defaultValue={selectedPanel.shot_type}
                     >
                       <option>全景</option>
@@ -644,11 +642,11 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                       角度
                     </label>
                     <select
-                      className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary appearance-none"
+                      className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent appearance-none"
                       defaultValue={selectedPanel.camera_angle ?? '平视'}
                     >
                       <option>平视</option>
@@ -658,11 +656,11 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                       运镜
                     </label>
                     <select
-                      className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary appearance-none"
+                      className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent appearance-none"
                       defaultValue={selectedPanel.camera_movement ?? '固定'}
                     >
                       <option>固定</option>
@@ -674,7 +672,7 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                       时长
                     </label>
                     <div className="relative">
@@ -685,9 +683,9 @@ export default function StoryboardEditor() {
                         max="30"
                         defaultValue={selectedPanel.duration}
                         aria-label="分镜时长（秒）"
-                        className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary pr-7"
+                        className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent pr-7"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-500 font-bold pointer-events-none">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-txt-muted font-bold pointer-events-none">
                         s
                       </span>
                     </div>
@@ -702,11 +700,11 @@ export default function StoryboardEditor() {
                   {/* Left column */}
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                         动作描述
                       </label>
                       <textarea
-                        className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2.5 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary resize-none"
+                        className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2.5 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent resize-none"
                         rows={3}
                         defaultValue={selectedPanel.action_description ?? ''}
                         placeholder="描述画面中的动作..."
@@ -714,23 +712,23 @@ export default function StoryboardEditor() {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                        <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                           氛围
                         </label>
                         <input
                           type="text"
-                          className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary"
+                          className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent"
                           defaultValue={selectedPanel.mood ?? ''}
                           placeholder="如：紧张、温馨"
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                        <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                           情绪
                         </label>
                         <input
                           type="text"
-                          className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary"
+                          className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent"
                           defaultValue={selectedPanel.emotion ?? ''}
                           placeholder="如：威严、悲伤"
                         />
@@ -741,23 +739,23 @@ export default function StoryboardEditor() {
                   {/* Right column */}
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                         对白
                       </label>
                       <textarea
-                        className="w-full bg-[#101622] border-l-4 border-l-primary/50 border border-[#314368] rounded-lg px-3 py-2.5 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary resize-none italic"
+                        className="w-full bg-surface-subtle border-l-4 border-l-accent/50 border border-bdr rounded-lg px-3 py-2.5 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent resize-none italic"
                         rows={3}
                         defaultValue={selectedPanel.dialogue ?? ''}
                         placeholder="无对白..."
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-slate-500 uppercase tracking-widest block">
+                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
                         旁白 / 音效
                       </label>
                       <input
                         type="text"
-                        className="w-full bg-[#101622] border border-[#314368] rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:ring-1 focus:ring-primary"
+                        className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent"
                         defaultValue={selectedPanel.narration ?? ''}
                         placeholder="描述旁白或特殊音效..."
                       />
@@ -776,16 +774,16 @@ export default function StoryboardEditor() {
                       role="listitem"
                       className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
                         assoc.type === 'character'
-                          ? 'bg-primary/10 border border-primary/30 text-primary'
+                          ? 'bg-accent-light text-accent'
                           : assoc.type === 'location'
-                          ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-                          : 'bg-[#1a2234] border border-[#314368] text-slate-300'
+                          ? 'bg-status-completed/10 text-status-completed'
+                          : 'bg-surface-subtle text-txt-secondary'
                       }`}
                     >
                       <AssocIcon type={assoc.type} />
                       <span>{assoc.name}</span>
                       <button
-                        className="hover:text-red-400 transition-colors ml-0.5"
+                        className="hover:text-status-failed transition-colors ml-0.5"
                         aria-label={`移除 ${assoc.name}`}
                       >
                         <X className="w-3 h-3" />
@@ -793,7 +791,7 @@ export default function StoryboardEditor() {
                     </div>
                   ))}
                   <button
-                    className="flex items-center gap-1.5 px-3 py-1.5 border border-dashed border-[#314368] rounded-full text-xs text-slate-500 font-medium hover:border-primary hover:text-primary transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 border border-dashed border-bdr rounded-full text-xs text-txt-muted font-medium hover:border-accent hover:text-accent transition-colors"
                     aria-label="添加关联资产"
                   >
                     <Plus className="w-3 h-3" />
@@ -805,28 +803,28 @@ export default function StoryboardEditor() {
               {/* ── Prompt sections ── */}
               <div className="space-y-3">
                 {/* Image prompt */}
-                <div className="rounded-xl border border-[#314368] overflow-hidden">
+                <div className="rounded-xl border border-bdr overflow-hidden">
                   <button
                     onClick={() => setImagePromptOpen(!imagePromptOpen)}
-                    className="w-full flex items-center justify-between p-3.5 bg-[#101622] hover:bg-[#1a2234] transition-colors"
+                    className="w-full flex items-center justify-between p-3.5 bg-white hover:bg-surface-subtle transition-colors"
                     aria-expanded={imagePromptOpen}
                   >
                     <div className="flex items-center gap-2">
-                      <ImageIcon className="w-4 h-4 text-primary" />
-                      <span className="text-sm font-bold uppercase tracking-wider text-slate-300">
+                      <ImageIcon className="w-4 h-4 text-accent" />
+                      <span className="text-sm font-bold uppercase tracking-wider text-txt-primary">
                         图片生成提示词
                       </span>
                     </div>
                     {imagePromptOpen ? (
-                      <ChevronUp className="w-4 h-4 text-slate-500" />
+                      <ChevronUp className="w-4 h-4 text-txt-muted" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-slate-500" />
+                      <ChevronDown className="w-4 h-4 text-txt-muted" />
                     )}
                   </button>
                   {imagePromptOpen && (
-                    <div className="p-4 bg-[#0a0f1a]">
+                    <div className="p-4 bg-surface-subtle">
                       <textarea
-                        className="w-full bg-[#101622] border border-[#314368] rounded-lg p-3 text-xs text-slate-400 resize-none focus:ring-1 focus:ring-primary outline-none leading-relaxed font-mono"
+                        className="w-full bg-white border border-bdr rounded-lg p-3 text-xs text-txt-secondary resize-none focus:ring-1 focus:ring-accent outline-none leading-relaxed font-mono"
                         rows={4}
                         defaultValue={selectedPanel.image_prompt ?? ''}
                         aria-label="图片生成提示词"
@@ -836,28 +834,28 @@ export default function StoryboardEditor() {
                 </div>
 
                 {/* Video prompt */}
-                <div className="rounded-xl border border-[#314368] overflow-hidden">
+                <div className="rounded-xl border border-bdr overflow-hidden">
                   <button
                     onClick={() => setVideoPromptOpen(!videoPromptOpen)}
-                    className="w-full flex items-center justify-between p-3.5 bg-[#101622] hover:bg-[#1a2234] transition-colors"
+                    className="w-full flex items-center justify-between p-3.5 bg-white hover:bg-surface-subtle transition-colors"
                     aria-expanded={videoPromptOpen}
                   >
                     <div className="flex items-center gap-2">
-                      <Video className="w-4 h-4 text-primary" />
-                      <span className="text-sm font-bold uppercase tracking-wider text-slate-300">
+                      <Video className="w-4 h-4 text-accent" />
+                      <span className="text-sm font-bold uppercase tracking-wider text-txt-primary">
                         视频动作提示词
                       </span>
                     </div>
                     {videoPromptOpen ? (
-                      <ChevronUp className="w-4 h-4 text-slate-500" />
+                      <ChevronUp className="w-4 h-4 text-txt-muted" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-slate-500" />
+                      <ChevronDown className="w-4 h-4 text-txt-muted" />
                     )}
                   </button>
                   {videoPromptOpen && (
-                    <div className="p-4 bg-[#0a0f1a]">
+                    <div className="p-4 bg-surface-subtle">
                       <textarea
-                        className="w-full bg-[#101622] border border-[#314368] rounded-lg p-3 text-xs text-slate-400 resize-none focus:ring-1 focus:ring-primary outline-none leading-relaxed font-mono"
+                        className="w-full bg-white border border-bdr rounded-lg p-3 text-xs text-txt-secondary resize-none focus:ring-1 focus:ring-accent outline-none leading-relaxed font-mono"
                         rows={3}
                         defaultValue={selectedPanel.video_prompt ?? ''}
                         aria-label="视频动作提示词"
@@ -881,10 +879,10 @@ export default function StoryboardEditor() {
                           onClick={() => setActiveVersionId(version.id)}
                           aria-pressed={isActive}
                           aria-label={`版本 ${version.version_number}: ${version.label}`}
-                          className={`flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                          className={`flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                             isActive
-                              ? 'border-primary ring-2 ring-primary/30'
-                              : 'border-[#314368] hover:border-primary/50'
+                              ? 'border-accent ring-2 ring-accent/30'
+                              : 'border-bdr hover:border-accent/50'
                           }`}
                         >
                           <div className="relative w-32 h-[72px]">
@@ -895,16 +893,16 @@ export default function StoryboardEditor() {
                               loading="lazy"
                             />
                             {isActive && (
-                              <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
-                                <CheckCircle2 className="w-6 h-6 text-primary drop-shadow-lg" />
+                              <div className="absolute inset-0 bg-accent/20 flex items-center justify-center">
+                                <CheckCircle2 className="w-6 h-6 text-accent drop-shadow-lg" />
                               </div>
                             )}
                           </div>
-                          <div className={`px-2 py-1.5 text-left ${isActive ? 'bg-primary/10' : 'bg-[#101622]'}`}>
-                            <p className={`text-[10px] font-bold ${isActive ? 'text-primary' : 'text-slate-400'}`}>
+                          <div className={`px-2 py-1.5 text-left ${isActive ? 'bg-accent-light' : 'bg-white'}`}>
+                            <p className={`text-[10px] font-bold ${isActive ? 'text-accent' : 'text-txt-secondary'}`}>
                               v{version.version_number} · {version.label}
                             </p>
-                            <p className="text-[9px] text-slate-600 mt-0.5">{version.model_used}</p>
+                            <p className="text-[9px] text-txt-muted mt-0.5">{version.model_used}</p>
                           </div>
                         </button>
                       );
@@ -915,16 +913,15 @@ export default function StoryboardEditor() {
 
               {/* ── Continue to next step ── */}
               <div className="pt-2 flex justify-end">
-                <Button
-                  variant="primary"
-                  size="md"
-                  iconRight={<ArrowRight className="w-4 h-4" />}
+                <button
+                  className="flex items-center gap-1.5 px-5 py-2 bg-txt-primary text-white text-sm font-medium rounded-full transition-colors hover:bg-txt-primary/90"
                   onClick={() =>
                     navigate(`/projects/${id}/episodes/${eid}/storyboard/panels/${selectedPanel.id}/compare`)
                   }
                 >
                   版本对比
-                </Button>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
           </div>
@@ -932,10 +929,10 @@ export default function StoryboardEditor() {
       </div>
 
       {/* ── Status footer bar ── */}
-      <div className="h-9 border-t border-[#314368] bg-[#0a0f1a] flex items-center justify-between px-6 flex-shrink-0">
-        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+      <div className="h-9 border-t border-bdr bg-white flex items-center justify-between px-6 flex-shrink-0">
+        <div className="flex items-center gap-4 text-[10px] font-bold text-txt-muted uppercase tracking-widest">
           <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+            <span className="w-1.5 h-1.5 rounded-full bg-status-completed" aria-hidden="true" />
             渲染就绪
           </span>
           <span className="flex items-center gap-1.5">
@@ -943,7 +940,7 @@ export default function StoryboardEditor() {
             GPU 24%
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] font-bold text-slate-600 uppercase tracking-widest">
+        <div className="flex items-center gap-4 text-[10px] font-bold text-txt-muted uppercase tracking-widest">
           <span>Space 播放</span>
           <span>J / L 跳转</span>
           <span>S 保存</span>

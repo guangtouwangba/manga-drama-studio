@@ -68,11 +68,11 @@ export default function VersionComparison() {
   return (
     <AppLayout layout="split">
       {/* Top navigation */}
-      <div className="flex items-center justify-between border-b border-slate-800 px-6 py-3 bg-background-dark/50 backdrop-blur-md flex-shrink-0">
+      <div className="flex items-center justify-between border-b border-bdr px-6 py-3 bg-white flex-shrink-0">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <Film className="w-5 h-5 text-primary" />
-            <span className="font-bold text-sm text-white">分镜编辑器</span>
+            <Film className="w-5 h-5 text-accent" />
+            <span className="font-bold text-sm text-txt-primary">分镜编辑器</span>
           </div>
           <nav className="hidden md:flex gap-1">
             {['项目', '素材库', '分镜编辑器', '版本对比'].map((tab, i) => (
@@ -80,8 +80,8 @@ export default function VersionComparison() {
                 key={tab}
                 className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
                   i === 3
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-accent-light text-accent'
+                    : 'text-txt-secondary hover:bg-surface-subtle hover:text-txt-primary'
                 }`}
               >
                 {tab}
@@ -90,41 +90,45 @@ export default function VersionComparison() {
           </nav>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="primary" size="sm" icon={<Save className="w-4 h-4" />}>
+          <button
+            className="flex items-center gap-1.5 px-4 py-1.5 bg-txt-primary text-white text-sm font-medium rounded-full transition-colors hover:bg-txt-primary/90"
+            aria-label="保存"
+          >
+            <Save className="w-4 h-4" />
             保存
-          </Button>
-          <div className="h-8 w-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-bold text-[10px]">
+          </button>
+          <div className="h-8 w-8 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-bold text-[10px]">
             SY
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
+      <div className="flex-1 overflow-y-auto custom-scrollbar bg-canvas">
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
           {/* Breadcrumb */}
-          <nav className="text-sm text-slate-400">
-            <Link to={`/projects/${id}`} className="hover:text-primary transition-colors">
+          <nav className="text-sm text-txt-muted">
+            <Link to={`/projects/${id}`} className="hover:text-accent transition-colors">
               仙玄纪元
             </Link>
             {' / '}
             <Link
               to={`/projects/${id}/episodes/${eid}/storyboard`}
-              className="hover:text-primary transition-colors"
+              className="hover:text-accent transition-colors"
             >
               场景 4
             </Link>
             {' / '}
-            <span className="text-slate-100 font-medium">面板 12 版本对比</span>
+            <span className="text-txt-primary font-medium">面板 12 版本对比</span>
           </nav>
 
           {/* Title section */}
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-txt-primary">
                 版本迭代对比
               </h1>
-              <p className="text-slate-400 mt-1 max-w-2xl">
+              <p className="text-txt-secondary mt-1 max-w-2xl">
                 对比不同版本的生成结果,选择最佳版本作为最终输出
               </p>
             </div>
@@ -154,9 +158,9 @@ export default function VersionComparison() {
           </div>
 
           {/* Version history */}
-          <div className="mt-12 border-t border-border-dark pt-8">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2 mb-6">
-              <Clock className="w-5 h-5 text-slate-400" />
+          <div className="mt-12 border-t border-bdr pt-8">
+            <h3 className="text-lg font-bold text-txt-primary flex items-center gap-2 mb-6">
+              <Clock className="w-5 h-5 text-txt-muted" />
               版本历史
             </h3>
             <div className="flex gap-4 overflow-x-auto pb-4">
@@ -170,21 +174,21 @@ export default function VersionComparison() {
                   }}
                   className={`min-w-[120px] aspect-[4/3] rounded-lg flex flex-col items-center justify-center transition-all ${
                     compareVersions.includes(v.version_number)
-                      ? 'border-2 border-primary bg-primary/10'
-                      : 'bg-slate-800 border border-border-dark hover:border-primary/50'
+                      ? 'border-2 border-accent bg-accent-light'
+                      : 'bg-surface-subtle hover:bg-accent-light/50'
                   }`}
                 >
                   <span
                     className={`text-sm font-bold uppercase ${
-                      compareVersions.includes(v.version_number) ? 'text-primary' : 'text-slate-400'
+                      compareVersions.includes(v.version_number) ? 'text-accent' : 'text-txt-secondary'
                     }`}
                   >
                     V{v.version_number}
                   </span>
-                  <span className="text-[10px] text-slate-500 mt-1">{v.label}</span>
+                  <span className="text-[10px] text-txt-muted mt-1">{v.label}</span>
                 </button>
               ))}
-              <button className="min-w-[120px] aspect-[4/3] rounded-lg flex flex-col items-center justify-center border border-dashed border-border-dark text-slate-500 hover:border-primary hover:text-primary transition-colors">
+              <button className="min-w-[120px] aspect-[4/3] rounded-lg flex flex-col items-center justify-center border border-dashed border-bdr text-txt-muted hover:border-accent hover:text-accent transition-colors">
                 <Plus className="w-5 h-5" />
                 <span className="text-[10px] mt-1">新版本</span>
               </button>
@@ -207,33 +211,33 @@ function VersionCard({
 }) {
   return (
     <div
-      className={`rounded-xl overflow-hidden shadow-2xl transition-all ${
+      className={`bg-white rounded-[24px] overflow-hidden transition-all ${
         version.is_latest
-          ? 'bg-panel-dark border-2 border-primary shadow-[0_0_40px_rgba(37,106,244,0.15)]'
-          : 'bg-panel-dark border border-border-dark'
+          ? 'ring-2 ring-accent/30'
+          : ''
       }`}
     >
       {/* Header */}
       <div
-        className={`flex items-center justify-between p-4 ${
-          version.is_latest ? 'bg-primary/10' : 'bg-slate-800/30'
-        } relative`}
+        className={`flex items-center justify-between p-4 relative ${
+          version.is_latest ? 'bg-accent-light' : 'bg-surface-subtle'
+        }`}
       >
         <div className="flex items-center gap-3">
           <span
             className={`px-2 py-1 text-xs font-bold rounded ${
-              version.is_latest ? 'bg-primary text-white' : 'bg-slate-700 text-slate-300'
+              version.is_latest ? 'bg-accent text-white' : 'bg-surface-subtle text-txt-secondary'
             }`}
           >
             V{version.version_number}
           </span>
           <div>
-            <p className="font-bold text-sm text-white">{version.label}</p>
-            <p className="text-[10px] text-slate-500">{version.created_at}</p>
+            <p className="font-bold text-sm text-txt-primary">{version.label}</p>
+            <p className="text-[10px] text-txt-muted">{version.created_at}</p>
           </div>
         </div>
         {version.is_latest && (
-          <span className="absolute top-0 right-0 bg-primary text-white px-3 py-1 text-[10px] font-bold uppercase rounded-bl-lg">
+          <span className="absolute top-0 right-0 bg-accent text-white px-3 py-1 text-[10px] font-bold uppercase rounded-bl-lg">
             最新版本
           </span>
         )}
@@ -246,7 +250,7 @@ function VersionCard({
           src={version.image_url}
           alt={version.label}
         />
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <div className="absolute inset-0 bg-[#1A1A1A]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <button className="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full transition-colors">
             <Maximize2 className="w-6 h-6 text-white" />
           </button>
@@ -255,14 +259,14 @@ function VersionCard({
 
       {/* Prompt */}
       <div className="p-4">
-        <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">
+        <p className="text-xs font-bold text-txt-muted uppercase tracking-widest mb-2">
           AI 提示词
         </p>
         <div
-          className={`p-4 rounded-lg text-sm leading-relaxed ${
+          className={`p-4 rounded-lg text-sm leading-relaxed border ${
             version.is_latest
-              ? 'bg-primary/5 border border-primary/20 text-slate-300'
-              : 'bg-slate-900/50 border border-border-dark/50 text-slate-300'
+              ? 'bg-accent-light/50 border-accent/20 text-txt-primary'
+              : 'bg-surface-subtle border-bdr text-txt-primary'
           }`}
         >
           {version.promptHighlights ? (
@@ -272,7 +276,7 @@ function VersionCard({
                   word.includes(h.split(' ')[0])
                 );
                 return isHighlight ? (
-                  <span key={i} className="text-primary font-semibold">
+                  <span key={i} className="text-accent font-semibold">
                     {word}
                   </span>
                 ) : (
@@ -289,11 +293,11 @@ function VersionCard({
       {/* Specs */}
       <div className="px-4 pb-4">
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="flex items-center gap-2 text-xs text-slate-400">
+          <div className="flex items-center gap-2 text-xs text-txt-muted">
             <Cpu className="w-3.5 h-3.5" />
             <span>{version.model_used}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-400">
+          <div className="flex items-center gap-2 text-xs text-txt-muted">
             <Clock className="w-3.5 h-3.5" />
             <span>{version.inference_time}s 推理时间</span>
           </div>

@@ -40,10 +40,10 @@ const MOCK_ACTIVITY: ActivityEvent[] = [
 ];
 
 const activityIcons: Record<string, { icon: typeof Zap; color: string }> = {
-  pipeline: { icon: Zap, color: 'bg-primary text-white' },
-  approval: { icon: CheckCircle2, color: 'bg-green-500 text-white' },
-  upload: { icon: Upload, color: 'bg-slate-700 text-slate-400' },
-  warning: { icon: AlertTriangle, color: 'bg-orange-500 text-white' },
+  pipeline: { icon: Zap, color: 'bg-accent text-white' },
+  approval: { icon: CheckCircle2, color: 'bg-status-completed text-white' },
+  upload: { icon: Upload, color: 'bg-surface-subtle text-txt-muted' },
+  warning: { icon: AlertTriangle, color: 'bg-status-waiting text-white' },
 };
 
 export default function ProjectDashboard() {
@@ -75,7 +75,7 @@ export default function ProjectDashboard() {
     return (
       <AppLayout layout="header-sidebar" sidebarContext="project">
         <div className="flex items-center justify-center py-32">
-          <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          <Loader2 className="w-8 h-8 text-accent animate-spin" />
         </div>
       </AppLayout>
     );
@@ -84,9 +84,9 @@ export default function ProjectDashboard() {
   if (!project) {
     return (
       <AppLayout layout="header-sidebar" sidebarContext="project">
-        <div className="flex flex-col items-center justify-center py-32 text-slate-400">
+        <div className="flex flex-col items-center justify-center py-32 text-txt-secondary">
           <p>项目未找到</p>
-          <Link to="/projects" className="text-primary mt-2 hover:underline">
+          <Link to="/projects" className="text-accent mt-2 hover:underline">
             返回项目列表
           </Link>
         </div>
@@ -105,13 +105,13 @@ export default function ProjectDashboard() {
         title={project.title}
         tags={
           <>
-            <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20 uppercase tracking-wider">
+            <span className="px-3 py-1 bg-accent-light text-accent text-xs font-bold rounded-lg border border-accent/20 uppercase tracking-wider">
               {project.genre || '仙侠'}
             </span>
-            <span className="px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded-lg border border-green-500/20">
+            <span className="px-3 py-1 bg-status-completed/10 text-status-completed text-xs font-bold rounded-lg border border-status-completed/20">
               活跃
             </span>
-            <span className="text-slate-500 text-sm">EP 05</span>
+            <span className="text-txt-muted text-sm">EP 05</span>
           </>
         }
         actions={
@@ -152,20 +152,20 @@ export default function ProjectDashboard() {
       <div className="flex flex-wrap gap-4">
         <QuickActionCard
           icon={<Brush className="w-6 h-6" />}
-          iconBg="bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"
+          iconBg="bg-accent-light text-accent group-hover:bg-accent group-hover:text-white"
           title="资产编辑器"
           desc="管理角色与场景"
           onClick={() => navigate(`/projects/${id}/assets`)}
         />
         <QuickActionCard
           icon={<Zap className="w-6 h-6" />}
-          iconBg="bg-orange-500/10 text-orange-500 group-hover:bg-orange-500 group-hover:text-white"
+          iconBg="bg-status-waiting/10 text-status-waiting group-hover:bg-status-waiting group-hover:text-white"
           title="流水线监控"
           desc="查看任务状态"
         />
         <QuickActionCard
           icon={<Server className="w-6 h-6" />}
-          iconBg="bg-purple-500/10 text-purple-500 group-hover:bg-purple-500 group-hover:text-white"
+          iconBg="bg-accent-light text-accent group-hover:bg-accent group-hover:text-white"
           title="模型配置"
           desc="AI 服务设置"
           onClick={() => navigate(`/projects/${id}/setup`)}
@@ -177,30 +177,30 @@ export default function ProjectDashboard() {
         {/* Episode table */}
         <div className="xl:col-span-2">
           <Card className="p-0 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-              <h2 className="text-lg font-bold text-white">剧集列表</h2>
-              <button className="text-sm text-primary hover:underline">查看全部</button>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-bdr">
+              <h2 className="text-lg font-bold text-txt-primary">剧集列表</h2>
+              <button className="text-sm text-accent hover:underline">查看全部</button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-slate-800">
-                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-xs">#</th>
-                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-xs">名称</th>
-                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-xs">面板</th>
-                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-xs">状态</th>
-                    <th className="px-6 py-4 font-bold text-slate-500 uppercase text-xs">操作</th>
+                  <tr className="border-b border-bdr">
+                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">#</th>
+                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">名称</th>
+                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">面板</th>
+                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">状态</th>
+                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">操作</th>
                   </tr>
                 </thead>
                 <tbody>
                   {MOCK_EPISODES.map((ep) => (
                     <tr
                       key={ep.id}
-                      className="border-b border-slate-800/50 hover:bg-slate-800/80 transition-colors"
+                      className="border-b border-bdr hover:bg-surface-subtle transition-colors"
                     >
-                      <td className="px-6 py-4 text-slate-400">{String(ep.episode_number).padStart(2, '0')}</td>
-                      <td className="px-6 py-4 font-medium text-white">{ep.title}</td>
-                      <td className="px-6 py-4 text-slate-400">{ep.panel_count}</td>
+                      <td className="px-6 py-4 text-txt-secondary">{String(ep.episode_number).padStart(2, '0')}</td>
+                      <td className="px-6 py-4 font-medium text-txt-primary">{ep.title}</td>
+                      <td className="px-6 py-4 text-txt-secondary">{ep.panel_count}</td>
                       <td className="px-6 py-4">
                         <StatusDot status={ep.status} />
                       </td>
@@ -208,20 +208,20 @@ export default function ProjectDashboard() {
                         <div className="flex items-center gap-1">
                           <Link
                             to={`/projects/${id}/episodes/${ep.id}/script`}
-                            className="p-2 hover:bg-slate-800 rounded-lg text-slate-500 hover:text-primary transition-colors"
+                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
                             title="剧本"
                           >
                             <FileText className="w-4 h-4" />
                           </Link>
                           <Link
                             to={`/projects/${id}/episodes/${ep.id}/storyboard`}
-                            className="p-2 hover:bg-slate-800 rounded-lg text-slate-500 hover:text-primary transition-colors"
+                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
                             title="分镜"
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
                           <button
-                            className="p-2 hover:bg-slate-800 rounded-lg text-slate-500 hover:text-primary transition-colors"
+                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
                             title="审核"
                           >
                             <ClipboardCheck className="w-4 h-4" />
@@ -239,8 +239,8 @@ export default function ProjectDashboard() {
         {/* Activity feed */}
         <div className="xl:col-span-1">
           <Card className="p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-800">
-              <h2 className="text-lg font-bold text-white">近期动态</h2>
+            <div className="px-6 py-4 border-b border-bdr">
+              <h2 className="text-lg font-bold text-txt-primary">近期动态</h2>
             </div>
             <div className="p-6 space-y-6">
               {MOCK_ACTIVITY.map((event, i) => {
@@ -249,7 +249,7 @@ export default function ProjectDashboard() {
                 return (
                   <div key={event.id} className="flex gap-4 relative">
                     {i < MOCK_ACTIVITY.length - 1 && (
-                      <div className="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-slate-700" />
+                      <div className="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-bdr" />
                     )}
                     <div
                       className={`w-6 h-6 rounded-full ${cfg.color} flex items-center justify-center z-10 shrink-0`}
@@ -257,8 +257,8 @@ export default function ProjectDashboard() {
                       <Icon className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex flex-col gap-1 min-w-0">
-                      <p className="text-sm font-bold text-white">{event.title}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-sm font-bold text-txt-primary">{event.title}</p>
+                      <p className="text-xs text-txt-muted">
                         {event.description} &middot; {event.timestamp}
                       </p>
                     </div>
@@ -267,7 +267,7 @@ export default function ProjectDashboard() {
               })}
             </div>
             <div className="px-6 pb-4">
-              <button className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-sm font-bold rounded-lg transition-colors text-slate-300">
+              <button className="w-full py-2.5 bg-surface-subtle hover:bg-bdr text-sm font-bold rounded-lg transition-colors text-txt-secondary">
                 查看全部流水线记录
               </button>
             </div>
@@ -294,7 +294,7 @@ function QuickActionCard({
   return (
     <button
       onClick={onClick}
-      className="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-2xl bg-slate-800/50 border border-slate-800 hover:border-primary/50 group transition-all cursor-pointer"
+      className="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-[24px] bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] group transition-all cursor-pointer"
     >
       <div
         className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${iconBg}`}
@@ -302,8 +302,8 @@ function QuickActionCard({
         {icon}
       </div>
       <div className="text-left">
-        <p className="font-bold text-sm text-white">{title}</p>
-        <p className="text-xs text-slate-500">{desc}</p>
+        <p className="font-bold text-sm text-txt-primary">{title}</p>
+        <p className="text-xs text-txt-muted">{desc}</p>
       </div>
     </button>
   );

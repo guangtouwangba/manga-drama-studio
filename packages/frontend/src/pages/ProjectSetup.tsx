@@ -68,14 +68,14 @@ const MOCK_SETTINGS: LocalForm = {
 };
 
 // ---------------------------------------------------------------------------
-// Shared input class (spec-compliant)
+// Shared input class (light theme)
 // ---------------------------------------------------------------------------
 
 const inputClass =
-  'w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none';
+  'w-full bg-white border border-bdr rounded-xl px-4 py-3 text-[15px] text-txt-primary placeholder:text-txt-muted focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none';
 
 const selectClass =
-  'w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none appearance-none cursor-pointer';
+  'w-full bg-white border border-bdr rounded-xl px-4 py-3 text-[15px] text-txt-primary placeholder:text-txt-muted focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all outline-none appearance-none cursor-pointer';
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -92,13 +92,13 @@ function SectionHeader({
 }) {
   return (
     <div className="flex items-start gap-3 mb-6">
-      <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5">
+      <div className="w-8 h-8 rounded-lg bg-accent-light border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-white text-base">{title}</h3>
+        <h3 className="font-bold text-txt-primary text-base">{title}</h3>
         {description && (
-          <p className="text-xs text-slate-500 mt-0.5">{description}</p>
+          <p className="text-xs text-txt-muted mt-0.5">{description}</p>
         )}
       </div>
     </div>
@@ -118,12 +118,12 @@ function FormField({
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-sm font-medium text-slate-300 flex items-center gap-1.5">
-        {icon && <span className="text-slate-500">{icon}</span>}
+      <label className="text-sm font-medium text-txt-secondary flex items-center gap-1.5">
+        {icon && <span className="text-txt-muted">{icon}</span>}
         {label}
       </label>
       {children}
-      {hint && <p className="text-xs text-slate-600">{hint}</p>}
+      {hint && <p className="text-xs text-txt-muted">{hint}</p>}
     </div>
   );
 }
@@ -152,7 +152,6 @@ export default function ProjectSetup() {
 
   function handleSave() {
     // TODO: wire to API — PATCH /api/projects/:id/settings
-    // TODO: wire to API — PATCH /api/projects/:id/settings
     setIsDirty(false);
   }
 
@@ -162,10 +161,10 @@ export default function ProjectSetup() {
 
   const budgetColor =
     budgetPercent >= 90
-      ? 'text-red-400'
+      ? 'text-red-500'
       : budgetPercent >= 75
-      ? 'text-orange-400'
-      : 'text-primary';
+      ? 'text-orange-500'
+      : 'text-accent';
 
   return (
     <AppLayout layout="header-only">
@@ -174,28 +173,28 @@ export default function ProjectSetup() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
 
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-sm text-slate-400" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-1.5 text-sm text-txt-muted" aria-label="Breadcrumb">
             <Link
               to="/projects"
-              className="hover:text-primary transition-colors"
+              className="hover:text-accent transition-colors"
             >
               项目
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600 shrink-0" aria-hidden="true" />
+            <ChevronRight className="w-3.5 h-3.5 text-txt-muted shrink-0" aria-hidden="true" />
             <Link
               to={`/projects/${project.id}`}
-              className="hover:text-primary transition-colors"
+              className="hover:text-accent transition-colors"
             >
               {project.title}
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600 shrink-0" aria-hidden="true" />
-            <span className="text-slate-100 font-medium">设置</span>
+            <ChevronRight className="w-3.5 h-3.5 text-txt-muted shrink-0" aria-hidden="true" />
+            <span className="text-txt-primary font-medium">设置</span>
           </nav>
 
           {/* Page title */}
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-white">项目设置</h1>
-            <p className="text-slate-400 text-sm mt-1">
+            <h1 className="text-3xl font-black tracking-tight text-txt-primary">项目设置</h1>
+            <p className="text-txt-secondary text-sm mt-1">
               配置项目的基本属性、风格偏好与 AI 模型参数
             </p>
           </div>
@@ -205,7 +204,7 @@ export default function ProjectSetup() {
           ---------------------------------------------------------------- */}
           <Card variant="form">
             <SectionHeader
-              icon={<Info className="w-4 h-4 text-primary" />}
+              icon={<Info className="w-4 h-4 text-accent" />}
               title="基本信息"
               description="项目名称、类型与简介"
             />
@@ -239,7 +238,7 @@ export default function ProjectSetup() {
                     <option value="爱情">爱情</option>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -275,7 +274,7 @@ export default function ProjectSetup() {
                     <option value="2560x1440">2560 × 1440 — 2K 横版</option>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -288,7 +287,7 @@ export default function ProjectSetup() {
           ---------------------------------------------------------------- */}
           <Card variant="form">
             <SectionHeader
-              icon={<Palette className="w-4 h-4 text-primary" />}
+              icon={<Palette className="w-4 h-4 text-accent" />}
               title="风格配置"
               description="定义画面视觉风格与全局提示词"
             />
@@ -308,8 +307,8 @@ export default function ProjectSetup() {
                       onClick={() => update('visual_style', style.value)}
                       className={`relative flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 transition-all text-sm font-bold ${
                         form.visual_style === style.value
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:border-slate-600 hover:text-slate-300'
+                          ? 'border-accent bg-accent text-white'
+                          : 'border-transparent bg-surface-subtle text-txt-secondary hover:bg-bdr'
                       }`}
                       aria-pressed={form.visual_style === style.value}
                       aria-label={`选择 ${style.label} 风格`}
@@ -319,7 +318,7 @@ export default function ProjectSetup() {
                       </span>
                       <span>{style.label}</span>
                       {form.visual_style === style.value && (
-                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary" />
+                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/80" />
                       )}
                     </button>
                   ))}
@@ -365,7 +364,7 @@ export default function ProjectSetup() {
           ---------------------------------------------------------------- */}
           <Card variant="form">
             <SectionHeader
-              icon={<Cpu className="w-4 h-4 text-primary" />}
+              icon={<Cpu className="w-4 h-4 text-accent" />}
               title="AI 模型配置"
               description="为不同生产阶段指定专用模型"
             />
@@ -397,7 +396,7 @@ export default function ProjectSetup() {
                     </optgroup>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -422,7 +421,7 @@ export default function ProjectSetup() {
                     <option value="dalle-3">DALL·E 3</option>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -447,7 +446,7 @@ export default function ProjectSetup() {
                     <option value="sora">Sora</option>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -471,7 +470,7 @@ export default function ProjectSetup() {
                     <option value="instantid">InstantID</option>
                   </select>
                   <ChevronRight
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 rotate-90 pointer-events-none"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-txt-muted rotate-90 pointer-events-none"
                     aria-hidden="true"
                   />
                 </div>
@@ -484,18 +483,18 @@ export default function ProjectSetup() {
           ---------------------------------------------------------------- */}
           <Card variant="form">
             <SectionHeader
-              icon={<DollarSign className="w-4 h-4 text-primary" />}
+              icon={<DollarSign className="w-4 h-4 text-accent" />}
               title="预算管理"
               description="设置 API 调用费用上限与消耗监控"
             />
 
             {/* Live indicator */}
-            <div className="flex items-center justify-between mb-5 px-4 py-3 rounded-lg bg-slate-800/60 border border-slate-700/50">
-              <div className="flex items-center gap-2 text-sm text-slate-400">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <div className="flex items-center justify-between mb-5 px-4 py-3 rounded-xl bg-surface-subtle border border-bdr">
+              <div className="flex items-center gap-2 text-sm text-txt-secondary">
+                <span className="w-2 h-2 rounded-full bg-status-completed animate-pulse" />
                 实时同步中
               </div>
-              <span className="text-xs text-slate-500">每次生成任务完成后自动更新</span>
+              <span className="text-xs text-txt-muted">每次生成任务完成后自动更新</span>
             </div>
 
             {/* Budget limit input */}
@@ -504,7 +503,7 @@ export default function ProjectSetup() {
               hint="超过设定值后，新的生成任务将自动暂停"
             >
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-bold pointer-events-none">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-txt-muted text-sm font-bold pointer-events-none">
                   $
                 </span>
                 <input
@@ -522,9 +521,9 @@ export default function ProjectSetup() {
             {/* Budget usage bar */}
             <div className="mt-5 space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">
+                <span className="text-txt-secondary">
                   已使用{' '}
-                  <span className="text-white font-bold">${form.budget_used.toFixed(2)}</span>
+                  <span className="text-txt-primary font-bold">${form.budget_used.toFixed(2)}</span>
                   {' '}/ ${form.budget_limit.toFixed(2)}
                 </span>
                 <span className={`font-black text-base ${budgetColor}`}>
@@ -538,15 +537,15 @@ export default function ProjectSetup() {
                 glow={budgetPercent < 80}
               />
 
-              <div className="flex items-center justify-between text-xs text-slate-500">
+              <div className="flex items-center justify-between text-xs text-txt-muted">
                 <span>
                   剩余{' '}
-                  <span className="text-slate-300 font-medium">
+                  <span className="text-txt-secondary font-medium">
                     ${Math.max(0, form.budget_limit - form.budget_used).toFixed(2)}
                   </span>
                 </span>
                 {budgetPercent >= 75 && (
-                  <span className={budgetPercent >= 90 ? 'text-red-400' : 'text-orange-400'}>
+                  <span className={budgetPercent >= 90 ? 'text-red-500' : 'text-orange-500'}>
                     {budgetPercent >= 90
                       ? '预算接近耗尽，请及时充值'
                       : '已使用超过 75%，请关注预算'}
@@ -593,12 +592,12 @@ export default function ProjectSetup() {
       ---------------------------------------------------------------- */}
       <div className="fixed bottom-0 left-0 right-0 z-40">
         {/* Blur backdrop */}
-        <div className="absolute inset-0 bg-background-dark/80 backdrop-blur-md border-t border-slate-800" />
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-md border-t border-bdr" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-          <p className="text-xs text-slate-500 hidden sm:block">
+          <p className="text-xs text-txt-muted hidden sm:block">
             {isDirty ? (
               <span className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                 有未保存的更改
               </span>
             ) : (
