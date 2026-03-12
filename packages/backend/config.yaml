@@ -1,0 +1,3 @@
+debug: true
+database:
+  url: "sqlite+aiosqlite:///data/manga_drama.db"
