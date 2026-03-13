@@ -110,7 +110,7 @@ export default function AppLayout({
               </aside>
             </div>
           )}
-          <main className="flex-1 flex flex-col p-6 gap-6 max-w-7xl mx-auto w-full overflow-y-auto">
+          <main className="flex-1 flex flex-col p-6 gap-4 max-w-7xl mx-auto w-full overflow-y-auto">
             {children}
           </main>
         </div>

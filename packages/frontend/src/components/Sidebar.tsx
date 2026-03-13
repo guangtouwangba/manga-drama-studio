@@ -74,8 +74,8 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="text-sm font-medium text-txt-primary truncate">漫剧工坊</p>
-            <p className="text-[11px] text-txt-muted tracking-wide">Manga Drama Studio</p>
+            <p className="text-sm font-medium text-txt-primary truncate font-display">漫剧工坊</p>
+            <p className="text-[11px] text-txt-muted tracking-wide font-display">Manga Drama Studio</p>
           </div>
         )}
         <button

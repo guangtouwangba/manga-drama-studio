@@ -10,6 +10,7 @@ import {
   Wand2,
   Plus,
   ChevronRight,
+  ChevronDown,
   Camera,
   Clock,
   User,
@@ -23,6 +24,8 @@ import {
   CheckCircle2,
   Loader2,
   AlignLeft,
+  PanelLeft,
+  PanelRight,
 } from 'lucide-react';
 
 /* ---------- Mock data ---------- */
@@ -326,6 +329,8 @@ export default function ScriptEditor() {
   const activeEpisodeId = eid ? parseInt(eid, 10) : MOCK_EPISODES[1].id;
   const [selectedEpisodeId, setSelectedEpisodeId] = useState(activeEpisodeId);
   const [fontSize, setFontSize] = useState(14);
+  const [mobileEpisodeListOpen, setMobileEpisodeListOpen] = useState(false);
+  const [mobilePanelBreakdownOpen, setMobilePanelBreakdownOpen] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
 
   const totalDuration = MOCK_PANELS.reduce((sum, p) => sum + p.duration, 0);
@@ -341,28 +346,28 @@ export default function ScriptEditor() {
   return (
     <AppLayout layout="split">
       {/* ── Top toolbar ────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between border-b border-bdr px-6 h-14 bg-white sticky top-0 z-10 flex-shrink-0">
+      <div className="flex items-center justify-between border-b border-bdr px-3 md:px-6 h-14 bg-white sticky top-0 z-10 flex-shrink-0">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-txt-secondary" aria-label="breadcrumb">
-          <Link to="/projects" className="hover:text-accent transition-colors">
+        <nav className="flex items-center gap-2 text-sm text-txt-secondary min-w-0" aria-label="breadcrumb">
+          <Link to="/projects" className="hover:text-accent transition-colors hidden md:inline">
             项目
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-txt-muted" aria-hidden="true" />
-          <Link to={`/projects/${id}`} className="hover:text-accent transition-colors">
+          <ChevronRight className="w-3.5 h-3.5 text-txt-muted hidden md:block" aria-hidden="true" />
+          <Link to={`/projects/${id}`} className="hover:text-accent transition-colors hidden md:inline">
             仙玄纪元
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-txt-muted" aria-hidden="true" />
-          <span className="text-txt-primary font-medium">
+          <ChevronRight className="w-3.5 h-3.5 text-txt-muted hidden md:block" aria-hidden="true" />
+          <span className="text-txt-primary font-medium truncate">
             EP{eid} 剧本编辑器
           </span>
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" icon={<Sparkles className="w-4 h-4" />}>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Button variant="outline" size="sm" icon={<Sparkles className="w-4 h-4" />} className="hidden md:flex">
             自动生成剧本
           </Button>
-          <div className="w-px h-5 bg-bdr mx-1" />
+          <div className="w-px h-5 bg-bdr mx-1 hidden md:block" />
           <button
             aria-label="保存"
             className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
@@ -373,11 +378,22 @@ export default function ScriptEditor() {
       </div>
 
       {/* ── Three-column body ──────────────────────────────────────── */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
 
         {/* ── LEFT PANEL: Episode list ─────────────────────────────── */}
+        {/* Mobile toggle button */}
+        <button
+          className="lg:hidden flex items-center gap-2 px-4 py-2.5 border-b border-bdr bg-white text-sm font-medium text-txt-secondary hover:bg-surface-subtle transition-colors w-full text-left"
+          onClick={() => setMobileEpisodeListOpen(!mobileEpisodeListOpen)}
+          aria-expanded={mobileEpisodeListOpen}
+        >
+          <PanelLeft className="w-4 h-4 text-accent" aria-hidden="true" />
+          <span>剧集列表</span>
+          <span className="text-[11px] text-txt-muted ml-1">({MOCK_EPISODES.length} 集)</span>
+          <ChevronDown className={`w-4 h-4 text-txt-muted ml-auto transition-transform ${mobileEpisodeListOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+        </button>
         <aside
-          className="w-64 flex-shrink-0 flex flex-col border-r border-bdr bg-white"
+          className={`${mobileEpisodeListOpen ? 'flex' : 'hidden'} lg:flex w-full lg:w-64 flex-shrink-0 flex-col border-r border-bdr bg-white`}
           aria-label="剧集列表"
         >
           {/* Header */}
@@ -392,7 +408,7 @@ export default function ScriptEditor() {
           </div>
 
           {/* Episode list */}
-          <ul className="flex-1 overflow-y-auto custom-scrollbar py-2" role="listbox" aria-label="选择剧集">
+          <ul className="flex-1 overflow-y-auto custom-scrollbar py-2 max-h-[40vh] lg:max-h-none" role="listbox" aria-label="选择剧集">
             {MOCK_EPISODES.map((ep) => {
               const isActive = ep.id === selectedEpisodeId;
               return (
@@ -458,11 +474,11 @@ export default function ScriptEditor() {
         </aside>
 
         {/* ── CENTER PANEL: Script editor ──────────────────────────── */}
-        <section className="flex-1 flex flex-col min-w-0 border-r border-bdr bg-white">
+        <section className="flex-1 flex flex-col min-w-0 lg:border-r border-bdr bg-white">
 
           {/* Editor toolbar */}
           <div
-            className="flex items-center gap-1 px-4 py-2 border-b border-bdr bg-surface-subtle flex-shrink-0"
+            className="flex flex-wrap items-center gap-1 px-3 md:px-4 py-2 border-b border-bdr bg-surface-subtle flex-shrink-0"
             role="toolbar"
             aria-label="文本格式工具栏"
           >
@@ -520,8 +536,8 @@ export default function ScriptEditor() {
           </div>
 
           {/* Episode title bar */}
-          <div className="px-10 py-4 border-b border-bdr/60 bg-white flex-shrink-0">
-            <div className="max-w-3xl mx-auto flex items-baseline gap-3">
+          <div className="px-4 md:px-10 py-4 border-b border-bdr/60 bg-white flex-shrink-0">
+            <div className="max-w-3xl mx-auto flex flex-wrap items-baseline gap-2 md:gap-3">
               <span className="text-[11px] font-medium text-accent uppercase tracking-wide">
                 EP{activeEpisode.episode_number}
               </span>
@@ -534,7 +550,7 @@ export default function ScriptEditor() {
 
           {/* Scrollable script body */}
           <div
-            className="flex-1 overflow-y-auto custom-scrollbar p-10 bg-white"
+            className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-10 bg-white"
             style={{ fontSize }}
           >
             <div
@@ -562,7 +578,7 @@ export default function ScriptEditor() {
                   </p>
 
                   {/* Script blocks */}
-                  <div className="space-y-5 pl-8">
+                  <div className="space-y-5 pl-2 md:pl-8">
                     {scene.blocks.map((block, i) => {
                       if (block.type === 'character') {
                         return (
@@ -594,7 +610,7 @@ export default function ScriptEditor() {
           </div>
 
           {/* Bottom control bar */}
-          <div className="h-14 border-t border-bdr bg-white flex items-center justify-between px-6 flex-shrink-0">
+          <div className="border-t border-bdr bg-white flex flex-wrap items-center justify-between gap-2 px-3 md:px-6 py-2 md:py-0 md:h-14 flex-shrink-0">
             <div className="flex items-center gap-1">
               <button
                 aria-label="撤销"
@@ -608,11 +624,11 @@ export default function ScriptEditor() {
               >
                 <Redo2 className="w-4 h-4" />
               </button>
-              <div className="w-px h-4 bg-bdr mx-2" />
-              <Button variant="ghost" size="sm" icon={<Save className="w-3.5 h-3.5" />}>
+              <div className="w-px h-4 bg-bdr mx-2 hidden md:block" />
+              <Button variant="ghost" size="sm" icon={<Save className="w-3.5 h-3.5" />} className="hidden md:flex">
                 保存草稿
               </Button>
-              <Button variant="secondary" size="sm" icon={<RefreshCw className="w-3.5 h-3.5" />}>
+              <Button variant="secondary" size="sm" icon={<RefreshCw className="w-3.5 h-3.5" />} className="hidden md:flex">
                 重新生成
               </Button>
             </div>
@@ -622,14 +638,25 @@ export default function ScriptEditor() {
               iconRight={<ArrowRight className="w-3.5 h-3.5" />}
               onClick={() => navigate(`/projects/${id}/episodes/${eid}/storyboard`)}
             >
-              下一步：分镜规划
+              <span className="hidden md:inline">下一步：</span>分镜规划
             </Button>
           </div>
         </section>
 
         {/* ── RIGHT PANEL: Panel breakdown ─────────────────────────── */}
+        {/* Mobile toggle button */}
+        <button
+          className="lg:hidden flex items-center gap-2 px-4 py-2.5 border-t border-bdr bg-white text-sm font-medium text-txt-secondary hover:bg-surface-subtle transition-colors w-full text-left"
+          onClick={() => setMobilePanelBreakdownOpen(!mobilePanelBreakdownOpen)}
+          aria-expanded={mobilePanelBreakdownOpen}
+        >
+          <PanelRight className="w-4 h-4 text-accent" aria-hidden="true" />
+          <span>分镜拆解</span>
+          <span className="text-[11px] text-txt-muted ml-1">({MOCK_PANELS.length} 面板)</span>
+          <ChevronDown className={`w-4 h-4 text-txt-muted ml-auto transition-transform ${mobilePanelBreakdownOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+        </button>
         <aside
-          className="w-80 flex-shrink-0 flex flex-col bg-white border-l border-bdr"
+          className={`${mobilePanelBreakdownOpen ? 'flex' : 'hidden'} lg:flex w-full lg:w-80 flex-shrink-0 flex-col bg-white lg:border-l border-bdr`}
           aria-label="分镜拆解"
         >
           {/* Header */}
@@ -665,7 +692,7 @@ export default function ScriptEditor() {
 
           {/* Panel cards list */}
           <ul
-            className="flex-1 overflow-y-auto custom-scrollbar py-3 px-3 space-y-2"
+            className="flex-1 overflow-y-auto custom-scrollbar py-3 px-3 space-y-2 max-h-[50vh] lg:max-h-none"
             aria-label="面板列表"
           >
             {MOCK_PANELS.map((panel, index) => (

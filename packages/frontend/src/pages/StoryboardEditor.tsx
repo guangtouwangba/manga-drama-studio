@@ -346,13 +346,13 @@ export default function StoryboardEditor() {
       </div>
 
       {/* ── Main split area (h-screen minus outer header + inner header) ── */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
 
         {/* ════════════════════════════════════════════════════
             LEFT PANEL — Panel grid / timeline (w-[40%])
         ════════════════════════════════════════════════════ */}
         <aside
-          className="w-[40%] min-w-[300px] border-r border-bdr flex flex-col bg-white"
+          className="w-full lg:w-[40%] lg:min-w-[300px] border-r border-bdr flex flex-col bg-white max-h-[45vh] lg:max-h-none"
           aria-label="分镜列表"
         >
           {/* Breadcrumb + toolbar */}
@@ -404,8 +404,8 @@ export default function StoryboardEditor() {
           </div>
 
           {/* Scrollable panel grid */}
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-4 bg-canvas">
-            <div className="grid grid-cols-2 gap-3" role="listbox" aria-label="分镜面板列表">
+          <div className="flex-1 overflow-y-auto lg:overflow-y-auto overflow-x-auto custom-scrollbar p-4 bg-canvas">
+            <div className="flex lg:grid lg:grid-cols-2 gap-3" role="listbox" aria-label="分镜面板列表">
               {MOCK_PANELS.map((panel) => {
                 const isSelected = panel.id === selectedPanelId;
                 const isActiveGenerating = isRegenerating && panel.id === selectedPanelId;
@@ -417,7 +417,7 @@ export default function StoryboardEditor() {
                     role="option"
                     aria-selected={isSelected}
                     onClick={() => setSelectedPanelId(panel.id)}
-                    className={`group relative text-left rounded-xl p-2 border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    className={`group relative text-left rounded-xl p-2 border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-accent flex-shrink-0 w-40 lg:w-auto ${
                       isSelected
                         ? 'bg-white border-accent ring-2 ring-accent/30'
                         : 'bg-white border-bdr hover:border-accent/60 hover:bg-surface-subtle'
@@ -529,7 +529,7 @@ export default function StoryboardEditor() {
 
           {/* Scrollable detail body */}
           <div className="flex-1 overflow-y-auto custom-scrollbar">
-            <div className="p-5 space-y-6 pb-8">
+            <div className="p-5 pb-8">
 
               {/* ── Large preview image ── */}
               <div className="relative aspect-video rounded-xl overflow-hidden bg-surface-subtle group">
@@ -585,8 +585,8 @@ export default function StoryboardEditor() {
                 )}
               </div>
 
-              {/* ── Action buttons ── */}
-              <div className="flex items-center justify-between gap-3 flex-wrap">
+              {/* ── Action buttons — tight to preview image ── */}
+              <div className="mt-4 flex items-center justify-between gap-3 flex-wrap">
                 <button
                   className="flex items-center gap-1.5 px-4 py-1.5 border border-bdr rounded-full text-sm font-medium text-txt-primary transition-colors hover:bg-surface-subtle disabled:opacity-50"
                   onClick={handleRegenerate}
@@ -621,8 +621,8 @@ export default function StoryboardEditor() {
                 </div>
               </div>
 
-              {/* ── Shot design ── */}
-              <div>
+              {/* ── Shot design — generous separation from actions ── */}
+              <div className="mt-8">
                 <SectionHeading>镜头设计</SectionHeading>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1.5">
@@ -693,8 +693,8 @@ export default function StoryboardEditor() {
                 </div>
               </div>
 
-              {/* ── Panel metadata ── */}
-              <div>
+              {/* ── Panel metadata — tight to shot design (related group) ── */}
+              <div className="mt-5">
                 <SectionHeading>内容描述</SectionHeading>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   {/* Left column */}
@@ -764,8 +764,8 @@ export default function StoryboardEditor() {
                 </div>
               </div>
 
-              {/* ── Associations ── */}
-              <div>
+              {/* ── Associations — generous separation (new group) ── */}
+              <div className="mt-8">
                 <SectionHeading>关联资产</SectionHeading>
                 <div className="flex flex-wrap gap-2" role="list" aria-label="关联资产列表">
                   {(selectedPanel.associations ?? []).map((assoc, i) => (
@@ -800,8 +800,8 @@ export default function StoryboardEditor() {
                 </div>
               </div>
 
-              {/* ── Prompt sections ── */}
-              <div className="space-y-3">
+              {/* ── Prompt sections — tight to associations (related) ── */}
+              <div className="mt-5 space-y-3">
                 {/* Image prompt */}
                 <div className="rounded-xl border border-bdr overflow-hidden">
                   <button
@@ -865,9 +865,9 @@ export default function StoryboardEditor() {
                 </div>
               </div>
 
-              {/* ── Version history strip ── */}
+              {/* ── Version history strip — generous separation (new major group) ── */}
               {showVersionHistory && (
-                <div>
+                <div className="mt-10">
                   <SectionHeading>版本历史</SectionHeading>
                   <div className="flex gap-3 overflow-x-auto pb-1 custom-scrollbar" role="list" aria-label="版本历史">
                     {MOCK_VERSIONS.map((version) => {
@@ -912,7 +912,7 @@ export default function StoryboardEditor() {
               )}
 
               {/* ── Continue to next step ── */}
-              <div className="pt-2 flex justify-end">
+              <div className="mt-8 pt-2 flex justify-end">
                 <button
                   className="flex items-center gap-1.5 px-5 py-2 bg-txt-primary text-white text-sm font-medium rounded-full transition-colors hover:bg-txt-primary/90"
                   onClick={() =>
@@ -929,7 +929,7 @@ export default function StoryboardEditor() {
       </div>
 
       {/* ── Status footer bar ── */}
-      <div className="h-9 border-t border-bdr bg-white flex items-center justify-between px-6 flex-shrink-0">
+      <div className="h-9 border-t border-bdr bg-white flex items-center justify-between px-3 md:px-6 flex-shrink-0">
         <div className="flex items-center gap-4 text-[11px] font-medium text-txt-muted uppercase tracking-wide">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-status-completed" aria-hidden="true" />
@@ -940,7 +940,7 @@ export default function StoryboardEditor() {
             GPU 24%
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[11px] font-medium text-txt-muted uppercase tracking-wide">
+        <div className="hidden md:flex items-center gap-4 text-[11px] font-medium text-txt-muted uppercase tracking-wide">
           <span>Space 播放</span>
           <span>J / L 跳转</span>
           <span>S 保存</span>

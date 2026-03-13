@@ -91,16 +91,14 @@ function SectionHeader({
   description?: string;
 }) {
   return (
-    <div className="flex items-start gap-3 mb-6">
-      <div className="w-8 h-8 rounded-lg bg-accent-light border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
+    <div className="mb-6">
+      <h3 className="font-semibold text-txt-primary text-base flex items-center gap-2">
         {icon}
-      </div>
-      <div>
-        <h3 className="font-semibold text-txt-primary text-base">{title}</h3>
-        {description && (
-          <p className="text-xs text-txt-muted mt-0.5">{description}</p>
-        )}
-      </div>
+        {title}
+      </h3>
+      {description && (
+        <p className="text-xs text-txt-muted mt-0.5">{description}</p>
+      )}
     </div>
   );
 }
@@ -200,11 +198,13 @@ export default function ProjectSetup() {
           </div>
 
           {/* ----------------------------------------------------------------
-              Section 1 — 基本信息
+              Single form card with all sections separated by dividers
           ---------------------------------------------------------------- */}
           <Card variant="form">
+
+            {/* Section 1 — 基本信息 */}
             <SectionHeader
-              icon={<Info className="w-4 h-4 text-accent" />}
+              icon={<Info className="w-4 h-4 text-txt-muted" />}
               title="基本信息"
               description="项目名称、类型与简介"
             />
@@ -280,21 +280,20 @@ export default function ProjectSetup() {
                 </div>
               </FormField>
             </div>
-          </Card>
 
-          {/* ----------------------------------------------------------------
-              Section 2 — 风格配置
-          ---------------------------------------------------------------- */}
-          <Card variant="form">
+            {/* Divider */}
+            <div className="border-b border-bdr my-8" />
+
+            {/* Section 2 — 风格配置 */}
             <SectionHeader
-              icon={<Palette className="w-4 h-4 text-accent" />}
+              icon={<Palette className="w-4 h-4 text-txt-muted" />}
               title="风格配置"
               description="定义画面视觉风格与全局提示词"
             />
 
             <div className="mb-5">
               <FormField label="视觉风格">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {[
                     { value: 'anime', label: '日系动漫', badge: 'ANIME' },
                     { value: 'realistic', label: '写实风格', badge: 'REAL' },
@@ -305,7 +304,7 @@ export default function ProjectSetup() {
                       key={style.value}
                       type="button"
                       onClick={() => update('visual_style', style.value)}
-                      className={`relative flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 transition-all text-sm font-medium ${
+                      className={`relative flex flex-col items-center justify-center gap-2.5 h-28 rounded-xl border-2 transition-all text-sm font-medium ${
                         form.visual_style === style.value
                           ? 'border-accent bg-accent text-white'
                           : 'border-transparent bg-surface-subtle text-txt-secondary hover:bg-bdr'
@@ -318,7 +317,7 @@ export default function ProjectSetup() {
                       </span>
                       <span>{style.label}</span>
                       {form.visual_style === style.value && (
-                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/80" />
+                        <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-white/80" />
                       )}
                     </button>
                   ))}
@@ -357,14 +356,13 @@ export default function ProjectSetup() {
                 />
               </FormField>
             </div>
-          </Card>
 
-          {/* ----------------------------------------------------------------
-              Section 3 — AI 模型配置
-          ---------------------------------------------------------------- */}
-          <Card variant="form">
+            {/* Divider */}
+            <div className="border-b border-bdr my-8" />
+
+            {/* Section 3 — AI 模型配置 */}
             <SectionHeader
-              icon={<Cpu className="w-4 h-4 text-accent" />}
+              icon={<Cpu className="w-4 h-4 text-txt-muted" />}
               title="AI 模型配置"
               description="为不同生产阶段指定专用模型"
             />
@@ -476,14 +474,13 @@ export default function ProjectSetup() {
                 </div>
               </FormField>
             </div>
-          </Card>
 
-          {/* ----------------------------------------------------------------
-              Section 4 — 预算管理
-          ---------------------------------------------------------------- */}
-          <Card variant="form">
+            {/* Divider */}
+            <div className="border-b border-bdr my-8" />
+
+            {/* Section 4 — 预算管理 */}
             <SectionHeader
-              icon={<DollarSign className="w-4 h-4 text-accent" />}
+              icon={<DollarSign className="w-4 h-4 text-txt-muted" />}
               title="预算管理"
               description="设置 API 调用费用上限与消耗监控"
             />
@@ -582,6 +579,7 @@ export default function ProjectSetup() {
                 </span>
               </div>
             </div>
+
           </Card>
 
         </div>

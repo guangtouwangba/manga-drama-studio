@@ -105,10 +105,10 @@ export default function ProjectList() {
   return (
     <AppLayout layout="sidebar" sidebarContext="home">
       {/* Sticky header */}
-      <div className="sticky top-0 z-10 bg-white px-8 py-6 border-b border-bdr">
+      <div className="sticky top-0 z-10 bg-white px-4 py-4 md:px-8 md:py-6 border-b border-bdr">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-display-lg text-txt-primary">我的项目</h1>
+            <h1 className="text-display-lg text-txt-primary font-display">我的项目</h1>
             <p className="text-txt-secondary text-sm mt-1">管理和创建你的漫画作品集</p>
           </div>
           <Button
@@ -147,7 +147,7 @@ export default function ProjectList() {
       )}
 
       {/* Content */}
-      <div className="px-8 pb-12 pt-6">
+      <div className="px-4 pb-8 pt-3 md:px-8 md:pb-12 md:pt-4">
         {loading ? (
           <div className="flex items-center justify-center py-24">
             <Loader2 className="w-8 h-8 text-accent animate-spin" />

@@ -1086,7 +1086,7 @@ export default function AssetWarehouse() {
       {/* ------------------------------------------------------------------ */}
       {/* Content                                                              */}
       {/* ------------------------------------------------------------------ */}
-      <main className="flex-1 overflow-y-auto px-6 py-6">
+      <main className="flex-1 overflow-y-auto px-6 pt-3 pb-6">
         {/* Mobile search */}
         <div className="sm:hidden mb-4 relative">
           <Search
@@ -1105,7 +1105,7 @@ export default function AssetWarehouse() {
 
         {/* Results summary bar */}
         <div
-          className="mb-4 text-xs text-txt-secondary flex items-center gap-1.5"
+          className="mb-3 text-xs text-txt-secondary flex items-center gap-1.5"
           aria-live="polite"
           aria-atomic="true"
         >
@@ -1146,7 +1146,7 @@ export default function AssetWarehouse() {
             {filteredCharacters.length === 0 ? (
               <EmptyState label="没有符合条件的角色" />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {filteredCharacters.map((char, index) => {
                   const isFeatured = char.role_level === '主角';
                   return (
@@ -1167,7 +1167,7 @@ export default function AssetWarehouse() {
             {filteredScenes.length === 0 ? (
               <EmptyState label="没有符合条件的场景" />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {filteredScenes.map((scene, index) => (
                   <div key={scene.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
                     <SceneCard scene={scene} />
@@ -1185,7 +1185,7 @@ export default function AssetWarehouse() {
             {filteredProps.length === 0 ? (
               <EmptyState label="没有符合条件的道具" />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {filteredProps.map((prop, index) => (
                   <div key={prop.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
                     <PropCard prop={prop} />

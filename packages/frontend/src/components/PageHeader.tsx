@@ -47,7 +47,7 @@ export default function PageHeader({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             {title && (
-              <h1 className="text-display-lg text-txt-primary">
+              <h1 className="text-display-lg text-txt-primary font-display">
                 {title}
               </h1>
             )}

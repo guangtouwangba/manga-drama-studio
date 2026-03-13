@@ -140,8 +140,8 @@ export default function ProjectDashboard() {
         }
       />
 
-      {/* Compact inline status bar */}
-      <div className="flex items-center gap-6 px-5 py-3 bg-white rounded-[24px] text-[13px] text-txt-secondary">
+      {/* Compact inline status bar — tight to header above */}
+      <div className="-mt-1 flex flex-wrap items-center gap-x-6 gap-y-2 px-2 py-3 text-[13px] text-txt-secondary">
         <span className="flex items-center gap-1.5">
           <span className="font-medium text-txt-primary">EP {publishedCount}/{totalEpisodes}</span>
           <span>已发布</span>
@@ -165,8 +165,8 @@ export default function ProjectDashboard() {
         </span>
       </div>
 
-      {/* Episode table — hero element */}
-      <Card className="p-0 overflow-hidden">
+      {/* Episode table — hero element, generous separation from status bar */}
+      <Card className="p-0 overflow-hidden mt-4">
         <div className="flex items-center justify-between px-6 py-5 border-b border-bdr">
           <h2 className="text-xl font-semibold text-txt-primary">剧集列表</h2>
           <button className="text-sm text-accent hover:underline">查看全部</button>
@@ -177,9 +177,9 @@ export default function ProjectDashboard() {
               <tr className="border-b border-bdr">
                 <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">#</th>
                 <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">名称</th>
-                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">面板</th>
+                <th className="hidden md:table-cell px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">面板</th>
                 <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">状态</th>
-                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">操作</th>
+                <th className="hidden md:table-cell px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -190,11 +190,11 @@ export default function ProjectDashboard() {
                 >
                   <td className="px-6 py-4 text-txt-secondary">{String(ep.episode_number).padStart(2, '0')}</td>
                   <td className="px-6 py-4 font-medium text-txt-primary">{ep.title}</td>
-                  <td className="px-6 py-4 text-txt-secondary">{ep.panel_count}</td>
+                  <td className="hidden md:table-cell px-6 py-4 text-txt-secondary">{ep.panel_count}</td>
                   <td className="px-6 py-4">
                     <StatusDot status={ep.status} />
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="hidden md:table-cell px-6 py-4">
                     <div className="flex items-center gap-1">
                       <Link
                         to={`/projects/${id}/episodes/${ep.id}/script`}
@@ -225,8 +225,8 @@ export default function ProjectDashboard() {
         </div>
       </Card>
 
-      {/* Activity feed — collapsible, default collapsed */}
-      <Card className="p-0 overflow-hidden">
+      {/* Activity feed — collapsible, default collapsed, tighter to episode table */}
+      <Card className="p-0 overflow-hidden mt-2">
         <button
           onClick={() => setActivityOpen((prev) => !prev)}
           className="flex items-center justify-between w-full px-6 py-4 text-left hover:bg-surface-subtle transition-colors"
