@@ -21,17 +21,17 @@ export default function StatCard({
   return (
     <div className="bg-white rounded-[24px] p-6">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-xs font-bold text-txt-secondary uppercase tracking-widest">{label}</p>
+        <p className="text-[11px] font-medium text-txt-secondary uppercase tracking-wide">{label}</p>
         {icon && <div className="text-txt-secondary">{icon}</div>}
       </div>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-3xl font-black text-txt-primary">{value}</p>
+          <p className="text-3xl font-extrabold text-txt-primary">{value}</p>
           {subtitle && <span className="text-txt-secondary text-xs">{subtitle}</span>}
         </div>
         {trend && (
           <span
-            className={`flex items-center text-xs font-bold mt-1 ${
+            className={`flex items-center text-xs font-medium mt-1 ${
               trend.positive !== false ? 'text-status-completed' : 'text-status-failed'
             }`}
           >

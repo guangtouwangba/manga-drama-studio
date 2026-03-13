@@ -23,12 +23,12 @@ export default function AppLayout({
     return (
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-canvas">
         {/* Top header */}
-        <header className="flex items-center justify-between border-b border-bdr bg-white/80 backdrop-blur-md px-6 py-3 sticky top-0 z-50">
+        <header className="flex items-center justify-between border-b border-bdr bg-white px-6 py-3 sticky top-0 z-50">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
               <Settings className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-txt-primary text-sm hidden sm:inline">Manga Drama Studio</span>
+            <span className="font-medium text-txt-primary text-sm hidden sm:inline">漫剧工坊</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative hidden md:block">
@@ -44,7 +44,7 @@ export default function AppLayout({
               <Bell className="w-5 h-5 text-txt-secondary" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-status-failed rounded-full" />
             </button>
-            <div className="h-10 w-10 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-bold text-xs">
+            <div className="h-10 w-10 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-medium text-xs">
               SY
             </div>
           </div>
@@ -58,7 +58,7 @@ export default function AppLayout({
     return (
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-canvas">
         {/* Top header */}
-        <header className="flex items-center justify-between border-b border-bdr bg-white/80 backdrop-blur-md px-6 py-3 sticky top-0 z-50">
+        <header className="flex items-center justify-between border-b border-bdr bg-white px-6 py-3 sticky top-0 z-50">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -69,7 +69,7 @@ export default function AppLayout({
             <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
               <Settings className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-txt-primary text-sm hidden sm:inline">项目仪表盘</span>
+            <span className="font-medium text-txt-primary text-sm hidden sm:inline">漫剧工坊</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative hidden md:block">
@@ -88,7 +88,7 @@ export default function AppLayout({
               <Bell className="w-5 h-5 text-txt-secondary" />
               <span className="absolute top-2 right-2 w-2 h-2 bg-status-failed rounded-full" />
             </button>
-            <div className="h-10 w-10 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-bold text-xs">
+            <div className="h-10 w-10 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-medium text-xs">
               SY
             </div>
           </div>

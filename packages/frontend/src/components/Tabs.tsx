@@ -34,7 +34,7 @@ export default function Tabs({ tabs, activeId, onChange, variant = 'underline' }
               {tab.icon}
               {tab.label}
               {tab.count !== undefined && (
-                <span className="bg-accent-light text-accent text-[10px] px-2 py-0.5 rounded-full font-bold">
+                <span className="bg-accent-light text-accent text-[11px] px-2 py-0.5 rounded-full font-medium">
                   {tab.count}
                 </span>
               )}
@@ -85,7 +85,7 @@ export default function Tabs({ tabs, activeId, onChange, variant = 'underline' }
           {tab.icon}
           {tab.label}
           {tab.count !== undefined && (
-            <span className="bg-accent-light text-accent text-[10px] px-2 py-0.5 rounded-full font-bold">
+            <span className="bg-accent-light text-accent text-[11px] px-2 py-0.5 rounded-full font-medium">
               {tab.count}
             </span>
           )}

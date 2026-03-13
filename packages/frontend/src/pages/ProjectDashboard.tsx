@@ -4,16 +4,14 @@ import { getProject } from '../api/projects';
 import type { Project, Episode, ActivityEvent } from '../api/types';
 import AppLayout from '../components/AppLayout';
 import PageHeader from '../components/PageHeader';
-import StatCard from '../components/StatCard';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import ProgressBar from '../components/ProgressBar';
 import { StatusDot } from '../components/StatusBadge';
 import {
   Plus,
   Settings,
-  Brush,
   Zap,
-  Server,
   FileText,
   Eye,
   ClipboardCheck,
@@ -21,6 +19,8 @@ import {
   Upload,
   AlertTriangle,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 /* ---------- mock data ---------- */
@@ -51,6 +51,7 @@ export default function ProjectDashboard() {
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activityOpen, setActivityOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -94,6 +95,15 @@ export default function ProjectDashboard() {
     );
   }
 
+  /* Derived stats for the inline status bar */
+  const publishedCount = MOCK_EPISODES.filter((ep) => ep.status === 'completed').length;
+  const totalEpisodes = MOCK_EPISODES.length;
+  const totalPanels = MOCK_EPISODES.reduce((sum, ep) => sum + ep.panel_count, 0);
+  const budgetUsed = 124;
+  const budgetTotal = 200;
+  const budgetPercent = Math.round((budgetUsed / budgetTotal) * 100);
+  const overallProgress = project.progress ?? 68;
+
   return (
     <AppLayout layout="header-sidebar" sidebarContext="project">
       {/* Breadcrumb + Title */}
@@ -105,13 +115,13 @@ export default function ProjectDashboard() {
         title={project.title}
         tags={
           <>
-            <span className="px-3 py-1 bg-accent-light text-accent text-xs font-bold rounded-lg border border-accent/20 uppercase tracking-wider">
+            <span className="px-3 py-1 bg-accent-light text-accent text-xs font-medium rounded-lg border border-accent/20 uppercase tracking-wide">
               {project.genre || '仙侠'}
             </span>
-            <span className="px-3 py-1 bg-status-completed/10 text-status-completed text-xs font-bold rounded-lg border border-status-completed/20">
+            <span className="px-3 py-1 bg-status-completed/10 text-status-completed text-xs font-medium rounded-lg border border-status-completed/20">
               活跃
             </span>
-            <span className="text-txt-muted text-sm">EP 05</span>
+            <span className="text-txt-muted text-sm">EP {String(totalEpisodes).padStart(2, '0')}</span>
           </>
         }
         actions={
@@ -130,118 +140,107 @@ export default function ProjectDashboard() {
         }
       />
 
-      {/* Stat row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          label="已发布剧集"
-          value="2"
-          subtitle="共 5 集"
-          trend={{ value: '+1', positive: true }}
-        />
-        <StatCard label="总面板数" value="98" subtitle="生成中" />
-        <StatCard
-          label="预算消耗"
-          value="$124"
-          subtitle="/ $200"
-          progress={62}
-        />
-        <StatCard label="整体进度" value="68%" progress={68} />
+      {/* Compact inline status bar */}
+      <div className="flex items-center gap-6 px-5 py-3 bg-white rounded-[24px] text-[13px] text-txt-secondary">
+        <span className="flex items-center gap-1.5">
+          <span className="font-medium text-txt-primary">EP {publishedCount}/{totalEpisodes}</span>
+          <span>已发布</span>
+        </span>
+        <span className="text-bdr">·</span>
+        <span className="flex items-center gap-1.5">
+          <span className="font-medium text-txt-primary">{totalPanels}</span>
+          <span>面板</span>
+        </span>
+        <span className="text-bdr">·</span>
+        <span className="flex items-center gap-1.5">
+          <span>预算</span>
+          <span className="font-medium text-txt-primary">${budgetUsed}/${budgetTotal}</span>
+          <span>({budgetPercent}%)</span>
+        </span>
+        <span className="text-bdr">·</span>
+        <span className="flex items-center gap-2">
+          <span>总进度</span>
+          <span className="font-medium text-txt-primary">{overallProgress}%</span>
+          <ProgressBar percent={overallProgress} size="sm" className="w-20" />
+        </span>
       </div>
 
-      {/* Quick actions */}
-      <div className="flex flex-wrap gap-4">
-        <QuickActionCard
-          icon={<Brush className="w-6 h-6" />}
-          iconBg="bg-accent-light text-accent group-hover:bg-accent group-hover:text-white"
-          title="资产编辑器"
-          desc="管理角色与场景"
-          onClick={() => navigate(`/projects/${id}/assets`)}
-        />
-        <QuickActionCard
-          icon={<Zap className="w-6 h-6" />}
-          iconBg="bg-status-waiting/10 text-status-waiting group-hover:bg-status-waiting group-hover:text-white"
-          title="流水线监控"
-          desc="查看任务状态"
-        />
-        <QuickActionCard
-          icon={<Server className="w-6 h-6" />}
-          iconBg="bg-accent-light text-accent group-hover:bg-accent group-hover:text-white"
-          title="模型配置"
-          desc="AI 服务设置"
-          onClick={() => navigate(`/projects/${id}/setup`)}
-        />
-      </div>
-
-      {/* Two-column: Episode table + Activity */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Episode table */}
-        <div className="xl:col-span-2">
-          <Card className="p-0 overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-bdr">
-              <h2 className="text-lg font-bold text-txt-primary">剧集列表</h2>
-              <button className="text-sm text-accent hover:underline">查看全部</button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-bdr">
-                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">#</th>
-                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">名称</th>
-                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">面板</th>
-                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">状态</th>
-                    <th className="px-6 py-4 font-bold text-txt-muted uppercase text-xs">操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {MOCK_EPISODES.map((ep) => (
-                    <tr
-                      key={ep.id}
-                      className="border-b border-bdr hover:bg-surface-subtle transition-colors"
-                    >
-                      <td className="px-6 py-4 text-txt-secondary">{String(ep.episode_number).padStart(2, '0')}</td>
-                      <td className="px-6 py-4 font-medium text-txt-primary">{ep.title}</td>
-                      <td className="px-6 py-4 text-txt-secondary">{ep.panel_count}</td>
-                      <td className="px-6 py-4">
-                        <StatusDot status={ep.status} />
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-1">
-                          <Link
-                            to={`/projects/${id}/episodes/${ep.id}/script`}
-                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
-                            title="剧本"
-                          >
-                            <FileText className="w-4 h-4" />
-                          </Link>
-                          <Link
-                            to={`/projects/${id}/episodes/${ep.id}/storyboard`}
-                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
-                            title="分镜"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </Link>
-                          <button
-                            className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
-                            title="审核"
-                          >
-                            <ClipboardCheck className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Card>
+      {/* Episode table — hero element */}
+      <Card className="p-0 overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-bdr">
+          <h2 className="text-xl font-semibold text-txt-primary">剧集列表</h2>
+          <button className="text-sm text-accent hover:underline">查看全部</button>
         </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-bdr">
+                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">#</th>
+                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">名称</th>
+                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">面板</th>
+                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">状态</th>
+                <th className="px-6 py-4 font-medium text-txt-muted uppercase text-[11px] tracking-wide">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MOCK_EPISODES.map((ep) => (
+                <tr
+                  key={ep.id}
+                  className="border-b border-bdr hover:bg-surface-subtle transition-colors"
+                >
+                  <td className="px-6 py-4 text-txt-secondary">{String(ep.episode_number).padStart(2, '0')}</td>
+                  <td className="px-6 py-4 font-medium text-txt-primary">{ep.title}</td>
+                  <td className="px-6 py-4 text-txt-secondary">{ep.panel_count}</td>
+                  <td className="px-6 py-4">
+                    <StatusDot status={ep.status} />
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-1">
+                      <Link
+                        to={`/projects/${id}/episodes/${ep.id}/script`}
+                        className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
+                        title="剧本"
+                      >
+                        <FileText className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        to={`/projects/${id}/episodes/${ep.id}/storyboard`}
+                        className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
+                        title="分镜"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Link>
+                      <button
+                        className="p-2 hover:bg-surface-subtle rounded-lg text-txt-muted hover:text-accent transition-colors"
+                        title="审核"
+                      >
+                        <ClipboardCheck className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
 
-        {/* Activity feed */}
-        <div className="xl:col-span-1">
-          <Card className="p-0 overflow-hidden">
-            <div className="px-6 py-4 border-b border-bdr">
-              <h2 className="text-lg font-bold text-txt-primary">近期动态</h2>
-            </div>
+      {/* Activity feed — collapsible, default collapsed */}
+      <Card className="p-0 overflow-hidden">
+        <button
+          onClick={() => setActivityOpen((prev) => !prev)}
+          className="flex items-center justify-between w-full px-6 py-4 text-left hover:bg-surface-subtle transition-colors"
+        >
+          <h2 className="text-[15px] font-medium text-txt-primary">近期动态</h2>
+          {activityOpen ? (
+            <ChevronUp className="w-4 h-4 text-txt-muted" />
+          ) : (
+            <ChevronDown className="w-4 h-4 text-txt-muted" />
+          )}
+        </button>
+        {activityOpen && (
+          <>
+            <div className="border-t border-bdr" />
             <div className="p-6 space-y-6">
               {MOCK_ACTIVITY.map((event, i) => {
                 const cfg = activityIcons[event.type] || activityIcons.pipeline;
@@ -257,7 +256,7 @@ export default function ProjectDashboard() {
                       <Icon className="w-3.5 h-3.5" />
                     </div>
                     <div className="flex flex-col gap-1 min-w-0">
-                      <p className="text-sm font-bold text-txt-primary">{event.title}</p>
+                      <p className="text-sm font-medium text-txt-primary">{event.title}</p>
                       <p className="text-xs text-txt-muted">
                         {event.description} &middot; {event.timestamp}
                       </p>
@@ -267,44 +266,13 @@ export default function ProjectDashboard() {
               })}
             </div>
             <div className="px-6 pb-4">
-              <button className="w-full py-2.5 bg-surface-subtle hover:bg-bdr text-sm font-bold rounded-lg transition-colors text-txt-secondary">
+              <button className="w-full py-2.5 bg-surface-subtle hover:bg-bdr text-sm font-medium rounded-lg transition-colors text-txt-secondary">
                 查看全部流水线记录
               </button>
             </div>
-          </Card>
-        </div>
-      </div>
+          </>
+        )}
+      </Card>
     </AppLayout>
-  );
-}
-
-function QuickActionCard({
-  icon,
-  iconBg,
-  title,
-  desc,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  iconBg: string;
-  title: string;
-  desc: string;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-1 min-w-[200px] items-center gap-4 p-4 rounded-[24px] bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] group transition-all cursor-pointer"
-    >
-      <div
-        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${iconBg}`}
-      >
-        {icon}
-      </div>
-      <div className="text-left">
-        <p className="font-bold text-sm text-txt-primary">{title}</p>
-        <p className="text-xs text-txt-muted">{desc}</p>
-      </div>
-    </button>
   );
 }

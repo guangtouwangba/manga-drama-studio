@@ -74,8 +74,8 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
         </div>
         {!collapsed && (
           <div className="min-w-0">
-            <p className="text-sm font-bold text-txt-primary truncate">AI Manga Editor</p>
-            <p className="text-[10px] text-txt-muted uppercase tracking-widest">Creator Studio</p>
+            <p className="text-sm font-medium text-txt-primary truncate">漫剧工坊</p>
+            <p className="text-[11px] text-txt-muted tracking-wide">Manga Drama Studio</p>
           </div>
         )}
         <button
@@ -99,7 +99,7 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
           return (
             <div key={i}>
               {item.dividerBefore && !collapsed && (
-                <p className="text-[10px] font-bold text-txt-muted uppercase tracking-widest px-3 py-2 mt-4">
+                <p className="text-[11px] font-medium text-txt-muted uppercase tracking-wide px-3 py-2 mt-4">
                   {item.dividerBefore}
                 </p>
               )}
@@ -127,7 +127,7 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
           <div className="bg-white/70 p-4 rounded-xl">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs font-medium text-txt-secondary">存储空间</span>
-              <span className="text-xs font-bold text-accent">85%</span>
+              <span className="text-xs font-medium text-accent">85%</span>
             </div>
             <ProgressBar percent={85} />
           </div>
@@ -137,12 +137,12 @@ export default function Sidebar({ context, projectId, collapsed, onToggle }: Sid
       {context !== 'home' && !collapsed && (
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-accent-light flex items-center justify-center text-accent font-bold text-xs">
+            <div className="w-8 h-8 rounded-full bg-accent-light flex items-center justify-center text-accent font-medium text-xs">
               SY
             </div>
             <div className="min-w-0">
               <p className="text-sm font-medium text-txt-primary truncate">Studio User</p>
-              <p className="text-[10px] text-txt-muted">管理员</p>
+              <p className="text-[11px] text-txt-muted">管理员</p>
             </div>
           </div>
         </div>

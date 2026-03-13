@@ -72,7 +72,7 @@ export default function VersionComparison() {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Film className="w-5 h-5 text-accent" />
-            <span className="font-bold text-sm text-txt-primary">分镜编辑器</span>
+            <span className="font-medium text-sm text-txt-primary">分镜编辑器</span>
           </div>
           <nav className="hidden md:flex gap-1">
             {['项目', '素材库', '分镜编辑器', '版本对比'].map((tab, i) => (
@@ -97,7 +97,7 @@ export default function VersionComparison() {
             <Save className="w-4 h-4" />
             保存
           </button>
-          <div className="h-8 w-8 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-bold text-[10px]">
+          <div className="h-8 w-8 rounded-full bg-accent-light border border-accent/30 flex items-center justify-center text-accent font-medium text-[11px]">
             SY
           </div>
         </div>
@@ -125,7 +125,7 @@ export default function VersionComparison() {
           {/* Title section */}
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-txt-primary">
+              <h1 className="text-display-lg text-txt-primary">
                 版本迭代对比
               </h1>
               <p className="text-txt-secondary mt-1 max-w-2xl">
@@ -145,21 +145,25 @@ export default function VersionComparison() {
 
           {/* Comparison grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <VersionCard
-              version={leftVersion}
-              isSelected={selectedFinal === leftVersion.version_number}
-              onSelect={() => setSelectedFinal(leftVersion.version_number)}
-            />
-            <VersionCard
-              version={rightVersion}
-              isSelected={selectedFinal === rightVersion.version_number}
-              onSelect={() => setSelectedFinal(rightVersion.version_number)}
-            />
+            <div className="animate-fade-in-up">
+              <VersionCard
+                version={leftVersion}
+                isSelected={selectedFinal === leftVersion.version_number}
+                onSelect={() => setSelectedFinal(leftVersion.version_number)}
+              />
+            </div>
+            <div className="animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+              <VersionCard
+                version={rightVersion}
+                isSelected={selectedFinal === rightVersion.version_number}
+                onSelect={() => setSelectedFinal(rightVersion.version_number)}
+              />
+            </div>
           </div>
 
           {/* Version history */}
           <div className="mt-12 border-t border-bdr pt-8">
-            <h3 className="text-lg font-bold text-txt-primary flex items-center gap-2 mb-6">
+            <h3 className="text-lg font-semibold text-txt-primary flex items-center gap-2 mb-6">
               <Clock className="w-5 h-5 text-txt-muted" />
               版本历史
             </h3>
@@ -179,18 +183,18 @@ export default function VersionComparison() {
                   }`}
                 >
                   <span
-                    className={`text-sm font-bold uppercase ${
+                    className={`text-sm font-medium uppercase ${
                       compareVersions.includes(v.version_number) ? 'text-accent' : 'text-txt-secondary'
                     }`}
                   >
                     V{v.version_number}
                   </span>
-                  <span className="text-[10px] text-txt-muted mt-1">{v.label}</span>
+                  <span className="text-[11px] text-txt-muted mt-1">{v.label}</span>
                 </button>
               ))}
               <button className="min-w-[120px] aspect-[4/3] rounded-lg flex flex-col items-center justify-center border border-dashed border-bdr text-txt-muted hover:border-accent hover:text-accent transition-colors">
                 <Plus className="w-5 h-5" />
-                <span className="text-[10px] mt-1">新版本</span>
+                <span className="text-[11px] mt-1">新版本</span>
               </button>
             </div>
           </div>
@@ -225,19 +229,19 @@ function VersionCard({
       >
         <div className="flex items-center gap-3">
           <span
-            className={`px-2 py-1 text-xs font-bold rounded ${
+            className={`px-2 py-1 text-xs font-medium rounded ${
               version.is_latest ? 'bg-accent text-white' : 'bg-surface-subtle text-txt-secondary'
             }`}
           >
             V{version.version_number}
           </span>
           <div>
-            <p className="font-bold text-sm text-txt-primary">{version.label}</p>
-            <p className="text-[10px] text-txt-muted">{version.created_at}</p>
+            <p className="font-medium text-sm text-txt-primary">{version.label}</p>
+            <p className="text-[11px] text-txt-muted">{version.created_at}</p>
           </div>
         </div>
         {version.is_latest && (
-          <span className="absolute top-0 right-0 bg-accent text-white px-3 py-1 text-[10px] font-bold uppercase rounded-bl-lg">
+          <span className="absolute top-0 right-0 bg-accent text-white px-3 py-1 text-[11px] font-medium uppercase rounded-bl-lg">
             最新版本
           </span>
         )}
@@ -259,7 +263,7 @@ function VersionCard({
 
       {/* Prompt */}
       <div className="p-4">
-        <p className="text-xs font-bold text-txt-muted uppercase tracking-widest mb-2">
+        <p className="text-[11px] font-medium text-txt-muted uppercase tracking-wide mb-2">
           AI 提示词
         </p>
         <div

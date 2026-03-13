@@ -442,7 +442,7 @@ function RoleLevelBadge({ level }: { level: string }) {
   };
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border backdrop-blur-sm ${
+      className={`inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded border ${
         styles[level] ?? styles['龙套']
       }`}
     >
@@ -459,7 +459,7 @@ function ViewGradeBadge({ grade }: { grade: string }) {
   };
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border backdrop-blur-sm ${
+      className={`inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded border ${
         styles[grade] ?? 'bg-surface-subtle text-txt-muted border-bdr'
       }`}
     >
@@ -472,7 +472,95 @@ function ViewGradeBadge({ grade }: { grade: string }) {
 // Asset card — Character
 // ---------------------------------------------------------------------------
 
-function CharacterCard({ char }: { char: CharacterAsset }) {
+function CharacterCard({ char, isFeatured = false }: { char: CharacterAsset; isFeatured?: boolean }) {
+  if (isFeatured) {
+    return (
+      <Card
+        variant="interactive"
+        className="p-0 overflow-hidden flex flex-col md:flex-row bg-white rounded-[24px] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
+        tabIndex={0}
+        role="article"
+        aria-label={`角色：${char.name}`}
+      >
+        {/* Thumbnail — left 40% on md+ */}
+        <div className="relative aspect-[4/3] md:aspect-auto md:w-[40%] overflow-hidden bg-surface-subtle shrink-0">
+          <img
+            src={char.thumbnail_url}
+            alt={`${char.name} 角色缩略图`}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute top-2 right-2">
+            <StatusBadge status={char.status} size="sm" />
+          </div>
+          <div className="absolute top-2 left-2">
+            <RoleLevelBadge level={char.role_level} />
+          </div>
+        </div>
+
+        {/* Body — right 60% on md+ */}
+        <div className="p-4 md:p-5 flex flex-col gap-2 flex-1 md:w-[60%]">
+          {/* Name row */}
+          <div>
+            <div className="flex items-center gap-2 min-w-0">
+              <h3 className="font-semibold text-txt-primary text-base truncate">{char.name}</h3>
+              <span className="text-xs text-txt-muted shrink-0 truncate">{char.name_en}</span>
+            </div>
+            <p className="text-xs text-txt-secondary mt-1.5 line-clamp-3 leading-relaxed">
+              {char.bio}
+            </p>
+          </div>
+
+          {/* Meta pills */}
+          <div className="flex items-center gap-3 text-[11px] text-txt-muted mt-auto pt-1">
+            <span className="flex items-center gap-1">
+              <UserRound className="w-3 h-3" aria-hidden="true" />
+              {char.gender}
+            </span>
+            {char.age !== undefined && (
+              <span className="flex items-center gap-1">
+                {char.age} 岁
+              </span>
+            )}
+            {char.height && (
+              <span className="flex items-center gap-1">
+                <Ruler className="w-3 h-3" aria-hidden="true" />
+                {char.height}
+              </span>
+            )}
+            {char.appearances !== undefined && (
+              <span className="flex items-center gap-1 ml-auto shrink-0">
+                <Eye className="w-3 h-3" aria-hidden="true" />
+                {char.appearances} 次
+              </span>
+            )}
+          </div>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1">
+            {char.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[11px] rounded"
+              >
+                <Tag className="w-2.5 h-2.5" aria-hidden="true" />
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Footer timestamp */}
+          {char.updated_at && (
+            <div className="text-[11px] text-txt-muted flex items-center gap-1 pt-2 border-t border-bdr">
+              <Clock className="w-2.5 h-2.5" aria-hidden="true" />
+              更新于 {char.updated_at}
+            </div>
+          )}
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card
       variant="interactive"
@@ -502,7 +590,7 @@ function CharacterCard({ char }: { char: CharacterAsset }) {
         {/* Name row */}
         <div>
           <div className="flex items-center gap-1.5 min-w-0">
-            <h3 className="font-bold text-txt-primary text-sm truncate">{char.name}</h3>
+            <h3 className="font-semibold text-txt-primary text-sm truncate">{char.name}</h3>
             <span className="text-[11px] text-txt-muted shrink-0 truncate">{char.name_en}</span>
           </div>
           <p className="text-xs text-txt-secondary mt-1 line-clamp-2 leading-relaxed">
@@ -540,7 +628,7 @@ function CharacterCard({ char }: { char: CharacterAsset }) {
           {char.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[10px] rounded"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[11px] rounded"
             >
               <Tag className="w-2.5 h-2.5" aria-hidden="true" />
               {tag}
@@ -550,7 +638,7 @@ function CharacterCard({ char }: { char: CharacterAsset }) {
 
         {/* Footer timestamp */}
         {char.updated_at && (
-          <div className="text-[10px] text-txt-muted flex items-center gap-1 pt-2 border-t border-bdr">
+          <div className="text-[11px] text-txt-muted flex items-center gap-1 pt-2 border-t border-bdr">
             <Clock className="w-2.5 h-2.5" aria-hidden="true" />
             更新于 {char.updated_at}
           </div>
@@ -565,6 +653,8 @@ function CharacterCard({ char }: { char: CharacterAsset }) {
 // ---------------------------------------------------------------------------
 
 function SceneCard({ scene }: { scene: SceneAsset }) {
+  const isWideShot = scene.view_grade === '远景';
+
   return (
     <Card
       variant="interactive"
@@ -573,8 +663,8 @@ function SceneCard({ scene }: { scene: SceneAsset }) {
       role="article"
       aria-label={`场景：${scene.name}`}
     >
-      {/* Thumbnail */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-surface-subtle shrink-0">
+      {/* Thumbnail — wider aspect for 远景 (wide shot) scenes */}
+      <div className={`relative overflow-hidden bg-surface-subtle shrink-0 ${isWideShot ? 'aspect-[16/9]' : 'aspect-[4/3]'}`}>
         {scene.thumbnail_url ? (
           <img
             src={scene.thumbnail_url}
@@ -598,7 +688,7 @@ function SceneCard({ scene }: { scene: SceneAsset }) {
       {/* Body */}
       <div className="p-4 flex flex-col gap-2 flex-1">
         <div>
-          <h3 className="font-bold text-txt-primary text-sm truncate">{scene.name}</h3>
+          <h3 className="font-semibold text-txt-primary text-sm truncate">{scene.name}</h3>
           {scene.description && (
             <p className="text-xs text-txt-secondary mt-1 line-clamp-2 leading-relaxed">
               {scene.description}
@@ -619,7 +709,7 @@ function SceneCard({ scene }: { scene: SceneAsset }) {
           {scene.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[10px] rounded"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[11px] rounded"
             >
               <Tag className="w-2.5 h-2.5" aria-hidden="true" />
               {tag}
@@ -662,7 +752,7 @@ function PropCard({ prop }: { prop: PropAsset }) {
           <StatusBadge status={prop.status} size="sm" />
         </div>
         <div className="absolute top-2 left-2">
-          <span className="inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border bg-white/80 text-txt-secondary border-bdr backdrop-blur-sm">
+          <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded border bg-white text-txt-secondary border-bdr">
             {prop.category}
           </span>
         </div>
@@ -671,7 +761,7 @@ function PropCard({ prop }: { prop: PropAsset }) {
       {/* Body */}
       <div className="p-4 flex flex-col gap-2 flex-1">
         <div>
-          <h3 className="font-bold text-txt-primary text-sm truncate">{prop.name}</h3>
+          <h3 className="font-semibold text-txt-primary text-sm truncate">{prop.name}</h3>
           {prop.description && (
             <p className="text-xs text-txt-secondary mt-1 line-clamp-2 leading-relaxed">
               {prop.description}
@@ -692,7 +782,7 @@ function PropCard({ prop }: { prop: PropAsset }) {
           {prop.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[10px] rounded"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-surface-subtle text-txt-muted text-[11px] rounded"
             >
               <Tag className="w-2.5 h-2.5" aria-hidden="true" />
               {tag}
@@ -911,7 +1001,7 @@ export default function AssetWarehouse() {
       {/* ------------------------------------------------------------------ */}
       {/* Sticky page header                                                   */}
       {/* ------------------------------------------------------------------ */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-bdr">
+      <header className="sticky top-0 z-10 bg-white border-b border-bdr">
         {/* Title + controls row */}
         <div className="flex items-center justify-between gap-4 px-6 pt-5 pb-3">
           {/* Left: icon + title */}
@@ -923,7 +1013,7 @@ export default function AssetWarehouse() {
               <Package className="w-5 h-5 text-accent" />
             </div>
             <div className="min-w-0 hidden sm:block">
-              <h1 className="text-lg font-bold text-txt-primary leading-tight">资产仓库</h1>
+              <h1 className="text-lg font-semibold text-txt-primary leading-tight">资产仓库</h1>
               <p className="text-xs text-txt-muted leading-tight">角色 · 场景 · 道具</p>
             </div>
           </div>
@@ -1057,9 +1147,14 @@ export default function AssetWarehouse() {
               <EmptyState label="没有符合条件的角色" />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredCharacters.map((char) => (
-                  <CharacterCard key={char.id} char={char} />
-                ))}
+                {filteredCharacters.map((char, index) => {
+                  const isFeatured = char.role_level === '主角';
+                  return (
+                    <div key={char.id} className={`animate-fade-in-up${isFeatured ? ' md:col-span-2' : ''}`} style={{ animationDelay: `${index * 50}ms` }}>
+                      <CharacterCard char={char} isFeatured={isFeatured} />
+                    </div>
+                  );
+                })}
                 <CreateNewCard label="新建角色" />
               </div>
             )}
@@ -1073,8 +1168,10 @@ export default function AssetWarehouse() {
               <EmptyState label="没有符合条件的场景" />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredScenes.map((scene) => (
-                  <SceneCard key={scene.id} scene={scene} />
+                {filteredScenes.map((scene, index) => (
+                  <div key={scene.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
+                    <SceneCard scene={scene} />
+                  </div>
                 ))}
                 <CreateNewCard label="新建场景" />
               </div>
@@ -1089,8 +1186,10 @@ export default function AssetWarehouse() {
               <EmptyState label="没有符合条件的道具" />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredProps.map((prop) => (
-                  <PropCard key={prop.id} prop={prop} />
+                {filteredProps.map((prop, index) => (
+                  <div key={prop.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
+                    <PropCard prop={prop} />
+                  </div>
                 ))}
                 <CreateNewCard label="新建道具" />
               </div>

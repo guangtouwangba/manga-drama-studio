@@ -304,7 +304,7 @@ function StatusDot({ status }: { status: string }) {
 function ShotTypeBadge({ type }: { type: string }) {
   return (
     <span
-      className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-accent-light text-accent"
+      className="inline-block px-1.5 py-0.5 rounded text-[11px] font-medium uppercase tracking-wide bg-accent-light text-accent"
     >
       {type}
     </span>
@@ -383,10 +383,10 @@ export default function ScriptEditor() {
           {/* Header */}
           <div className="px-4 py-3 border-b border-bdr flex items-center gap-2">
             <Film className="w-4 h-4 text-accent" aria-hidden="true" />
-            <span className="text-xs font-bold text-txt-primary uppercase tracking-widest">
+            <span className="text-xs font-medium text-txt-primary uppercase tracking-wide">
               剧集列表
             </span>
-            <span className="ml-auto text-[10px] font-bold text-txt-muted">
+            <span className="ml-auto text-[11px] font-medium text-txt-muted">
               {MOCK_EPISODES.length} 集
             </span>
           </div>
@@ -407,7 +407,7 @@ export default function ScriptEditor() {
                   >
                     {/* Episode number badge */}
                     <span
-                      className={`mt-0.5 text-[11px] font-black w-7 h-5 rounded flex items-center justify-center flex-shrink-0 ${
+                      className={`mt-0.5 text-[11px] font-extrabold w-7 h-5 rounded flex items-center justify-center flex-shrink-0 ${
                         isActive
                           ? 'bg-accent text-white'
                           : 'bg-surface-subtle text-txt-muted group-hover:bg-bdr'
@@ -427,7 +427,7 @@ export default function ScriptEditor() {
                       </p>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <StatusDot status={ep.status} />
-                        <span className="text-[10px] text-txt-muted">
+                        <span className="text-[11px] text-txt-muted">
                           {ep.panel_count ? `${ep.panel_count} 面板` : '草稿'}
                         </span>
                       </div>
@@ -462,7 +462,7 @@ export default function ScriptEditor() {
 
           {/* Editor toolbar */}
           <div
-            className="flex items-center gap-1 px-4 py-2 border-b border-bdr bg-surface-subtle backdrop-blur-sm flex-shrink-0"
+            className="flex items-center gap-1 px-4 py-2 border-b border-bdr bg-surface-subtle flex-shrink-0"
             role="toolbar"
             aria-label="文本格式工具栏"
           >
@@ -515,17 +515,17 @@ export default function ScriptEditor() {
             {/* Autosave indicator */}
             <div className="ml-auto flex items-center gap-1.5" aria-live="polite">
               <span className="w-1.5 h-1.5 rounded-full bg-status-completed animate-pulse" />
-              <span className="text-[10px] text-txt-muted">已自动保存</span>
+              <span className="text-[11px] text-txt-muted">已自动保存</span>
             </div>
           </div>
 
           {/* Episode title bar */}
           <div className="px-10 py-4 border-b border-bdr/60 bg-white flex-shrink-0">
             <div className="max-w-3xl mx-auto flex items-baseline gap-3">
-              <span className="text-[11px] font-bold text-accent uppercase tracking-widest">
+              <span className="text-[11px] font-medium text-accent uppercase tracking-wide">
                 EP{activeEpisode.episode_number}
               </span>
-              <h1 className="text-lg font-black text-txt-primary">{activeEpisode.title}</h1>
+              <h1 className="text-lg font-extrabold text-txt-primary">{activeEpisode.title}</h1>
               {activeEpisode.synopsis && (
                 <p className="text-xs text-txt-muted italic truncate">{activeEpisode.synopsis}</p>
               )}
@@ -550,7 +550,7 @@ export default function ScriptEditor() {
               {MOCK_SCRIPT_SCENES.map((scene) => (
                 <div key={scene.id} className="space-y-4">
                   {/* Scene heading */}
-                  <div className="bg-accent-light/30 px-4 py-2 rounded font-bold text-sm tracking-widest border-l-4 border-accent text-txt-primary select-none">
+                  <div className="bg-accent-light/30 px-4 py-2 rounded font-semibold text-sm tracking-wide border-l-4 border-accent text-txt-primary select-none">
                     场景 {scene.number}：
                     <span className="editor-highlight">[{scene.location}]</span>
                     {' - '}{scene.timeOfDay}{' - '}{scene.intOrExt}
@@ -567,7 +567,7 @@ export default function ScriptEditor() {
                       if (block.type === 'character') {
                         return (
                           <div key={i} className="space-y-1" data-block="character">
-                            <p className="text-center font-bold text-sm text-txt-secondary uppercase tracking-widest">
+                            <p className="text-center font-medium text-sm text-txt-secondary uppercase tracking-wide">
                               【<span className="editor-highlight">{block.name}</span>】
                             </p>
                             {block.direction && (
@@ -637,7 +637,7 @@ export default function ScriptEditor() {
             <div className="flex items-center justify-between mb-2.5">
               <div className="flex items-center gap-2">
                 <Camera className="w-4 h-4 text-accent" aria-hidden="true" />
-                <span className="text-xs font-bold text-txt-primary uppercase tracking-widest">
+                <span className="text-xs font-medium text-txt-primary uppercase tracking-wide">
                   分镜拆解
                 </span>
               </div>
@@ -650,13 +650,13 @@ export default function ScriptEditor() {
             <div className="flex gap-3">
               <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
                 <Camera className="w-3 h-3 text-txt-muted" aria-hidden="true" />
-                <span className="text-[11px] font-bold text-txt-secondary">
+                <span className="text-[11px] font-medium text-txt-secondary">
                   {MOCK_PANELS.length} 面板
                 </span>
               </div>
               <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
                 <Clock className="w-3 h-3 text-txt-muted" aria-hidden="true" />
-                <span className="text-[11px] font-bold text-txt-secondary">
+                <span className="text-[11px] font-medium text-txt-secondary">
                   {totalDuration.toFixed(1)}s 共计
                 </span>
               </div>
@@ -668,13 +668,13 @@ export default function ScriptEditor() {
             className="flex-1 overflow-y-auto custom-scrollbar py-3 px-3 space-y-2"
             aria-label="面板列表"
           >
-            {MOCK_PANELS.map((panel) => (
-              <li key={panel.id}>
+            {MOCK_PANELS.map((panel, index) => (
+              <li key={panel.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
                 <div className="rounded-xl bg-surface-subtle hover:bg-bdr transition-colors p-3 space-y-2.5 cursor-pointer group">
                   {/* Panel header row */}
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-black bg-accent-light text-accent px-1.5 py-0.5 rounded">
+                      <span className="text-[11px] font-extrabold bg-accent-light text-accent px-1.5 py-0.5 rounded">
                         P{panel.panel_number}
                       </span>
                       <ShotTypeBadge type={panel.shot_type} />
@@ -710,19 +710,19 @@ export default function ScriptEditor() {
                     {/* Dialogue indicator */}
                     <div className="flex items-center gap-3">
                       {panel.dialogue ? (
-                        <span className="flex items-center gap-1 text-[10px] text-txt-muted">
+                        <span className="flex items-center gap-1 text-[11px] text-txt-muted">
                           <User className="w-3 h-3" aria-hidden="true" />
                           <span className="text-txt-secondary truncate max-w-[100px]">
                             {panel.dialogue}
                           </span>
                         </span>
                       ) : (
-                        <span className="text-[10px] text-txt-muted italic">无对白</span>
+                        <span className="text-[11px] text-txt-muted italic">无对白</span>
                       )}
                     </div>
 
                     {/* Duration badge */}
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-txt-muted bg-white px-1.5 py-0.5 rounded">
+                    <span className="flex items-center gap-1 text-[11px] font-medium text-txt-muted bg-white px-1.5 py-0.5 rounded">
                       <Clock className="w-2.5 h-2.5" aria-hidden="true" />
                       {panel.duration}s
                     </span>

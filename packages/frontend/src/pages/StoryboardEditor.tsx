@@ -251,7 +251,7 @@ function AssocIcon({ type }: { type: PanelAssociation['type'] }) {
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-[10px] font-bold text-txt-muted uppercase tracking-widest flex items-center gap-2 mb-3">
+    <h3 className="text-[11px] font-medium text-txt-muted uppercase tracking-wide flex items-center gap-2 mb-3">
       <span className="w-4 h-[2px] bg-accent flex-shrink-0" />
       {children}
     </h3>
@@ -294,7 +294,7 @@ export default function StoryboardEditor() {
           {/* Logo / brand */}
           <div className="flex items-center gap-2 mr-2">
             <Film className="w-5 h-5 text-accent" />
-            <span className="font-bold text-sm text-txt-primary hidden sm:inline">分镜编辑器</span>
+            <span className="font-semibold text-sm text-txt-primary hidden sm:inline">分镜编辑器</span>
           </div>
           {/* Nav tabs */}
           <nav className="hidden md:flex gap-1" aria-label="编辑器导航">
@@ -392,12 +392,12 @@ export default function StoryboardEditor() {
               </div>
               <div className="flex items-center gap-4 text-xs text-txt-muted">
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] uppercase tracking-widest">总分镜</span>
-                  <span className="font-bold text-txt-primary">{MOCK_PANELS.length}</span>
+                  <span className="text-[11px] uppercase tracking-wide">总分镜</span>
+                  <span className="font-medium text-txt-primary">{MOCK_PANELS.length}</span>
                 </div>
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] uppercase tracking-widest">总时长</span>
-                  <span className="font-bold text-txt-primary">{totalDuration.toFixed(1)}s</span>
+                  <span className="text-[11px] uppercase tracking-wide">总时长</span>
+                  <span className="font-medium text-txt-primary">{totalDuration.toFixed(1)}s</span>
                 </div>
               </div>
             </div>
@@ -448,7 +448,7 @@ export default function StoryboardEditor() {
                       )}
 
                       {/* Shot-type badge overlay */}
-                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-accent text-white text-[9px] font-bold rounded">
+                      <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-accent text-white text-[9px] font-medium rounded">
                         {panel.shot_type}
                       </span>
                     </div>
@@ -458,7 +458,7 @@ export default function StoryboardEditor() {
                       <div className="min-w-0 flex-1">
                         {/* Number badge */}
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          className={`text-[11px] font-medium px-1.5 py-0.5 rounded ${
                             isSelected ? 'bg-accent text-white' : 'bg-accent-light text-accent'
                           }`}
                         >
@@ -469,7 +469,7 @@ export default function StoryboardEditor() {
                         </p>
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <Clock className="w-3 h-3 text-txt-muted" />
-                          <span className="text-[10px] text-txt-muted">
+                          <span className="text-[11px] text-txt-muted">
                             {panel.duration}s
                           </span>
                         </div>
@@ -505,10 +505,10 @@ export default function StoryboardEditor() {
           {/* Detail header */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-bdr bg-white flex-shrink-0 sticky top-0 z-10">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 bg-accent text-white text-xs font-bold rounded-lg">
+              <span className="px-2.5 py-1 bg-accent text-white text-xs font-medium rounded-lg">
                 P{selectedPanel.panel_number}
               </span>
-              <h2 className="font-bold text-txt-primary text-base">{selectedPanel.title}</h2>
+              <h2 className="font-semibold text-txt-primary text-base">{selectedPanel.title}</h2>
               <StatusBadge status={selectedPanel.status} size="sm" />
             </div>
             <div className="flex items-center gap-1">
@@ -562,13 +562,13 @@ export default function StoryboardEditor() {
                 {selectedPanel.image_url && !isRegenerating && (
                   <div className="absolute inset-0 bg-[#1A1A1A]/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                     <button
-                      className="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors"
+                      className="p-3 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
                       aria-label="播放"
                     >
                       <Play className="w-6 h-6 text-white" />
                     </button>
                     <button
-                      className="p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-colors"
+                      className="p-3 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
                       aria-label="全屏"
                     >
                       <Maximize2 className="w-6 h-6 text-white" />
@@ -578,7 +578,7 @@ export default function StoryboardEditor() {
 
                 {/* Camera badge */}
                 {selectedPanel.camera_angle && (
-                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-[#1A1A1A]/60 backdrop-blur-sm rounded-lg text-xs text-white">
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-[#1A1A1A]/60 rounded-lg text-xs text-white">
                     <Camera className="w-3.5 h-3.5" />
                     <span>{selectedPanel.camera_angle}</span>
                   </div>
@@ -626,7 +626,7 @@ export default function StoryboardEditor() {
                 <SectionHeading>镜头设计</SectionHeading>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                    <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                       景别
                     </label>
                     <select
@@ -642,7 +642,7 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                    <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                       角度
                     </label>
                     <select
@@ -656,7 +656,7 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                    <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                       运镜
                     </label>
                     <select
@@ -672,7 +672,7 @@ export default function StoryboardEditor() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                    <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                       时长
                     </label>
                     <div className="relative">
@@ -685,7 +685,7 @@ export default function StoryboardEditor() {
                         aria-label="分镜时长（秒）"
                         className="w-full bg-surface-subtle border border-bdr rounded-lg px-3 py-2 text-sm text-txt-primary outline-none focus:ring-1 focus:ring-accent pr-7"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-txt-muted font-bold pointer-events-none">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-txt-muted font-medium pointer-events-none">
                         s
                       </span>
                     </div>
@@ -700,7 +700,7 @@ export default function StoryboardEditor() {
                   {/* Left column */}
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                      <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                         动作描述
                       </label>
                       <textarea
@@ -712,7 +712,7 @@ export default function StoryboardEditor() {
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                        <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                           氛围
                         </label>
                         <input
@@ -723,7 +723,7 @@ export default function StoryboardEditor() {
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                        <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                           情绪
                         </label>
                         <input
@@ -739,7 +739,7 @@ export default function StoryboardEditor() {
                   {/* Right column */}
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                      <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                         对白
                       </label>
                       <textarea
@@ -750,7 +750,7 @@ export default function StoryboardEditor() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-medium text-txt-muted uppercase tracking-widest block">
+                      <label className="text-[11px] font-medium text-txt-muted uppercase tracking-wide block">
                         旁白 / 音效
                       </label>
                       <input
@@ -811,7 +811,7 @@ export default function StoryboardEditor() {
                   >
                     <div className="flex items-center gap-2">
                       <ImageIcon className="w-4 h-4 text-accent" />
-                      <span className="text-sm font-bold uppercase tracking-wider text-txt-primary">
+                      <span className="text-sm font-medium uppercase tracking-wider text-txt-primary">
                         图片生成提示词
                       </span>
                     </div>
@@ -842,7 +842,7 @@ export default function StoryboardEditor() {
                   >
                     <div className="flex items-center gap-2">
                       <Video className="w-4 h-4 text-accent" />
-                      <span className="text-sm font-bold uppercase tracking-wider text-txt-primary">
+                      <span className="text-sm font-medium uppercase tracking-wider text-txt-primary">
                         视频动作提示词
                       </span>
                     </div>
@@ -899,7 +899,7 @@ export default function StoryboardEditor() {
                             )}
                           </div>
                           <div className={`px-2 py-1.5 text-left ${isActive ? 'bg-accent-light' : 'bg-white'}`}>
-                            <p className={`text-[10px] font-bold ${isActive ? 'text-accent' : 'text-txt-secondary'}`}>
+                            <p className={`text-[11px] font-medium ${isActive ? 'text-accent' : 'text-txt-secondary'}`}>
                               v{version.version_number} · {version.label}
                             </p>
                             <p className="text-[9px] text-txt-muted mt-0.5">{version.model_used}</p>
@@ -930,7 +930,7 @@ export default function StoryboardEditor() {
 
       {/* ── Status footer bar ── */}
       <div className="h-9 border-t border-bdr bg-white flex items-center justify-between px-6 flex-shrink-0">
-        <div className="flex items-center gap-4 text-[10px] font-bold text-txt-muted uppercase tracking-widest">
+        <div className="flex items-center gap-4 text-[11px] font-medium text-txt-muted uppercase tracking-wide">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-status-completed" aria-hidden="true" />
             渲染就绪
@@ -940,7 +940,7 @@ export default function StoryboardEditor() {
             GPU 24%
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[10px] font-bold text-txt-muted uppercase tracking-widest">
+        <div className="flex items-center gap-4 text-[11px] font-medium text-txt-muted uppercase tracking-wide">
           <span>Space 播放</span>
           <span>J / L 跳转</span>
           <span>S 保存</span>

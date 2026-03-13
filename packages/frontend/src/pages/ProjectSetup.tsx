@@ -96,7 +96,7 @@ function SectionHeader({
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-txt-primary text-base">{title}</h3>
+        <h3 className="font-semibold text-txt-primary text-base">{title}</h3>
         {description && (
           <p className="text-xs text-txt-muted mt-0.5">{description}</p>
         )}
@@ -161,9 +161,9 @@ export default function ProjectSetup() {
 
   const budgetColor =
     budgetPercent >= 90
-      ? 'text-red-500'
+      ? 'text-status-failed'
       : budgetPercent >= 75
-      ? 'text-orange-500'
+      ? 'text-status-waiting'
       : 'text-accent';
 
   return (
@@ -193,7 +193,7 @@ export default function ProjectSetup() {
 
           {/* Page title */}
           <div>
-            <h1 className="text-3xl font-black tracking-tight text-txt-primary">项目设置</h1>
+            <h1 className="text-display-lg text-txt-primary">项目设置</h1>
             <p className="text-txt-secondary text-sm mt-1">
               配置项目的基本属性、风格偏好与 AI 模型参数
             </p>
@@ -305,7 +305,7 @@ export default function ProjectSetup() {
                       key={style.value}
                       type="button"
                       onClick={() => update('visual_style', style.value)}
-                      className={`relative flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 transition-all text-sm font-bold ${
+                      className={`relative flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 transition-all text-sm font-medium ${
                         form.visual_style === style.value
                           ? 'border-accent bg-accent text-white'
                           : 'border-transparent bg-surface-subtle text-txt-secondary hover:bg-bdr'
@@ -313,7 +313,7 @@ export default function ProjectSetup() {
                       aria-pressed={form.visual_style === style.value}
                       aria-label={`选择 ${style.label} 风格`}
                     >
-                      <span className="text-xs font-black tracking-widest opacity-60">
+                      <span className="text-xs font-extrabold tracking-wide opacity-60">
                         {style.badge}
                       </span>
                       <span>{style.label}</span>
@@ -503,7 +503,7 @@ export default function ProjectSetup() {
               hint="超过设定值后，新的生成任务将自动暂停"
             >
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-txt-muted text-sm font-bold pointer-events-none">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-txt-muted text-sm font-medium pointer-events-none">
                   $
                 </span>
                 <input
@@ -523,10 +523,10 @@ export default function ProjectSetup() {
               <div className="flex items-center justify-between text-sm">
                 <span className="text-txt-secondary">
                   已使用{' '}
-                  <span className="text-txt-primary font-bold">${form.budget_used.toFixed(2)}</span>
+                  <span className="text-txt-primary font-semibold">${form.budget_used.toFixed(2)}</span>
                   {' '}/ ${form.budget_limit.toFixed(2)}
                 </span>
-                <span className={`font-black text-base ${budgetColor}`}>
+                <span className={`font-extrabold text-base ${budgetColor}`}>
                   {budgetPercent}%
                 </span>
               </div>
@@ -545,7 +545,7 @@ export default function ProjectSetup() {
                   </span>
                 </span>
                 {budgetPercent >= 75 && (
-                  <span className={budgetPercent >= 90 ? 'text-red-500' : 'text-orange-500'}>
+                  <span className={budgetPercent >= 90 ? 'text-status-failed' : 'text-status-waiting'}>
                     {budgetPercent >= 90
                       ? '预算接近耗尽，请及时充值'
                       : '已使用超过 75%，请关注预算'}
@@ -559,23 +559,23 @@ export default function ProjectSetup() {
               {/* Threshold indicator ticks */}
               <div className="relative h-4">
                 <div
-                  className="absolute top-0 h-full border-l border-dashed border-orange-400/50"
+                  className="absolute top-0 h-full border-l border-dashed border-status-waiting/50"
                   style={{ left: '75%' }}
                   title="预警线 75%"
                 />
                 <div
-                  className="absolute top-0 h-full border-l border-dashed border-red-400/50"
+                  className="absolute top-0 h-full border-l border-dashed border-status-failed/50"
                   style={{ left: '90%' }}
                   title="危险线 90%"
                 />
                 <span
-                  className="absolute text-[10px] text-orange-400/70 -translate-x-1/2"
+                  className="absolute text-[11px] text-status-waiting/70 -translate-x-1/2"
                   style={{ left: '75%', top: '2px' }}
                 >
                   75%
                 </span>
                 <span
-                  className="absolute text-[10px] text-red-400/70 -translate-x-1/2"
+                  className="absolute text-[11px] text-status-failed/70 -translate-x-1/2"
                   style={{ left: '90%', top: '2px' }}
                 >
                   90%
@@ -592,7 +592,7 @@ export default function ProjectSetup() {
       ---------------------------------------------------------------- */}
       <div className="fixed bottom-0 left-0 right-0 z-40">
         {/* Blur backdrop */}
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-md border-t border-bdr" />
+        <div className="absolute inset-0 bg-white border-t border-bdr" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
           <p className="text-xs text-txt-muted hidden sm:block">
             {isDirty ? (
