@@ -4,39 +4,51 @@
 
 @theme {
   /* Canvas — page background */
-  --color-canvas: #E4F0A4;
-  --color-canvas-light: #EDF5C4;
-  --color-canvas-dark: #D4E488;
+  --color-canvas: #F7F7F8;
+  --color-canvas-light: #FAFAFB;
+  --color-canvas-dark: #EEEFF1;
 
   /* Surface — cards, modals */
   --color-surface: #FFFFFF;
-  --color-surface-subtle: #F5F5F0;
+  --color-surface-subtle: #F3F3F5;
 
-  /* Accent — THE one accent color */
-  --color-accent: #7C6AF2;
-  --color-accent-light: #EDE9FE;
-  --color-accent-medium: #A394F5;
-  --color-accent-dark: #5B47D0;
+  /* Sidebar — dark chrome */
+  --color-sidebar: #1C1C28;
+  --color-sidebar-hover: #2A2A3C;
+  --color-sidebar-active: #1A3A38;
+  --color-sidebar-txt: #B0B0C0;
+  --color-sidebar-txt-bright: #ECECF0;
+  --color-sidebar-border: #2E2E40;
+
+  /* Accent — warm teal, the brand color */
+  --color-accent: #0D9488;
+  --color-accent-light: #F0FDFA;
+  --color-accent-medium: #2DD4BF;
+  --color-accent-dark: #0F766E;
+
+  /* Secondary warm accent for creative flair */
+  --color-warm: #F97316;
+  --color-warm-light: #FFF7ED;
 
   /* Text */
-  --color-txt-primary: #1A1A1A;
-  --color-txt-secondary: #6B6B6B;
-  --color-txt-muted: #ABABAB;
+  --color-txt-primary: #18181B;
+  --color-txt-secondary: #52525B;
+  --color-txt-muted: #A1A1AA;
 
   /* Borders */
-  --color-bdr: #E8E8E4;
-  --color-bdr-subtle: #F0F0EC;
+  --color-bdr: #E4E4E7;
+  --color-bdr-subtle: #F0F0F2;
 
   /* Status */
-  --color-status-running: #7C6AF2;
-  --color-status-completed: #6BBF6A;
-  --color-status-waiting: #F0C850;
-  --color-status-failed: #E87070;
-  --color-status-pending: #CCCCCC;
+  --color-status-running: #0D9488;
+  --color-status-completed: #22C55E;
+  --color-status-waiting: #EAB308;
+  --color-status-failed: #EF4444;
+  --color-status-pending: #A1A1AA;
 
   /* Radius */
-  --radius-card: 24px;
-  --radius-card-nested: 16px;
+  --radius-card: 14px;
+  --radius-card-nested: 10px;
 
   /* Shadows */
   --shadow-card: 0 2px 8px rgba(0,0,0,0.04);
@@ -53,8 +65,8 @@
 
 body {
   font-family: 'DM Sans', 'Noto Sans SC', system-ui, sans-serif;
-  background-color: #E4F0A4;
-  color: #1A1A1A;
+  background-color: #F7F7F8;
+  color: #18181B;
 }
 
 /* Custom scrollbar for panels */
@@ -65,18 +77,18 @@ body {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #D4E488;
+  background: #D4D4D8;
   border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #7C6AF2;
+  background: #0D9488;
 }
 
 /* Editor entity highlights */
 .editor-highlight {
-  background-color: rgba(124, 106, 242, 0.12);
-  border-bottom: 2px solid #7C6AF2;
-  color: #5B47D0;
+  background-color: rgba(13, 148, 136, 0.12);
+  border-bottom: 2px solid #0D9488;
+  color: #0F766E;
   padding: 0 2px;
   cursor: pointer;
 }

@@ -19,7 +19,7 @@ export default function StatCard({
   icon,
 }: StatCardProps) {
   return (
-    <div className="bg-white rounded-[24px] p-6">
+    <div className="bg-white rounded-xl p-6">
       <div className="flex items-center justify-between mb-1">
         <p className="text-[11px] font-medium text-txt-secondary uppercase tracking-wide">{label}</p>
         {icon && <div className="text-txt-secondary">{icon}</div>}

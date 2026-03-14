@@ -5,50 +5,99 @@ export interface Project {
   genre: string;
   visual_style: string;
   status: string;
-  global_style: string;
-  cover_image_url?: string;
-  progress?: number;
+  creative_brief?: Record<string, unknown>;
+  global_style?: string;
+  global_prefix?: string;
+  output_width?: number;
+  output_height?: number;
+  default_panel_count?: number;
+  budget_limit?: number;
+  analysis_model?: string;
+  image_model?: string;
+  video_model?: string;
+  character_model?: string;
+  storyboard_model?: string;
+  voice_model?: string;
   created_at?: string;
   updated_at?: string;
+  // List view fields
+  episode_count?: number;
+  panel_count?: number;
+  // Detail view fields
+  episodes?: Episode[];
+  character_count?: number;
+  scene_count?: number;
+  prop_count?: number;
+  // Frontend-only derived fields
+  cover_image_url?: string;
+  progress?: number;
+  latest_run_status?: string;
+  current_phase?: string;
+  current_stage?: string;
+  budget_used?: number;
 }
 
 export interface Character {
   id: number;
   project_id: number;
   name: string;
-  name_en: string;
+  name_en?: string;
+  gender?: string;
+  age_group?: string;
   role_level: string;
-  gender: string;
-  age?: number;
-  height?: string;
-  base_appearance: string;
-  bio?: string;
-  profile_image_url?: string;
-  thumbnail_url?: string;
-  appearances?: number;
+  archetype?: string;
+  personality?: string;
+  base_appearance?: string;
+  costume_tier?: number;
+  visual_keywords?: string[];
+  image_prompt?: string;
+  reference_image?: string;
+  lora_model_path?: string;
+  face_embedding_path?: string;
+  voice_preset_id?: string;
+  seed_value?: number | null;
+  appearances?: CharacterAppearance[];
+  created_at?: string;
   updated_at?: string;
 }
 
-export interface AppearanceState {
+export interface CharacterAppearance {
   id: number;
   character_id: number;
-  name: string;
-  description: string;
-  reference_images?: { url: string; label: string }[];
-  prompt_settings?: {
-    anchor_prompt: string;
-    lora_weight: number;
-    negative_prompt_preset: string;
-  };
+  label: string;
+  description?: string;
+  prompt_modifier?: string;
+  selected_image_id?: number | null;
+  sort_order: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Scene {
   id: number;
   project_id: number;
   name: string;
-  view_grade: string;
+  name_en?: string;
   description?: string;
-  thumbnail_url?: string;
+  description_en?: string;
+  floor_plan_ascii?: string;
+  lighting_preset?: Record<string, unknown>;
+  color_palette?: string[];
+  spatial_structure?: Record<string, unknown>;
+  view_grade: string;
+  views?: SceneView[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface SceneView {
+  id: number;
+  scene_id: number;
+  direction: string;
+  description?: string;
+  selected_image_id?: number | null;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Episode {
@@ -56,10 +105,11 @@ export interface Episode {
   project_id: number;
   episode_number: number;
   title: string;
-  status: string;
-  panel_count?: number;
-  synopsis?: string;
   script_content?: string;
+  status: string;
+  word_count?: number;
+  estimated_duration_s?: number;
+  panel_count?: number;
   created_at?: string;
   updated_at?: string;
 }
@@ -93,51 +143,72 @@ export interface PanelAssociation {
   id: number;
 }
 
-export interface PanelVersion {
-  id: number;
-  panel_id: number;
-  version_number: number;
-  label: string;
-  image_url: string;
-  prompt: string;
-  model_used: string;
-  inference_time: number;
+export interface PipelineRun {
+  id: string; // UUID
+  project_id: number;
+  workflow_type: string;
+  status: 'pending' | 'running' | 'paused' | 'completed' | 'failed';
+  current_step?: string | null; // derived on frontend from steps
+  episode_id?: number | null;
+  target_type?: string;
+  target_id?: number | null;
+  input?: Record<string, unknown> | null;
+  output?: Record<string, unknown> | null;
+  total_cost: number;
+  started_at: string | null;
+  completed_at: string | null;
   created_at: string;
-  is_latest: boolean;
 }
 
-export interface PipelineRun {
+export interface PipelineStep {
+  id: string; // UUID
+  run_id: string; // UUID
+  step_key: string;
+  agent_type: string;
+  status: 'pending' | 'running' | 'completed' | 'failed' | 'skipped' | 'waiting_for_gate';
+  input: Record<string, unknown> | null;
+  output: Record<string, unknown> | null;
+  retry_count?: number;
+  attempts?: StepAttempt[];
+  started_at: string | null;
+  completed_at: string | null;
+}
+
+export interface StepAttempt {
   id: string;
+  step_id: string;
+  attempt_number: number;
   status: string;
-  workflow_type: string;
-  total_cost: number;
+  provider: string;
+  model: string;
+  output: Record<string, unknown> | null;
+  error_message: string | null;
+  duration_ms: number;
+  cost: number;
+  started_at: string | null;
+  completed_at: string | null;
 }
 
 export interface RunEvent {
+  id: string; // UUID
+  run_id: string; // UUID
   seq: number;
   event_type: string;
   payload: Record<string, unknown>;
+  created_at: string;
 }
 
-export interface ActivityEvent {
-  id: string;
-  type: 'pipeline' | 'approval' | 'upload' | 'warning';
-  title: string;
-  description: string;
-  timestamp: string;
+export interface GateDecision {
+  decision: 'approve' | 'reject';
+  feedback?: string;
+  regeneration_targets?: string[];
 }
 
-export interface ProjectSettings {
-  title: string;
-  genre: string;
-  description: string;
-  resolution: string;
-  default_panel_count: number;
-  style_prefix: string;
-  writer_model: string;
-  artist_model: string;
-  video_model: string;
-  consistency_model: string;
-  budget_limit: number;
-  budget_used: number;
+export interface ProviderConfig {
+  name: string;
+  provider_type: string;
+  base_url?: string;
+  default_model?: string;
+  is_enabled: boolean;
+  has_api_key?: boolean;
 }

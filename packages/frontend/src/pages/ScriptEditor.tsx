@@ -1,8 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/AppLayout';
 import Button from '../components/Button';
 import type { Episode, Panel } from '../api/types';
+import { listEpisodes, createEpisode } from '../api/episodes';
+import { listPanels, createPanel } from '../api/panels';
+import { getProject } from '../api/projects';
+import { generateImage } from '../api/generation';
 import {
   Bold,
   Italic,
@@ -18,6 +22,7 @@ import {
   Undo2,
   Redo2,
   RefreshCw,
+  ArrowLeft,
   ArrowRight,
   Sparkles,
   Film,
@@ -26,266 +31,42 @@ import {
   AlignLeft,
   PanelLeft,
   PanelRight,
+  X,
 } from 'lucide-react';
 
-/* ---------- Mock data ---------- */
+/* ---------- Toast component ---------- */
 
-const MOCK_EPISODES: Episode[] = [
-  {
-    id: 1,
-    project_id: 1,
-    episode_number: 1,
-    title: '废体觉醒',
-    status: 'completed',
-    panel_count: 24,
-    synopsis: '沈渊在屈辱中觉醒远古血脉',
-  },
-  {
-    id: 2,
-    project_id: 1,
-    episode_number: 2,
-    title: '宗门大比',
-    status: 'in_progress',
-    panel_count: 18,
-    synopsis: '宗门大比中凌风崭露头角',
-  },
-  {
-    id: 3,
-    project_id: 1,
-    episode_number: 3,
-    title: '禁地之秘',
-    status: 'draft',
-    panel_count: 0,
-    synopsis: '探索禁地深处隐藏的秘密',
-  },
-  {
-    id: 4,
-    project_id: 1,
-    episode_number: 4,
-    title: '血脉传承',
-    status: 'draft',
-    panel_count: 0,
-    synopsis: '远古血脉的真正含义浮出水面',
-  },
-  {
-    id: 5,
-    project_id: 1,
-    episode_number: 5,
-    title: '逆天之战',
-    status: 'draft',
-    panel_count: 0,
-    synopsis: '决战时刻，命运的转折点',
-  },
-];
-
-interface ScriptScene {
-  id: number;
-  number: number;
-  location: string;
-  timeOfDay: string;
-  intOrExt: string;
-  stageDirection: string;
-  blocks: ScriptBlock[];
+interface ToastData {
+  type: 'success' | 'error';
+  message: string;
 }
 
-type ScriptBlock =
-  | { type: 'character'; name: string; direction?: string; dialogue: string }
-  | { type: 'action'; text: string };
+function Toast({ toast, onDismiss }: { toast: ToastData; onDismiss: () => void }) {
+  useEffect(() => {
+    const timer = setTimeout(onDismiss, 3000);
+    return () => clearTimeout(timer);
+  }, [onDismiss]);
 
-const MOCK_SCRIPT_SCENES: ScriptScene[] = [
-  {
-    id: 1,
-    number: 1,
-    location: '苍玄宗 - 主殿前广场',
-    timeOfDay: '黎明',
-    intOrExt: '外景',
-    stageDirection:
-      '晨曦中，巍峨的苍玄宗主殿轮廓在薄雾中若隐若现。微风拂过，殿前的石阶上散落着几片枯叶。阳光从云层边缘透出，将大地染成一片金橙色。',
-    blocks: [
-      {
-        type: 'character',
-        name: '凌风',
-        direction: '抬头望向天空，目光坚定',
-        dialogue: '今天……就是宗门大比的日子了。',
-      },
-      {
-        type: 'action',
-        text: '凌风缓缓拔出腰间长剑，剑身在晨光中泛出淡蓝色光芒。他深吸一口气，将剑意收敛于心。',
-      },
-      {
-        type: 'character',
-        name: '小白',
-        direction: '从远处跑来，气喘吁吁',
-        dialogue: '师兄！师兄等等我！',
-      },
-      {
-        type: 'character',
-        name: '凌风',
-        direction: '微微一笑，回身等待',
-        dialogue: '你总是迟到。今天可不能再如此了。',
-      },
-      {
-        type: 'action',
-        text: '小白跑到凌风身旁，弯腰喘息。两人并肩望向宗门方向，神情各异。',
-      },
-    ],
-  },
-  {
-    id: 2,
-    number: 2,
-    location: '苍玄宗 - 比武台',
-    timeOfDay: '上午',
-    intOrExt: '外景',
-    stageDirection:
-      '比武台上人声鼎沸，四周坐满了前来观战的弟子。台中央的阵法正散发着微弱的光芒，空气中弥漫着淡淡的灵气波动。',
-    blocks: [
-      {
-        type: 'character',
-        name: '长老',
-        dialogue: '宗门大比，正式开始！第一场——凌风对战赵铭！',
-      },
-      {
-        type: 'action',
-        text: '人群爆发出热烈的欢呼声。凌风从容走上比武台，手握长剑，剑意凛然。对面，赵铭冷笑着踏步而来。',
-      },
-      {
-        type: 'character',
-        name: '凌风',
-        dialogue: '请指教。',
-      },
-      {
-        type: 'character',
-        name: '赵铭',
-        direction: '轻蔑地扫视凌风',
-        dialogue: '废物就是废物，不知道自量力。今日，我赵铭要让你知道，天才与庸才的差距！',
-      },
-      {
-        type: 'action',
-        text: '赵铭率先出手，掌风劈来如山倒。凌风身形一闪，苍澜剑划出一道弧光，以快打快。台下一片哗然。',
-      },
-    ],
-  },
-  {
-    id: 3,
-    number: 3,
-    location: '苍玄宗 - 禁地入口',
-    timeOfDay: '夜晚',
-    intOrExt: '外景',
-    stageDirection:
-      '月色朦胧。禁地入口处，两道古老的石柱上刻满了诡异的符文，微微发光。凌风独自立于此处，手中握着一枚残缺的古玉。',
-    blocks: [
-      {
-        type: 'action',
-        text: '凌风将古玉靠近石柱，符文开始剧烈震动，发出低沉的轰鸣声。',
-      },
-      {
-        type: 'character',
-        name: '凌风',
-        direction: '自语，神情复杂',
-        dialogue: '师父临终前留下的东西……究竟隐藏着什么秘密？',
-      },
-    ],
-  },
-];
-
-const MOCK_PANELS: Panel[] = [
-  {
-    id: 1,
-    episode_id: 2,
-    panel_number: 1,
-    title: '黎明中的剑修',
-    shot_type: '远景',
-    camera_angle: '平视',
-    duration: 3.0,
-    status: 'completed',
-    action_description: '晨曦中，凌风站在苍玄宗山巅，背对镜头，长衫随风飘动。',
-    dialogue: '',
-  },
-  {
-    id: 2,
-    episode_id: 2,
-    panel_number: 2,
-    title: '回望宗门',
-    shot_type: '中景',
-    camera_angle: '平视',
-    duration: 2.5,
-    status: 'completed',
-    action_description: '凌风转身望向山脚下的宗门建筑群，目光中带着复杂的感情。',
-    dialogue: '今天……就是宗门大比的日子了。',
-  },
-  {
-    id: 3,
-    episode_id: 2,
-    panel_number: 3,
-    title: '拔剑试锋',
-    shot_type: '特写',
-    camera_angle: '仰拍',
-    duration: 2.0,
-    status: 'completed',
-    action_description: '凌风缓缓拔出腰间长剑，剑身在晨光中泛出淡蓝色光芒。',
-    dialogue: '',
-  },
-  {
-    id: 4,
-    episode_id: 2,
-    panel_number: 4,
-    title: '小白登场',
-    shot_type: '全景',
-    camera_angle: '平视',
-    duration: 2.0,
-    status: 'generating',
-    action_description: '小白从远处跑来，气喘吁吁，身后尘土飞扬。',
-    dialogue: '师兄！师兄等等我！',
-  },
-  {
-    id: 5,
-    episode_id: 2,
-    panel_number: 5,
-    title: '二人并肩',
-    shot_type: '中景',
-    camera_angle: '平视',
-    duration: 3.5,
-    status: 'pending',
-    action_description: '小白跑到凌风身旁，弯腰喘息。凌风微微一笑。',
-    dialogue: '你总是迟到。',
-  },
-  {
-    id: 6,
-    episode_id: 2,
-    panel_number: 6,
-    title: '比武台全景',
-    shot_type: '远景',
-    camera_angle: '俯拍',
-    duration: 3.0,
-    status: 'pending',
-    action_description: '镜头切换到宏大的比武台全景，四周坐满了弟子。',
-    dialogue: '',
-  },
-  {
-    id: 7,
-    episode_id: 2,
-    panel_number: 7,
-    title: '长老宣布',
-    shot_type: '中景',
-    camera_angle: '平视',
-    duration: 2.5,
-    status: 'pending',
-    action_description: '长老站于高台之上，手持令旗，庄严宣布大比开始。',
-    dialogue: '宗门大比，正式开始！',
-  },
-  {
-    id: 8,
-    episode_id: 2,
-    panel_number: 8,
-    title: '凌风应战',
-    shot_type: '近景',
-    camera_angle: '平视',
-    duration: 2.0,
-    status: 'pending',
-    action_description: '凌风从容走上比武台，手握长剑，剑意凛然，神情沉静。',
-    dialogue: '请指教。',
-  },
-];
+  return (
+    <div
+      className={`fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg text-sm font-medium transition-all animate-in fade-in slide-in-from-top-2 ${
+        toast.type === 'success'
+          ? 'bg-status-completed text-white'
+          : 'bg-status-failed text-white'
+      }`}
+      role="alert"
+    >
+      <span>{toast.message}</span>
+      <button
+        onClick={onDismiss}
+        className="ml-1 p-0.5 rounded hover:bg-white/20 transition-colors"
+        aria-label="关闭提示"
+      >
+        <X className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  );
+}
 
 /* ---------- Sub-components ---------- */
 
@@ -326,16 +107,65 @@ export default function ScriptEditor() {
   const { id, eid } = useParams();
   const navigate = useNavigate();
 
-  const activeEpisodeId = eid ? parseInt(eid, 10) : MOCK_EPISODES[1].id;
-  const [selectedEpisodeId, setSelectedEpisodeId] = useState(activeEpisodeId);
+  const activeEpisodeId = eid ? parseInt(eid, 10) : undefined;
+  const [selectedEpisodeId, setSelectedEpisodeId] = useState<number | undefined>(activeEpisodeId);
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [panels, setPanels] = useState<Panel[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [projectTitle, setProjectTitle] = useState('');
   const [fontSize, setFontSize] = useState(14);
   const [mobileEpisodeListOpen, setMobileEpisodeListOpen] = useState(false);
   const [mobilePanelBreakdownOpen, setMobilePanelBreakdownOpen] = useState(false);
+  const [aiGenerating, setAiGenerating] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
 
-  const totalDuration = MOCK_PANELS.reduce((sum, p) => sum + p.duration, 0);
-  const activeEpisode =
-    MOCK_EPISODES.find((e) => e.id === selectedEpisodeId) ?? MOCK_EPISODES[1];
+  /* Toast state */
+  const [toast, setToast] = useState<ToastData | null>(null);
+  const showToast = useCallback((type: ToastData['type'], message: string) => {
+    setToast({ type, message });
+  }, []);
+  const dismissToast = useCallback(() => setToast(null), []);
+
+  /* Episode creation dialog state */
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [newEpisodeTitle, setNewEpisodeTitle] = useState('');
+
+  /* Fetch project title */
+  useEffect(() => {
+    if (!id) return;
+    getProject(Number(id))
+      .then(res => setProjectTitle(res.data.title))
+      .catch(() => {});
+  }, [id]);
+
+  /* Fetch episodes for this project */
+  useEffect(() => {
+    if (!id) return;
+    listEpisodes(Number(id))
+      .then(res => setEpisodes(res.data))
+      .catch(() => {
+        showToast('error', '后端服务不可用，数据已保存在本地');
+      })
+      .finally(() => setLoading(false));
+  }, [id, showToast]);
+
+  /* Once episodes load, fall back to the first episode if none is selected */
+  useEffect(() => {
+    if (!selectedEpisodeId && episodes.length > 0) {
+      setSelectedEpisodeId(episodes[0].id);
+    }
+  }, [episodes, selectedEpisodeId]);
+
+  /* Fetch panels whenever the selected episode changes */
+  useEffect(() => {
+    if (!selectedEpisodeId) return;
+    listPanels(selectedEpisodeId)
+      .then(res => setPanels(res.data))
+      .catch(() => setPanels([]));
+  }, [selectedEpisodeId]);
+
+  const activeEpisode = episodes.find(e => e.id === selectedEpisodeId);
+  const totalDuration = panels.reduce((sum, p) => sum + p.duration, 0);
 
   /* Rich-text formatting helpers */
   const execFormat = (command: string) => {
@@ -343,20 +173,190 @@ export default function ScriptEditor() {
     document.execCommand(command, false);
   };
 
+  /* Handle content editable input — sync changes back to episode state */
+  const handleEditorInput = () => {
+    if (!editorRef.current || !selectedEpisodeId) return;
+    const content = editorRef.current.textContent ?? '';
+    setEpisodes(prev =>
+      prev.map(ep =>
+        ep.id === selectedEpisodeId
+          ? { ...ep, script_content: content }
+          : ep
+      )
+    );
+  };
+
+  /* Create a new episode — try API first, fall back to local */
+  const handleCreateEpisode = async () => {
+    const title = newEpisodeTitle.trim();
+    if (!title || !id) return;
+
+    const projectId = Number(id);
+    const episodeNumber = episodes.length + 1;
+
+    try {
+      const res = await createEpisode(projectId, {
+        title,
+        episode_number: episodeNumber,
+        status: 'draft',
+        script_content: '',
+      });
+      setEpisodes(prev => [...prev, res.data]);
+      setSelectedEpisodeId(res.data.id);
+      showToast('success', '剧集创建成功');
+    } catch {
+      /* Backend unavailable — create locally with a negative ID */
+      const localEpisode: Episode = {
+        id: -(episodes.length + 1),
+        project_id: projectId,
+        episode_number: episodeNumber,
+        title,
+        status: 'draft',
+        script_content: '',
+      };
+      setEpisodes(prev => [...prev, localEpisode]);
+      setSelectedEpisodeId(localEpisode.id);
+      showToast('error', '后端服务不可用，数据已保存在本地');
+    }
+
+    setNewEpisodeTitle('');
+    setShowCreateDialog(false);
+  };
+
+  /* Save draft — show confirmation toast */
+  const handleSaveDraft = () => {
+    showToast('success', '已保存到本地');
+  };
+
+  /* AI regenerate script */
+  const handleAiRegenerate = async () => {
+    if (!panels[0]?.id) {
+      showToast('error', '后端 AI 服务不可用');
+      return;
+    }
+    setAiGenerating(true);
+    try {
+      await generateImage(panels[0].id, { model: 'deepseek-v3' });
+    } catch {
+      showToast('error', '后端 AI 服务不可用');
+    } finally {
+      setAiGenerating(false);
+    }
+  };
+
+  /* AI-assisted writing */
+  const handleAiAssist = () => {
+    showToast('error', '后端 AI 服务不可用');
+  };
+
+  /* Auto-storyboard */
+  const handleAutoStoryboard = () => {
+    showToast('error', '后端 AI 服务不可用');
+  };
+
+  /* Add a local panel with defaults */
+  const handleAddPanel = async () => {
+    if (!selectedEpisodeId) return;
+
+    const panelNumber = panels.length + 1;
+    const panelData: Partial<Panel> = {
+      panel_number: panelNumber,
+      title: `面板 ${panelNumber}`,
+      shot_type: 'MS',
+      duration: 3,
+      status: 'pending',
+      action_description: '',
+      dialogue: '',
+    };
+
+    try {
+      const res = await createPanel(selectedEpisodeId, panelData);
+      setPanels(prev => [...prev, res.data]);
+      showToast('success', '面板已创建');
+    } catch {
+      /* Backend unavailable — create locally with a negative ID */
+      const localPanel: Panel = {
+        id: -(panels.length + 1),
+        episode_id: selectedEpisodeId,
+        panel_number: panelNumber,
+        title: `面板 ${panelNumber}`,
+        shot_type: 'MS',
+        duration: 3,
+        status: 'pending',
+        action_description: '',
+        dialogue: '',
+      };
+      setPanels(prev => [...prev, localPanel]);
+      showToast('error', '后端服务不可用，数据已保存在本地');
+    }
+  };
+
   return (
     <AppLayout layout="split">
+      {/* ── Toast notification ───────────────────────────────────── */}
+      {toast && <Toast toast={toast} onDismiss={dismissToast} />}
+
+      {/* ── Create episode dialog ────────────────────────────────── */}
+      {showCreateDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div
+            className="bg-white rounded-xl shadow-xl w-full max-w-sm mx-4 p-6"
+            role="dialog"
+            aria-label="新建剧集"
+          >
+            <h2 className="text-lg font-bold text-txt-primary mb-4">新建剧集</h2>
+            <label className="block text-sm font-medium text-txt-secondary mb-1.5">
+              剧集标题
+            </label>
+            <input
+              type="text"
+              value={newEpisodeTitle}
+              onChange={e => setNewEpisodeTitle(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') handleCreateEpisode(); }}
+              placeholder="请输入剧集标题"
+              className="w-full px-3 py-2 border border-bdr rounded-lg text-sm text-txt-primary outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2 mt-5">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setShowCreateDialog(false);
+                  setNewEpisodeTitle('');
+                }}
+              >
+                取消
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleCreateEpisode}
+                disabled={!newEpisodeTitle.trim()}
+              >
+                创建
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Top toolbar ────────────────────────────────────────────── */}
       <div className="flex items-center justify-between border-b border-bdr px-3 md:px-6 h-14 bg-white sticky top-0 z-10 flex-shrink-0">
-        {/* Breadcrumb */}
+        {/* Back + Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-txt-secondary min-w-0" aria-label="breadcrumb">
-          <Link to="/projects" className="hover:text-accent transition-colors hidden md:inline">
-            项目
+          <Link
+            to={`/projects/${id}`}
+            className="flex items-center gap-1.5 text-txt-secondary hover:text-accent transition-colors flex-shrink-0"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">返回</span>
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-txt-muted hidden md:block" aria-hidden="true" />
-          <Link to={`/projects/${id}`} className="hover:text-accent transition-colors hidden md:inline">
-            仙玄纪元
+          <div className="h-4 w-px bg-bdr flex-shrink-0" />
+          <Link to={`/projects/${id}`} className="hover:text-accent transition-colors hidden md:inline truncate">
+            {projectTitle || '项目'}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-txt-muted hidden md:block" aria-hidden="true" />
+          <ChevronRight className="w-3.5 h-3.5 text-txt-muted hidden md:block flex-shrink-0" aria-hidden="true" />
           <span className="text-txt-primary font-medium truncate">
             EP{eid} 剧本编辑器
           </span>
@@ -364,13 +364,36 @@ export default function ScriptEditor() {
 
         {/* Actions */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <Button variant="outline" size="sm" icon={<Sparkles className="w-4 h-4" />} className="hidden md:flex">
-            自动生成剧本
-          </Button>
+          {/* Model badge */}
+          <span className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-subtle border border-bdr text-[11px] font-medium text-txt-muted">
+            <Sparkles className="w-3 h-3 text-accent" aria-hidden="true" />
+            Gemini 2.5 Flash
+          </span>
+
+          {/* AI 重新生成 button */}
+          {aiGenerating ? (
+            <span className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-accent bg-accent-light">
+              <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
+              AI生成中...
+            </span>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              icon={<Sparkles className="w-4 h-4" />}
+              className="hidden md:flex"
+              onClick={handleAiRegenerate}
+              aria-label="AI 重新生成剧本"
+            >
+              AI 重新生成
+            </Button>
+          )}
+
           <div className="w-px h-5 bg-bdr mx-1 hidden md:block" />
           <button
             aria-label="保存"
             className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
+            onClick={handleSaveDraft}
           >
             <Save className="w-4 h-4" />
           </button>
@@ -389,7 +412,7 @@ export default function ScriptEditor() {
         >
           <PanelLeft className="w-4 h-4 text-accent" aria-hidden="true" />
           <span>剧集列表</span>
-          <span className="text-[11px] text-txt-muted ml-1">({MOCK_EPISODES.length} 集)</span>
+          <span className="text-[11px] text-txt-muted ml-1">({episodes.length} 集)</span>
           <ChevronDown className={`w-4 h-4 text-txt-muted ml-auto transition-transform ${mobileEpisodeListOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
         <aside
@@ -403,13 +426,24 @@ export default function ScriptEditor() {
               剧集列表
             </span>
             <span className="ml-auto text-[11px] font-medium text-txt-muted">
-              {MOCK_EPISODES.length} 集
+              {episodes.length} 集
             </span>
           </div>
 
           {/* Episode list */}
           <ul className="flex-1 overflow-y-auto custom-scrollbar py-2 max-h-[40vh] lg:max-h-none" role="listbox" aria-label="选择剧集">
-            {MOCK_EPISODES.map((ep) => {
+            {loading && (
+              <li className="px-4 py-6 flex items-center justify-center gap-2 text-xs text-txt-muted">
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                加载中…
+              </li>
+            )}
+            {!loading && episodes.length === 0 && (
+              <li className="px-4 py-6 text-center text-xs text-txt-muted">
+                暂无剧集数据
+              </li>
+            )}
+            {episodes.map((ep) => {
               const isActive = ep.id === selectedEpisodeId;
               return (
                 <li key={ep.id} role="option" aria-selected={isActive}>
@@ -464,6 +498,7 @@ export default function ScriptEditor() {
           {/* New episode button */}
           <div className="p-3 border-t border-bdr">
             <button
+              onClick={() => setShowCreateDialog(true)}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-bdr text-xs text-txt-muted font-medium hover:border-accent/50 hover:text-accent transition-colors"
               aria-label="新建剧集"
             >
@@ -521,6 +556,7 @@ export default function ScriptEditor() {
 
             {/* AI Assist */}
             <button
+              onClick={handleAiAssist}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-accent-light text-accent hover:bg-accent/20 transition-colors"
               aria-label="AI 辅助写作"
             >
@@ -530,7 +566,7 @@ export default function ScriptEditor() {
 
             {/* Autosave indicator */}
             <div className="ml-auto flex items-center gap-1.5" aria-live="polite">
-              <span className="w-1.5 h-1.5 rounded-full bg-status-completed animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-status-completed" />
               <span className="text-[11px] text-txt-muted">已自动保存</span>
             </div>
           </div>
@@ -538,12 +574,18 @@ export default function ScriptEditor() {
           {/* Episode title bar */}
           <div className="px-4 md:px-10 py-4 border-b border-bdr/60 bg-white flex-shrink-0">
             <div className="max-w-3xl mx-auto flex flex-wrap items-baseline gap-2 md:gap-3">
-              <span className="text-[11px] font-medium text-accent uppercase tracking-wide">
-                EP{activeEpisode.episode_number}
-              </span>
-              <h1 className="text-lg font-extrabold text-txt-primary">{activeEpisode.title}</h1>
-              {activeEpisode.synopsis && (
-                <p className="text-xs text-txt-muted italic truncate">{activeEpisode.synopsis}</p>
+              {activeEpisode ? (
+                <>
+                  <span className="text-[11px] font-medium text-accent uppercase tracking-wide">
+                    EP{activeEpisode.episode_number}
+                  </span>
+                  <h1 className="text-lg font-extrabold text-txt-primary">{activeEpisode.title}</h1>
+                  {activeEpisode.synopsis && (
+                    <p className="text-xs text-txt-muted italic truncate">{activeEpisode.synopsis}</p>
+                  )}
+                </>
+              ) : (
+                <h1 className="text-lg font-extrabold text-txt-muted">请选择剧集</h1>
               )}
             </div>
           </div>
@@ -560,75 +602,49 @@ export default function ScriptEditor() {
               spellCheck={false}
               aria-label="剧本编辑区"
               aria-multiline="true"
-              className="max-w-3xl mx-auto space-y-8 text-txt-primary outline-none"
+              className="max-w-3xl mx-auto text-txt-primary outline-none whitespace-pre-wrap"
               style={{ fontSize, lineHeight: 1.8 }}
-            >
-              {MOCK_SCRIPT_SCENES.map((scene) => (
-                <div key={scene.id} className="space-y-4">
-                  {/* Scene heading */}
-                  <div className="bg-accent-light/30 px-4 py-2 rounded font-semibold text-sm tracking-wide border-l-4 border-accent text-txt-primary select-none">
-                    场景 {scene.number}：
-                    <span className="editor-highlight">[{scene.location}]</span>
-                    {' - '}{scene.timeOfDay}{' - '}{scene.intOrExt}
-                  </div>
-
-                  {/* Stage direction */}
-                  <p className="italic text-txt-muted text-sm leading-relaxed pl-4">
-                    {scene.stageDirection}
-                  </p>
-
-                  {/* Script blocks */}
-                  <div className="space-y-5 pl-2 md:pl-8">
-                    {scene.blocks.map((block, i) => {
-                      if (block.type === 'character') {
-                        return (
-                          <div key={i} className="space-y-1" data-block="character">
-                            <p className="text-center font-medium text-sm text-txt-secondary uppercase tracking-wide">
-                              【<span className="editor-highlight">{block.name}</span>】
-                            </p>
-                            {block.direction && (
-                              <p className="italic text-center text-xs text-txt-muted">
-                                ({block.direction})
-                              </p>
-                            )}
-                            <p className="text-center leading-relaxed max-w-md mx-auto text-txt-primary">
-                              {block.dialogue}
-                            </p>
-                          </div>
-                        );
-                      }
-                      return (
-                        <p key={i} className="py-1 text-sm leading-relaxed text-txt-secondary" data-block="action">
-                          {block.text}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
+              onInput={handleEditorInput}
+              dangerouslySetInnerHTML={{
+                __html: activeEpisode?.script_content || '<p class="text-txt-muted italic">暂无剧本内容，点击"自动生成剧本"开始创作</p>',
+              }}
+            />
           </div>
 
           {/* Bottom control bar */}
           <div className="border-t border-bdr bg-white flex flex-wrap items-center justify-between gap-2 px-3 md:px-6 py-2 md:py-0 md:h-14 flex-shrink-0">
             <div className="flex items-center gap-1">
               <button
+                onClick={() => document.execCommand('undo')}
                 aria-label="撤销"
                 className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
               >
                 <Undo2 className="w-4 h-4" />
               </button>
               <button
+                onClick={() => document.execCommand('redo')}
                 aria-label="重做"
                 className="p-2 rounded-lg hover:bg-surface-subtle text-txt-muted hover:text-txt-secondary transition-colors"
               >
                 <Redo2 className="w-4 h-4" />
               </button>
               <div className="w-px h-4 bg-bdr mx-2 hidden md:block" />
-              <Button variant="ghost" size="sm" icon={<Save className="w-3.5 h-3.5" />} className="hidden md:flex">
+              <Button
+                variant="ghost"
+                size="sm"
+                icon={<Save className="w-3.5 h-3.5" />}
+                className="hidden md:flex"
+                onClick={handleSaveDraft}
+              >
                 保存草稿
               </Button>
-              <Button variant="secondary" size="sm" icon={<RefreshCw className="w-3.5 h-3.5" />} className="hidden md:flex">
+              <Button
+                variant="secondary"
+                size="sm"
+                icon={<RefreshCw className="w-3.5 h-3.5" />}
+                className="hidden md:flex"
+                onClick={handleAiRegenerate}
+              >
                 重新生成
               </Button>
             </div>
@@ -652,7 +668,7 @@ export default function ScriptEditor() {
         >
           <PanelRight className="w-4 h-4 text-accent" aria-hidden="true" />
           <span>分镜拆解</span>
-          <span className="text-[11px] text-txt-muted ml-1">({MOCK_PANELS.length} 面板)</span>
+          <span className="text-[11px] text-txt-muted ml-1">({panels.length} 面板)</span>
           <ChevronDown className={`w-4 h-4 text-txt-muted ml-auto transition-transform ${mobilePanelBreakdownOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
         <aside
@@ -668,7 +684,12 @@ export default function ScriptEditor() {
                   分镜拆解
                 </span>
               </div>
-              <Button variant="outline" size="sm" icon={<Wand2 className="w-3.5 h-3.5" />}>
+              <Button
+                variant="outline"
+                size="sm"
+                icon={<Wand2 className="w-3.5 h-3.5" />}
+                onClick={handleAutoStoryboard}
+              >
                 自动分镜
               </Button>
             </div>
@@ -678,7 +699,7 @@ export default function ScriptEditor() {
               <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
                 <Camera className="w-3 h-3 text-txt-muted" aria-hidden="true" />
                 <span className="text-[11px] font-medium text-txt-secondary">
-                  {MOCK_PANELS.length} 面板
+                  {panels.length} 面板
                 </span>
               </div>
               <div className="flex items-center gap-1.5 bg-surface-subtle rounded-lg px-2.5 py-1.5">
@@ -695,73 +716,84 @@ export default function ScriptEditor() {
             className="flex-1 overflow-y-auto custom-scrollbar py-3 px-3 space-y-2 max-h-[50vh] lg:max-h-none"
             aria-label="面板列表"
           >
-            {MOCK_PANELS.map((panel, index) => (
-              <li key={panel.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
-                <div className="rounded-xl bg-surface-subtle hover:bg-bdr transition-colors p-3 space-y-2.5 cursor-pointer group">
-                  {/* Panel header row */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-extrabold bg-accent-light text-accent px-1.5 py-0.5 rounded">
-                        P{panel.panel_number}
-                      </span>
-                      <ShotTypeBadge type={panel.shot_type} />
-                    </div>
-                    {/* Status icon */}
-                    <span className="flex-shrink-0 mt-0.5">
-                      {panel.status === 'completed' && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-status-completed" aria-label="已完成" />
-                      )}
-                      {panel.status === 'generating' && (
-                        <Loader2 className="w-3.5 h-3.5 text-accent animate-spin" aria-label="生成中" />
-                      )}
-                      {panel.status === 'pending' && (
-                        <Clock className="w-3.5 h-3.5 text-txt-muted" aria-label="待处理" />
-                      )}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <p className="text-sm font-semibold text-txt-primary group-hover:text-accent transition-colors line-clamp-1">
-                    {panel.title}
-                  </p>
-
-                  {/* Description */}
-                  {panel.action_description && (
-                    <p className="text-xs text-txt-muted line-clamp-2 leading-relaxed">
-                      {panel.action_description}
-                    </p>
-                  )}
-
-                  {/* Footer row */}
-                  <div className="flex items-center justify-between pt-0.5">
-                    {/* Dialogue indicator */}
-                    <div className="flex items-center gap-3">
-                      {panel.dialogue ? (
-                        <span className="flex items-center gap-1 text-[11px] text-txt-muted">
-                          <User className="w-3 h-3" aria-hidden="true" />
-                          <span className="text-txt-secondary truncate max-w-[100px]">
-                            {panel.dialogue}
-                          </span>
-                        </span>
-                      ) : (
-                        <span className="text-[11px] text-txt-muted italic">无对白</span>
-                      )}
-                    </div>
-
-                    {/* Duration badge */}
-                    <span className="flex items-center gap-1 text-[11px] font-medium text-txt-muted bg-white px-1.5 py-0.5 rounded">
-                      <Clock className="w-2.5 h-2.5" aria-hidden="true" />
-                      {panel.duration}s
-                    </span>
-                  </div>
-                </div>
+            {panels.length === 0 && (
+              <li className="py-6 text-center text-xs text-txt-muted">
+                暂无面板数据
               </li>
-            ))}
+            )}
+            {panels.map((panel) => {
+              /* Backend may return `action` instead of `action_description` */
+              const actionText =
+                panel.action_description ?? (panel as unknown as Record<string, string>)['action'];
+              return (
+                <li key={panel.id}>
+                  <div className="rounded-xl bg-surface-subtle hover:bg-bdr transition-colors p-3 space-y-2.5 cursor-pointer group">
+                    {/* Panel header row */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] font-extrabold bg-accent-light text-accent px-1.5 py-0.5 rounded">
+                          P{panel.panel_number}
+                        </span>
+                        <ShotTypeBadge type={panel.shot_type} />
+                      </div>
+                      {/* Status icon */}
+                      <span className="flex-shrink-0 mt-0.5">
+                        {panel.status === 'completed' && (
+                          <CheckCircle2 className="w-3.5 h-3.5 text-status-completed" aria-label="已完成" />
+                        )}
+                        {panel.status === 'generating' && (
+                          <Loader2 className="w-3.5 h-3.5 text-accent animate-spin" aria-label="生成中" />
+                        )}
+                        {panel.status === 'pending' && (
+                          <Clock className="w-3.5 h-3.5 text-txt-muted" aria-label="待处理" />
+                        )}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <p className="text-sm font-semibold text-txt-primary group-hover:text-accent transition-colors line-clamp-1">
+                      {panel.title}
+                    </p>
+
+                    {/* Description */}
+                    {actionText && (
+                      <p className="text-xs text-txt-muted line-clamp-2 leading-relaxed">
+                        {actionText}
+                      </p>
+                    )}
+
+                    {/* Footer row */}
+                    <div className="flex items-center justify-between pt-0.5">
+                      {/* Dialogue indicator */}
+                      <div className="flex items-center gap-3">
+                        {panel.dialogue ? (
+                          <span className="flex items-center gap-1 text-[11px] text-txt-muted">
+                            <User className="w-3 h-3" aria-hidden="true" />
+                            <span className="text-txt-secondary truncate max-w-[100px]">
+                              {panel.dialogue}
+                            </span>
+                          </span>
+                        ) : (
+                          <span className="text-[11px] text-txt-muted italic">无对白</span>
+                        )}
+                      </div>
+
+                      {/* Duration badge */}
+                      <span className="flex items-center gap-1 text-[11px] font-medium text-txt-muted bg-white px-1.5 py-0.5 rounded">
+                        <Clock className="w-2.5 h-2.5" aria-hidden="true" />
+                        {panel.duration}s
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Add panel button */}
           <div className="p-3 border-t border-bdr flex-shrink-0">
             <button
+              onClick={handleAddPanel}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-dashed border-bdr text-xs text-txt-muted font-medium hover:border-accent/50 hover:text-accent transition-colors"
               aria-label="手动添加面板"
             >

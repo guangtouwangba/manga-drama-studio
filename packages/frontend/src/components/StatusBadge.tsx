@@ -52,6 +52,30 @@ const statusConfig: Record<string, { bg: string; text: string; dot?: string; lab
     dot: 'bg-status-pending',
     label: '等待中',
   },
+  running: {
+    bg: 'bg-status-running/10',
+    text: 'text-status-running',
+    dot: 'bg-status-running animate-pulse',
+    label: '运行中',
+  },
+  waiting_for_gate: {
+    bg: 'bg-status-waiting/10',
+    text: 'text-status-waiting',
+    dot: 'bg-status-waiting animate-pulse',
+    label: '等待审核',
+  },
+  failed: {
+    bg: 'bg-red-50',
+    text: 'text-red-600',
+    dot: 'bg-red-500',
+    label: '失败',
+  },
+  paused: {
+    bg: 'bg-status-pending/10',
+    text: 'text-txt-muted',
+    dot: 'bg-status-pending',
+    label: '已暂停',
+  },
 };
 
 export default function StatusBadge({ status, size = 'md' }: StatusBadgeProps) {
